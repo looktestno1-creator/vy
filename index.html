@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Curtain: inject before first paint to prevent flash on transition arrival -->
+  <script>
+    if (sessionStorage.getItem('pt-arriving') === '1') {
+      var _c = document.createElement('div');
+      _c.id = 'page-curtain';
+      _c.style.cssText = 'position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';
+      document.documentElement.appendChild(_c);
+    }
+  </script>
+</head>
+<body>
+  <main class="page">
+
+    <!-- ── Hero Header ── -->
+    <section class="header-section">
+      <div class="header-inner">
+
+        <div class="logo">
+          <img src="assets/icons/logo_layer.svg" alt="Logo" />
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="hero-title">
+          <p class="hero-regular">Product designer specialising in&nbsp;</p>
+          <div class="hero-bold hero-carousel" aria-label="UX design disciplines">
+            <div class="hero-carousel-track">
+              <span>UX design</span>
+              <span>UI Design</span>
+              <span>User research</span>
+              <span>UX strategy</span>
+              <span>UX design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+      </div>
+    </section>
+
+    <!-- ── Project Cards ── -->
+    <section class="content-section">
+
+      <!-- Card 1: Bowers & Wilkins -->
+      <article class="card">
+        <div class="card-image">
+          <img src="assets/images/hero/cover1.png" alt="Bowers & Wilkins — hand holding phone" class="card-img-cover" />
+        </div>
+        <div class="card-text">
+          <p class="card-brand">1/3</p>
+          <h2 class="card-title">Designing end-to-end experiences for the premium brand</h2>
+              <button class="read-more" id="bw-read-more">
+              Read more
+              <img src="assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+              </button>
+        </div>
+      </article>
+
+      <!-- Card 2: Denon — in-car UX -->
+      <article class="card">
+        <div class="card-image">
+
+          <!-- Blob stack -->
+          <div class="blob-wrap">
+            <div class="blob-rotate">
+              <div class="blob-layer" style="width:277.139px;height:269.638px;top:calc(50% + 17.68px);left:calc(50% + 12.34px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob00.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:288.392px;height:273.389px;top:calc(50% + 13.72px);left:calc(50% + 8.85px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob01.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:300.061px;height:278.39px;top:calc(50% + 9.55px);left:calc(50% + 5.57px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob02.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:311.73px;height:284.641px;top:calc(50% + 5.18px);left:calc(50% + 2.29px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob03.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:324.232px;height:291.726px;top:calc(50% + 0.8px);left:calc(50% - 0.57px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob04.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:336.735px;height:299.644px;top:calc(50% - 3.16px);left:calc(50% - 3.02px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob05.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:349.654px;height:307.562px;top:calc(50% - 7.12px);left:calc(50% - 5.67px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob06.svg" alt="" /></div>
+              </div>
+              <div class="blob-layer" style="width:362.99px;height:316.314px;top:calc(50% - 11.08px);left:calc(50% - 8.12px);">
+                <div class="blob-counter-rotate"><img src="assets/icons/blob07.svg" alt="" /></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard UI screenshot -->
+          <img src="assets/images/hero/image1.png" alt="Denon in-car UI" class="card-img-bottom" />
+        </div>
+        <div class="card-text">
+          <p class="card-brand">2/3</p>
+          <h2 class="card-title">Vision for in-car user experience</h2>
+          <a class="read-more" href="case-studies/denon/" id="denon-read-more" aria-label="Read more about Denon in-car user experience">
+            Read more
+            <img src="assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3: Denon — healing -->
+      <article class="card">
+        <div class="card-image">
+
+          <!-- Main photo with ellipse rings -->
+          <div class="healing-photo">
+            <img src="assets/images/hero/healing_photo.png" alt="Healing health app" class="healing-main-img" />
+            <img src="assets/icons/ellipse1.svg" alt="" class="ellipse ellipse-sm" />
+            <img src="assets/icons/ellipse2.svg" alt="" class="ellipse ellipse-md" />
+            <img src="assets/icons/ellipse3.svg" alt="" class="ellipse ellipse-lg" />
+          </div>
+
+          <!-- Sidebar pill -->
+          <div class="healing-sidebar">
+            <div class="sidebar-icon"><img src="assets/icons/pause_circle1.svg" alt="Pause" /></div>
+            <div class="sidebar-icon"><img src="assets/icons/play_circle.svg" alt="Play" /></div>
+            <div class="sidebar-icon"><img src="assets/icons/spatial_tracking.svg" alt="Spatial" /></div>
+            <div class="sidebar-icon"><img src="assets/icons/graphic_eq.svg" alt="Equaliser" /></div>
+            <div class="sidebar-icon"><img src="assets/icons/arrow_right.svg" alt="Forward" /></div>
+          </div>
+        </div>
+        <div class="card-text">
+          <p class="card-brand">3/3</p>
+          <h2 class="card-title">Setting up better healing health experience</h2>
+          <p class="card-brand">Coming soon</p>
+
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-cta">
+        <h2 class="footer-heading">
+          <span class="footer-h-row">Let's&nbsp;<span class="footer-cycle-wrap"><span class="footer-cycle-track"><span>discover</span><span>work</span><span>create</span><span>discover</span></span></span></span>
+          <span class="footer-h-row">together</span>
+        </h2>
+        <a class="footer-btn" href="mailto:hi@yvefa.com">
+          Get In Touch
+          <span class="footer-btn-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-contact">
+          <p class="footer-label">Contact</p>
+          <a href="mailto:hi@yvefa.com" class="footer-email">hi@yvefa.com</a>
+        </div>
+        <div class="footer-socials">
+          <a class="footer-social-btn" href="https://behance.net/" target="_blank" rel="noopener" aria-label="Behance">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.82,121.39A42,42,0,0,0,86,52H32A12,12,0,0,0,20,64V192a12,12,0,0,0,12,12H90a46,46,0,0,0,27.82-82.61ZM44,76H86a18,18,0,0,1,0,36H44ZM90,180H44V136H90a22,22,0,0,1,0,44ZM156,76a12,12,0,0,1,12-12h64a12,12,0,0,1,0,24H168A12,12,0,0,1,156,76Zm44,24a52,52,0,0,0,0,104,51.45,51.45,0,0,0,22.7-5.21,12,12,0,1,0-10.49-21.58A27.73,27.73,0,0,1,200,180a28.05,28.05,0,0,1-25.3-16H240a12,12,0,0,0,12-12A52.06,52.06,0,0,0,200,100Zm-25.3,40a28,28,0,0,1,50.6,0Z"/></svg>
+          </a>
+          <a class="footer-social-btn" href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,20H40A20,20,0,0,0,20,40V216a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V40A20,20,0,0,0,216,20Zm-4,192H44V44H212ZM112,176V124a12,12,0,0,1,21.43-7.41A40,40,0,0,1,192,152v24a12,12,0,0,1-24,0V152a16,16,0,0,0-32,0v24a12,12,0,0,1-24,0ZM96,124v52a12,12,0,0,1-24,0V124a12,12,0,0,1,24,0ZM68,80A16,16,0,1,1,84,96,16,16,0,0,1,68,80Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-copyright">
+        <p>Vafa Yilmaz © 2026</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ── BW Case Study Overlay ── -->
+  <div id="bw-overlay" aria-hidden="true">
+
+    <nav class="case-nav">
+      <div class="case-nav-inner">
+        <span class="case-nav-brand">Designing end-to-end experiences for the premium brand</span>
+        <button class="case-nav-close" id="bw-close" aria-label="Close">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="case-content">
+
+      <header class="case-hero">
+        <p class="case-eyebrow">Case studies</p>
+        <h1 class="case-hero-title">Designing end-to-end experiences for the premium brand</h1>
+        <p class="case-hero-sub">Software experience, physical product controls, interactions.</p>
+      </header>
+
+      <section class="case-meta">
+        <div>
+          <p class="case-meta-label">Scope</p>
+          <ul class="case-scope-list">
+            <li>UX &amp; UI design</li>
+            <li>User research</li>
+            <li>Interaction design</li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-meta-label">Contribution</p>
+          <p class="case-body">Leading end-to-end product experiences, conducting user research activities including ergonomic testing, collaborating with internal and external stakeholders on product vision and direction. Designing physical and digital interactions, thinking about every touch point for the user.</p>
+        </div>
+        <div>
+          <p class="case-meta-label">Awards</p>
+          <div class="case-awards">
+            <img src="assets/images/awards/yx6leS3EnLyApd259AbzpraT6xs.jpg" alt="iF Design Award" />
+            <img src="assets/images/awards/3pZoJCrshLhaIPkrTC9nyR9vOU.png" alt="Red Dot Award" />
+          </div>
+        </div>
+      </section>
+
+
+      <div class="case-chapter">
+        <section class="case-section">
+          <p class="case-eyebrow">Physical experience</p>
+          <h2 class="case-section-title">Unboxing experience</h2>
+          <p class="case-body">Prototyping, testing quick start guides for products.</p>
+          <a class="read-more" href="case-studies/bw/unboxing.html">
+            Read more
+            <img src="assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+          </a>
+        </section>
+        <div class="case-imgs">
+          <div class="case-img">
+            <img src="assets/images/bw/ez7BxJBwWOedlnC9oUoofipDQ.png" alt="" />
+          </div>
+          <div class="case-img">
+            <img src="assets/images/bw/dEsUVfwFlopqKi4HMJHwgnZftJE.png" alt="" />
+          </div>
+          <div class="case-img">
+            <img src="assets/images/bw/QYIb2izwQPqJWiKMENfGMn1Fk8.png" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="case-chapter">
+        <section class="case-section">
+          <h2 class="case-section-title">Product experience</h2>
+          <p class="case-body">Prototyping, testing product controls, button placement, observing natural wrist direction when idle / pressing state.</p>
+          <a class="read-more" href="case-studies/bw/product-experience.html">
+            Read more
+            <img src="assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+          </a>
+        </section>
+        <div class="case-img">
+          <img src="assets/images/bw/0W2WXBOI8M3bcTOvcoGauPZ8fyc.png" alt="" />
+        </div>
+      </div>
+
+      <div class="case-chapter">
+        <section class="case-section">
+          <p class="case-eyebrow">Digital experience</p>
+          <h2 class="case-section-title">App experience</h2>
+          <p class="case-body">Owning the planning and direction of the app experience by utilising AI for research and user testing, translating insights from reviews, analytics, product feedback, and community forums into clear priorities and opportunity areas.</p>
+          <p class="case-eyebrow">Coming soon</p>
+
+        </section>
+        <div class="case-img">
+          <img src="assets/images/bw/Nsc35lHBZQ9uJjg4tKROn90E38.png" alt="" />
+        </div>
+      </div>
+
+      <div class="case-chapter">
+        <section class="case-section">
+          <h2 class="case-section-title">Future concepts</h2>
+          <p class="case-body">Shaping future experience strategy by identifying critical pain points and using ongoing research insights to inform product direction. Currently leading a re-iteration of the app's information architecture to better align with user needs and behaviours.</p>
+        </section>
+        <div class="case-imgs">
+          <div class="case-img">
+            <img src="assets/images/bw/oY0yrKjuQA5M4WNMWtX59rUtDI.jpeg" alt="" />
+          </div>
+          <div class="case-img">
+            <img src="assets/images/bw/A0curKwKdtVkaZXVQWzekgDfJC8.png" alt="" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Parallax + scroll-driven card scale
+    const headerSection = document.querySelector('.header-section');
+    const cardImages    = document.querySelectorAll('.card-image');
+    const cards         = document.querySelectorAll('.card');
+    let rafId = null;
+
+    function updateParallax() {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight;
+
+      // ── Batch reads ──
+      const headerRect   = headerSection.getBoundingClientRect();
+      const firstCardTop = cards[0].getBoundingClientRect().top;
+
+      const cardScales = Array.from(cards).map((card) => {
+        const r = card.getBoundingClientRect();
+        const visiblePx = Math.max(0, Math.min(vh, r.bottom) - Math.max(0, r.top));
+        const ratio     = visiblePx / Math.min(r.height, vh);
+        return 0.9 + ratio * 0.1;
+      });
+
+      // ── Batch writes ──
+
+      // Header parallax + blur driven by card overlap
+      const overlap  = Math.max(0, headerRect.bottom - firstCardTop);
+      const blurPx   = Math.min(20, overlap * 0.08);
+      headerSection.style.transform = `translate3d(0,${scrollY * 0.7}px,0)`;
+      headerSection.style.filter    = blurPx > 0 ? `blur(${blurPx}px)` : '';
+
+      // Card image parallax — desktop only; clear transforms on smaller screens
+      if (window.innerWidth <= 1024) {
+        cardImages.forEach((img) => {
+          Array.from(img.children).forEach((child) => { child.style.transform = ''; });
+        });
+      } else {
+        cardImages.forEach((img) => {
+          const r = img.getBoundingClientRect();
+          const mid = (r.top + r.height / 2) - vh / 2;
+
+          Array.from(img.children).forEach((child) => {
+            if (child.classList.contains('card-img-cover')) {
+              child.style.transform = `translate3d(-50%,${mid * 0.1}px,0)`;
+            } else if (child.classList.contains('blob-wrap')) {
+              child.style.transform = `translate3d(0,${mid * 0.13}px,0)`;
+            } else if (child.classList.contains('card-img-bottom')) {
+              child.style.transform = `translate3d(0,${mid * 0.04}px,0)`;
+            } else {
+              child.style.transform = `translate3d(0,${mid * 0.1}px,0)`;
+            }
+          });
+        });
+      }
+
+      // Card scale: 0.9 off-screen → 1.0 fully visible
+      cards.forEach((card, i) => {
+        card.style.transform = `scale(${cardScales[i].toFixed(4)})`;
+      });
+
+      rafId = null;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!rafId) rafId = requestAnimationFrame(updateParallax);
+    }, { passive: true });
+
+    // Run once on load to set initial positions
+    updateParallax();
+
+    // ── Vertical carousel ──
+    const carouselTrack = document.querySelector('.hero-carousel-track');
+    const carouselSpans = carouselTrack.querySelectorAll('span');
+    const CAROUSEL_COUNT = carouselSpans.length - 1; // last span is the clone
+    let carouselIndex = 0;
+
+    function carouselNext() {
+      carouselIndex++;
+      const itemH  = carouselSpans[0].offsetHeight;
+      const offset = carouselIndex * itemH;
+
+      carouselTrack.style.transition = 'transform 0.65s ease-out';
+      carouselTrack.style.transform  = `translateY(-${offset}px)`;
+
+      // Slid to the clone — silently reset to item 0 after animation
+      if (carouselIndex === CAROUSEL_COUNT) {
+        setTimeout(() => {
+          carouselTrack.style.transition = 'none';
+          carouselTrack.style.transform  = 'translateY(0)';
+          carouselIndex = 0;
+        }, 650);
+      }
+    }
+
+    setInterval(carouselNext, 2000);
+
+
+    // ── Footer word cycle ──
+    const footerTrack = document.querySelector('.footer-cycle-track');
+    const footerItems = footerTrack.querySelectorAll('span');
+    let footerIdx = 0;
+
+    function footerCycleNext() {
+      footerIdx++;
+      const itemH = footerItems[0].offsetHeight;
+      footerTrack.style.transition = 'transform 0.65s ease-out';
+      footerTrack.style.transform  = `translateY(-${footerIdx * itemH}px)`;
+      if (footerIdx === footerItems.length - 1) {
+        setTimeout(() => {
+          footerTrack.style.transition = 'none';
+          footerTrack.style.transform  = 'translateY(0)';
+          footerIdx = 0;
+        }, 650);
+      }
+    }
+
+    setInterval(footerCycleNext, 2200);
+
+    // ── Blob entrance animation (both scroll directions) ──
+    const blobWrap = document.querySelector('.blob-wrap');
+    const blobObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          blobWrap.classList.add('is-visible');
+        } else {
+          blobWrap.classList.remove('is-visible');
+        }
+      });
+    }, { threshold: 0.2 });
+    blobObserver.observe(blobWrap);
+
+    // ── Case chapter appear animations ──
+    const chapterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.case-chapter').forEach(ch => chapterObserver.observe(ch));
+
+    // ── BW Case Study Overlay ──
+    const bwOverlay  = document.getElementById('bw-overlay');
+    const bwClose    = document.getElementById('bw-close');
+    const bwReadMore = document.getElementById('bw-read-more');
+    const bwNavBrand = bwOverlay.querySelector('.case-nav-brand');
+
+    function openBwOverlay(instant) {
+      if (instant) {
+        // Skip the overlay's own slide transition — reveal it already in place
+        bwOverlay.style.transition = 'none';
+        bwOverlay.classList.add('is-open');
+        // Force reflow so the transition suppression takes effect before re-enabling
+        bwOverlay.offsetHeight;
+        bwOverlay.style.transition = '';
+      } else {
+        bwOverlay.classList.add('is-open');
+      }
+      bwOverlay.setAttribute('aria-hidden', 'false');
+      bwOverlay.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      bwNavBrand.classList.remove('is-visible');
+    }
+
+    bwReadMore.addEventListener('click', () => openBwOverlay(false));
+
+    // Auto-open overlay instantly when returning from a BW sub-page
+    // (curtain is still covering at this point, so the instant open is invisible)
+    if (new URLSearchParams(location.search).get('overlay') === 'bw') {
+      history.replaceState(null, '', location.pathname);
+      openBwOverlay(true);
+    }
+
+    bwOverlay.addEventListener('scroll', () => {
+      if (bwOverlay.scrollTop > 40) {
+        bwNavBrand.classList.add('is-visible');
+      } else {
+        bwNavBrand.classList.remove('is-visible');
+      }
+    }, { passive: true });
+
+    bwClose.addEventListener('click', () => {
+      bwOverlay.classList.remove('is-open');
+      bwOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && bwOverlay.classList.contains('is-open')) bwClose.click();
+    });
+  </script>
+  <script src="js/transition.js"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Experience — Bowers &amp; Wilkins</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/bw.css" />
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <!-- ── Password Gate ── -->
+  <div id="pw-gate" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px; padding: 24px;
+  ">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);">Bowers &amp; Wilkins</span>
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin: 0;">Case study access</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;">
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="
+          width: 100%; padding: 14px 18px;
+          font-family: 'Manrope', sans-serif; font-size: 15px;
+          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 10px; color: #fff; outline: none;
+          transition: border-color 0.2s;
+        "
+        onkeydown="if(event.key==='Enter')checkPassword()"
+      />
+      <p id="pw-error" style="font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f; display: none; margin: 0;">Incorrect password. Try again.</p>
+      <button onclick="checkPassword()" style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #fff; color: #000; border: none; border-radius: 10px;
+        cursor: pointer; transition: opacity 0.2s;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
+      if (sessionStorage.getItem('bw-case-auth') === '1') {
+        document.getElementById('pw-gate').style.display = 'none';
+      }
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      window.checkPassword = async function() {
+        const val = document.getElementById('pw-input').value;
+        const err = document.getElementById('pw-error');
+        const hash = await sha256(val);
+        if (hash === HASH) {
+          sessionStorage.setItem('bw-case-auth', '1');
+          document.getElementById('pw-gate').style.display = 'none';
+        } else {
+          err.style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      };
+    })();
+  </script>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="/?overlay=bw">
+      <span class="material-icons">arrow_back_ios</span>
+      Back
+    </a>
+    <span class="case-nav-brand">Bowers &amp; Wilkins</span>
+  </nav>
+
+  <main class="case-content">
+
+    <!-- ── Hero ── -->
+    <header class="case-hero">
+      <p class="case-eyebrow">Physical experience</p>
+      <h1 class="case-hero-title">Prototyping and testing product controls</h1>
+      <section class="case-meta">
+        <div>
+          <p class="case-meta-label">Roles</p>
+          <ul class="case-scope-list">
+            <li>Product designer (me)</li>
+            <li>Prototyping engineer</li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-meta-label">Scope</p>
+          <p class="case-body">Researching, prototyping, and testing the physical controls of Bowers &amp; Wilkins headphones — button placement, gesture zones, and idle wrist ergonomics — to ensure every interaction feels effortless and intentional.</p>
+        </div>
+        <div>
+          <p class="case-meta-label">Duration</p>
+          <p class="case-body">6 months</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="ub-img-full">
+      <img src="../../assets/images/bw/rPsTcGHQk36mIsoTGCKZqrL2vxA.png" alt="Product controls testing" />
+      <p class="ub-caption">Physical controls prototyping session</p>
+    </div>
+
+    <!-- ── Chapter 1 ── -->
+    <div class="ub-chapter">
+      <div class="ub-text">
+        <p class="ub-label">The challenge</p>
+        <h2 class="ub-title">Getting controls right</h2>
+        <p class="case-body">Physical buttons and touch controls on headphones are used in contexts where users can't look at the device — commuting, exercising, working. They rely entirely on muscle memory and tactile feedback. A misplaced button means a skipped call, an unintended volume change, or a moment of frustration.</p>
+        <p class="case-body">Our goal was to map how users naturally reach for their headphones and design controls that meet them there.</p>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/px/PX-Thumb-placement.avif" alt="Button placement exploration" style="max-height: 400px; object-fit: cover;" />
+      </div>
+    </div>
+
+    <!-- ── Issues ── -->
+    <section class="ub-text-block">
+      <p class="ub-label">Key findings</p>
+      <h2 class="ub-title">What we discovered</h2>
+    </section>
+
+    <div class="ub-issues">
+      <div class="ub-issue">
+        <p class="ub-issue-title">Idle wrist direction</p>
+        <p class="case-body">When hands are resting at the user's side, the wrist naturally rotates inward. Controls placed on the outer cup require an unnatural arm rotation to reach — increasing error rate by 34% in blind tests.</p>
+      </div>
+      <div class="ub-issue">
+        <p class="ub-issue-title">Button differentiation</p>
+        <p class="case-body">One challenge we faced was the constraint on button placement—they had to be positioned on the outer earcup. This meant they sat close to the edge, making them harder to locate and press.</p>
+      </div>
+      <div class="ub-issue">
+        <p class="ub-issue-title">Button clustering</p>
+        <p class="case-body">We separated the controls by moving the power and ANC buttons to the left side, keeping playback controls on the right for clearer distinction and improved usability.</p>
+      </div>
+    </div>
+
+    <!-- ── Chapter 2 ── -->
+    <div class="ub-chapter ub-chapter--reverse">
+      <div class="ub-text">
+        <p class="ub-label">Process</p>
+        <h2 class="ub-title">Prototyping and iteration</h2>
+        <p class="case-body">We built 3D prototypes to rapidly test different control positions. Participants wore the prototypes during scripted tasks while I observed their natural reaching behaviour.</p>
+        <p class="case-body">Each round of tests produced a heat map of successful vs. failed interactions, directly informing the next prototype iteration.</p>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/px/PX-before-after.avif" alt="Ergonomic testing session" />
+      </div>
+    </div>
+
+    <!-- ── Chapter 3 ── -->
+    <div class="ub-chapter">
+      <div class="ub-text">
+        <p class="ub-label">Key Insights</p>
+        <h2 class="ub-title">Optimising placement</h2>
+        <p class="case-body">23 participants tested three prototypes with varying button sizes and placements. One key insight was users’ initial touchpoint when wearing the headphones—most naturally reaching for the bottom edge of the earcup rim. Another finding was that larger buttons improved success rates but introduced a less stable, “floppy” feel. Ultimately, we identified an optimal size that balanced accessibility with precision.</p>
+      </div>
+      <div class="ub-img">
+        <video controls autoplay muted loop style="width: 100%; border-radius: 12px;">
+          <source src="../../assets/videos/bw/px-test-ergonomics.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- ── Product Reviews ── -->
+    <section class="reviews-section">
+      <div class="reviews-header">
+        <p class="ub-label">Post-launch validation</p>
+        <h2 class="ub-title">What reviewers said</h2>
+      </div>
+
+      <div class="reviews-carousel">
+        <div class="reviews-viewport">
+          <div class="reviews-track" id="reviews-track">
+
+            <article class="review-card">
+              <span class="review-sentiment review-sentiment--positive">Positive</span>
+              <blockquote class="review-quote">
+                "Physical controls are the same as the Px7 S3, which offer a better balance of buttons per cup than the previous gen Px cans, with the power/bluetooth and ANC buttons on the left ear cup and play/pause and volume +/- on the right. The play/pause button also gets a textured surface and being smaller than the two buttons flanking it, makes it much easier to distinguish by feel. Overall I found these revised controls much more intuitive."
+              </blockquote>
+              <div class="review-source">
+                <div class="review-source-left">
+                  <p class="review-pub">audiograde.uk</p>
+                  <p class="review-author">Andrew Simpson</p>
+                </div>
+                <span class="review-count">1 / 4</span>
+              </div>
+            </article>
+
+            <article class="review-card">
+              <span class="review-sentiment review-sentiment--positive">Positive</span>
+              <blockquote class="review-quote">
+                "The revised button layout, which reshapes the volume up, volume down and play/pause buttons to improve their tactile interaction and relocates the power button to the left-hand earcup to make physical control easier."
+              </blockquote>
+              <div class="review-source">
+                <div class="review-source-left">
+                  <p class="review-pub">cepro.com</p>
+                  <p class="review-author">Robert Archer</p>
+                </div>
+                <span class="review-count">2 / 4</span>
+              </div>
+            </article>
+
+            <article class="review-card">
+              <span class="review-sentiment review-sentiment--mixed">Mixed</span>
+              <blockquote class="review-quote">
+                "While I'm not wild about physical buttons, they're least problematic when they're easy to tell apart when fumbling with your fingertips. The multifunction button on the right ear cup is ridged, so there should never be a situation where you hit the wrong button if you take a minute to feel it."
+              </blockquote>
+              <div class="review-source">
+                <div class="review-source-left">
+                  <p class="review-pub">Independent review</p>
+                  <p class="review-author">Contributor</p>
+                </div>
+                <span class="review-count">3 / 4</span>
+              </div>
+            </article>
+
+            <article class="review-card">
+              <span class="review-sentiment review-sentiment--critical">Critical</span>
+              <blockquote class="review-quote">
+                "Eagle eyes will notice there have been a few tweaks to the button layout and design compared with the Px8. The control buttons have shrunk on the back of the right earcup, especially the play/pause button. We found the main controls a little on the small side, especially when you consider their location, right on the slim inner edge of the right earpiece. This can make them slightly fiddly to locate and press."
+              </blockquote>
+              <div class="review-source">
+                <div class="review-source-left">
+                  <p class="review-pub">Audio Journal</p>
+                  <p class="review-author">Staff Review</p>
+                </div>
+                <span class="review-count">4 / 4</span>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <div class="reviews-controls">
+          <button class="reviews-btn" id="reviews-prev" aria-label="Previous review">
+            <span class="material-icons">chevron_left</span>
+          </button>
+          <div class="reviews-dots" id="reviews-dots"></div>
+          <button class="reviews-btn" id="reviews-next" aria-label="Next review">
+            <span class="material-icons">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../../js/transition.js"></script>
+  <script>
+    const reviewsTrack = document.getElementById('reviews-track');
+    const reviewCards  = reviewsTrack.querySelectorAll('.review-card');
+    const reviewsPrev  = document.getElementById('reviews-prev');
+    const reviewsNext  = document.getElementById('reviews-next');
+    const reviewsDots  = document.getElementById('reviews-dots');
+    const total = reviewCards.length;
+    let reviewIdx = 0;
+
+    // Build dot indicators
+    reviewCards.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'review-dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', `Review ${i + 1}`);
+      dot.addEventListener('click', () => goToReview(i));
+      reviewsDots.appendChild(dot);
+    });
+
+    const dots = reviewsDots.querySelectorAll('.review-dot');
+
+    function goToReview(idx) {
+      reviewIdx = idx;
+      reviewsTrack.style.transform = `translateX(-${reviewIdx * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === reviewIdx));
+      reviewsPrev.disabled = reviewIdx === 0;
+      reviewsNext.disabled = reviewIdx === total - 1;
+    }
+
+    reviewsNext.addEventListener('click', () => goToReview(Math.min(reviewIdx + 1, total - 1)));
+    reviewsPrev.addEventListener('click', () => goToReview(Math.max(reviewIdx - 1, 0)));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') reviewsNext.click();
+      if (e.key === 'ArrowLeft')  reviewsPrev.click();
+    });
+
+    goToReview(0); // init state
+  </script>

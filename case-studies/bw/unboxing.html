@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Guides — Bowers &amp; Wilkins</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/bw.css" />
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <!-- ── Password Gate ── -->
+  <div id="pw-gate" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px; padding: 24px;
+  ">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);">Bowers &amp; Wilkins</span>
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin: 0;">Case study access</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;">
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="
+          width: 100%; padding: 14px 18px;
+          font-family: 'Manrope', sans-serif; font-size: 15px;
+          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 10px; color: #fff; outline: none;
+          transition: border-color 0.2s;
+        "
+        onkeydown="if(event.key==='Enter')checkPassword()"
+      />
+      <p id="pw-error" style="font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f; display: none; margin: 0;">Incorrect password. Try again.</p>
+      <button onclick="checkPassword()" style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #fff; color: #000; border: none; border-radius: 10px;
+        cursor: pointer; transition: opacity 0.2s;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
+      if (sessionStorage.getItem('bw-case-auth') === '1') {
+        document.getElementById('pw-gate').style.display = 'none';
+      }
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      window.checkPassword = async function() {
+        const val = document.getElementById('pw-input').value;
+        const err = document.getElementById('pw-error');
+        const hash = await sha256(val);
+        if (hash === HASH) {
+          sessionStorage.setItem('bw-case-auth', '1');
+          document.getElementById('pw-gate').style.display = 'none';
+        } else {
+          err.style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      };
+    })();
+  </script>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="/?overlay=bw">
+      <span class="material-icons">arrow_back_ios</span>
+      Back
+    </a>
+    <span class="case-nav-brand">Bowers &amp; Wilkins</span>
+  </nav>
+
+  <main class="case-content">
+
+    <!-- ── Hero ── -->
+    <header class="case-hero">
+      <p class="case-eyebrow">Physical experience</p>
+      <h1 class="case-hero-title">Re-designing product onboarding: Quick Start Guides</h1>
+      <section class="case-meta">
+        <div>
+          <p class="case-meta-label">Roles</p>
+          <ul class="case-scope-list">
+            <li>Product designer (me)</li>
+            <li>Packaging designer</li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-meta-label">Scope</p>
+          <p class="case-body">The mission was to transform the Quick Start Guide for the Bowers & Wilkins headphones. Through processes of analysis, collaboration, and testing, we aimed to redesign the way we introduce our products to users.</p>
+        </div>
+        <div>
+          <p class="case-meta-label">Duration</p>
+          <p class="case-body">3 months</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="ub-img-full">
+      <img src="../../assets/images/bw/ez7BxJBwWOedlnC9oUoofipDQ.png" alt="Sneak peek from user tests" />
+      <p class="ub-caption">Sneak peek from user tests</p>
+    </div>
+
+
+    <!-- ── Interactive Z-Fold QSG ── -->
+    <section class="ub-text-block">
+      <p class="case-eyebrow">The Quick Start Guide</p>
+      <h2 class="ub-title">Z-Fold with instructions</h2>
+      <p class="case-body">This is a preview of the interactive Z-Fold Quick Start Guide. It helps to understand the sequence of steps mentioned.</p>
+    </section>
+
+    <div class="qsg-scene">
+      <div class="qsg-fold" id="qsg-fold" role="button" tabindex="0" aria-label="Open Quick Start Guide">
+
+        <div class="qsg-inner">
+
+          <!-- Panel 1: Cover -->
+          <div class="qsg-panel qsg-panel--cover" style="--i:0">
+            <div class="qsg-cover-eyebrow">Bowers &amp; Wilkins</div>
+            <div class="qsg-cover-model">Cover</div>
+            <div class="qsg-cover-type">Quick Start<br>Guide</div>
+            <div class="qsg-cover-dot"></div>
+          </div>
+
+          <!-- Panel 2: Download and setup -->
+          <div class="qsg-panel" style="--i:1">
+            <div class="qsg-fold-line"></div>
+            <div class="qsg-p-num">01</div>
+            <div class="qsg-p-title">Setup instructions</div>
+            <img src="../../assets/images/bw/Existing-QSG-01.png" alt="Box contents illustration" class="qsg-p-img" />
+          </div>
+
+          <!-- Panel 3: Charge + Power on -->
+          <div class="qsg-panel qsg-panel--tinted" style="--i:2">
+            <div class="qsg-p-num">02</div>
+            <div class="qsg-p-title">Pairing</div>
+            <img src="../../assets/images/bw/Existing-QSG-02.png" alt="Box contents illustration" class="qsg-p-img" />
+          </div>
+
+          <!-- Panel 4: App Setup & Pairing -->
+          <div class="qsg-panel" style="--i:3">
+            <div class="qsg-fold-line"></div>
+            <div class="qsg-p-num">04</div>
+            <div class="qsg-p-title">App Setup & Pairing</div>
+            <img src="../../assets/images/bw/Existing-QSG-03.png" alt="Box contents illustration" class="qsg-p-img" />
+          </div>
+
+          <!-- Panel 5: Controls & Fit -->
+          <div class="qsg-panel qsg-panel--tinted" style="--i:4">
+            <div class="qsg-fold-line"></div>
+            <div class="qsg-p-num">05</div>
+            <div class="qsg-p-title">Controls & Fit</div>
+            <img src="../../assets/images/bw/Existing-QSG-04.png" alt="Box contents illustration" class="qsg-p-img" />
+
+          </div>
+
+          <!-- Panel 6: Back cover -->
+          <div class="qsg-panel qsg-panel--back" style="--i:5">
+            <div class="qsg-fold-line qsg-fold-line--light"></div>
+            <div class="qsg-back-logo">B&amp;W</div>
+            <div class="qsg-back-divider"></div>
+            <div class="qsg-back-url">bowerswilkins.com</div>
+            <div class="qsg-back-support">support.bowerswilkins.com</div>
+          </div>
+
+        </div><!-- /.qsg-inner -->
+
+        <button class="qsg-close-btn" id="qsg-close" aria-label="Close guide">
+          <span class="material-icons">close</span>
+        </button>
+
+      </div><!-- /.qsg-fold -->
+
+      <p class="qsg-hint" id="qsg-hint">Click to open</p>
+    </div><!-- /.qsg-scene -->
+
+    <!-- ── Observations ── -->
+    <section class="ub-chapter-row">
+      <div class="ub-text">
+        <p class="case-eyebrow">framing</p>
+        <h2 class="ub-title">Observing the pairing experience in-person</h2>
+        <ul class="ub-list">
+          <li>Lack of order / sequence of actions needed to set up</li>
+          <li>Lack of clarity with too many arrows and pointers</li>
+        </ul>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/bw/XHdYqh34ahvis5Sm1ORjZwJHl7E.png" alt="Observations from first user tests" />
+      </div>
+    </section>
+
+ <!-- ── Collaborative Feedback ── -->
+    <section class="ub-chapter-column">
+      <div class="ub-text">
+        <p class="case-eyebrow">Collaborative feedback</p>
+        <h2 class="ub-title">Listing all pain-points</h2>
+        <p class="case-body">Working across teams to surface and consolidate every identified issue with the existing guide before moving toward solutions.</p>
+      </div>
+      <div class="ub-issues-imgs">
+        <div class="ub-img-colour"><img src="../../assets/images/Existing-QSG.png" alt="Overfilled pages example" /></div>
+      </div>
+      <p class="case-eyebrow">Key issues identified</p>
+      <!-- ── Key Issues ── -->
+      <section class="ub-issues">
+          <div class="ub-issue">
+            <h3 class="ub-issue-title">Monochromatic design</h3>
+            <p class="case-body">The absence of accent colours or hierarchy made it difficult to distinguish the order of importance.</p>
+          </div>
+          <div class="ub-issue">
+            <h3 class="ub-issue-title">Legibility issues</h3>
+            <p class="case-body">The text was challenging to read, compromising user understanding.</p>
+          </div>
+        <div class="ub-issue">
+          <h3 class="ub-issue-title">Overfilled pages</h3>
+          <p class="case-body">Lacked sufficient negative space, creating a visually overwhelming experience. Numerous illustrations were crammed into a small format, detracting from clarity. Each page attempted to convey too much information, leading to user confusion.</p>
+        </div>
+      </section>
+    </section>
+
+    <!-- ── Priorities ── -->
+    <section class="ub-chapter">
+      <div class="ub-text">
+        <p class="case-eyebrow">Priorities</p>
+        <h2 class="ub-title">Separation of controls &amp; fitting</h2>
+        <p class="case-body">To further enhance understanding, controls and fitting instructions are grouped but shown separately. This allows users to easily navigate the guide and apply instructions at their own pace.</p>
+        <p class="case-body">We categorised actions according to the order of use and separated each.</p>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/bw/U5aUakU46CX4nDxX9owNZln3igg.png" alt="Separation of controls and fitting" />
+      </div>
+    </section>
+
+    <!-- ── Feedback Sessions ── -->
+    <section class="ub-text-block">
+      <p class="case-eyebrow">Feedback sessions</p>
+      <h2 class="ub-title">Sorting the quick start guide pages</h2>
+      <p class="case-body">After deciding on the pages and layout, it was time to print these out for getting more feedback. We were primarily focused on the order of content.</p>
+    </section>
+
+    <div class="ub-img-grid">
+      <div class="ub-img"><img src="../../assets/images/bw/MEJlC2CgLoGOtGUC3PbtbLNTj3k.png" alt="Sorting QSG pages" /></div>
+      <div class="ub-img"><img src="../../assets/images/bw/dEsUVfwFlopqKi4HMJHwgnZftJE.png" alt="Packaging and QSG tests" /></div>
+    </div>
+
+    <section class="ub-chapter ub-chapter--reverse">
+      <div class="ub-text">
+        <p class="case-eyebrow">Testing</p>
+        <h2 class="ub-title">Packaging &amp; QSG tests</h2>
+        <p class="case-body">Combination of packaging and QSG questions tested together to understand how the physical and printed experiences interact.</p>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/bw/uqxwWtOZFubXCt1xyBD3xXDA.png" alt="Packaging and QSG combination tests" />
+      </div>
+    </section>
+
+    <!-- ── Test Sample ── -->
+    <section class="ub-chapter">
+      <div class="ub-text">
+        <p class="case-eyebrow">Test sample</p>
+        <h2 class="ub-title">13 participants</h2>
+        <p class="case-body">13 participants received unboxed product packaging for testing, including the QSG. Recordings from each test session were reviewed for qualitative insights.</p>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/bw/sanGjgl5Wk9qN1Xw5nFYGkJerio.png" alt="Recordings from user test sessions" />
+      </div>
+    </section>
+
+    <!-- ── Insights + Packaging ── -->
+    <section class="ub-text-block">
+      <p class="case-eyebrow">Insights</p>
+      <h2 class="ub-title">Key findings from round 1</h2>
+      <p class="case-body">Overall sentiment was positive, with a clearer hierarchy. IT followed the setup sequence more logically and felt better aligned with the natural progression of steps.</p>
+      <div class="ub-img">
+        <img src="../../assets/images/bw/xmke6Xp0WG9mzfcR0O6lBktKhgc.png" alt="Round 2 QSG version" />
+      </div>
+    </section>
+
+      
+    <blockquote class="ub-quote">
+      "The overall direction and instructions are good. Controls are quite straightforward. I understand what the dots mean. Pair more devices would confuse me — for me the QSG is to get it in the box to playing audio quickly."
+    </blockquote>
+
+    <!-- ── Next step ── -->
+    <section class="ub-chapter ub-chapter--reverse">
+      <div class="ub-text">
+        <p class="case-eyebrow">Next step</p>
+        <h2 class="ub-title">Further refinements</h2>
+        <ul class="ub-list">
+          <li>'Manual pairing' removed — it was identified as a point of confusion</li>
+          <li>Addition of wired &amp; wireless charging</li>
+          <li>Greater focus placed on the QR code as a key step for app engagement</li>
+          <li>Control section adjusted</li>
+        </ul>
+      </div>
+      <div class="ub-img">
+        <img src="../../assets/images/bw/v9GSYyvzj7rquOV1ZC33d57bE.png" alt="Round 3 QSG version" />
+      </div>
+    </section>
+
+    <!-- ── Final Result ── -->
+    <section class="ub-text-block">
+      <p class="case-eyebrow">Final result</p>
+      <h2 class="ub-title">The outcome</h2>
+      <p class="case-body">Three rounds of testing, iterative refinement, and close cross-team collaboration resulted in a clear, structured quick start guide that leads users confidently through their first experience. This layout has since been adopted across B&W and Denon headphones.</p>
+    </section>
+
+    <div class="ub-img-full-coloured">
+      <img src="../../assets/images/bw/QzoG389yb2GNrV0ZOcv0z2LgS0.png" alt="Final quick start guide result" />
+    </div>
+
+    
+
+  </main>
+
+  <script src="../../js/transition.js"></script>
+  <script>
+    const fold      = document.getElementById('qsg-fold');
+    const closeBtn  = document.getElementById('qsg-close');
+    const hint      = document.getElementById('qsg-hint');
+    const panels    = fold.querySelectorAll('.qsg-panel');
+    const TOTAL     = panels.length;
+    const STEP      = 0.07; // seconds between each panel unfold
+
+    function setDelays(opening) {
+      panels.forEach((p, i) => {
+        p.style.transitionDelay = opening
+          ? `${i * STEP}s`
+          : `${(TOTAL - 1 - i) * STEP}s`;
+      });
+    }
+
+    function openFold() {
+      setDelays(true);
+      fold.classList.add('is-open');
+      fold.setAttribute('aria-label', 'Quick Start Guide — open');
+      hint.style.opacity = '0';
+    }
+
+    function closeFold() {
+      setDelays(false);
+      fold.classList.remove('is-open');
+      fold.setAttribute('aria-label', 'Open Quick Start Guide');
+      hint.style.opacity = '1';
+    }
+
+    const coverPanel = panels[0];
+
+    fold.addEventListener('click', (e) => {
+      if (e.target.closest('#qsg-close')) return;
+      if (fold.classList.contains('is-open')) {
+        // Only close when clicking the cover panel
+        if (e.target.closest('.qsg-panel') === coverPanel) closeFold();
+      } else {
+        openFold();
+      }
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeFold();
+    });
+
+    fold.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        fold.classList.contains('is-open') ? closeFold() : openFold();
+      }
+      if (e.key === 'Escape') closeFold();
+    });
+  </script>
+
+</body>
+</html>

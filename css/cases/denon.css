@@ -1,0 +1,220 @@
+/* ── Denon Automotive case study ── */
+
+
+.case-hero { max-width: none; }
+
+/* ─────────────────────────────────────────────
+   Case meta — 3-column override
+───────────────────────────────────────────── */
+.case-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ─────────────────────────────────────────────
+   Full-width image / video block
+───────────────────────────────────────────── */
+.dn-media-full {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+
+.dn-media-full img,
+.dn-media-full video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prototype is a fixed 1280×800 canvas — scale it to fill container */
+.dn-media-full--iframe {
+  position: relative;
+  width: 100%;
+  /* 800/1280 = 62.5% aspect ratio */
+  padding-bottom: 62.5%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dn-media-full--iframe iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Render at native 1280px wide, then scale down to container */
+  width: 1280px;
+  height: 800px;
+  border: none;
+  transform-origin: top left;
+  /* JS will set the scale dynamically */
+}
+
+.dn-caption {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #8a8a8a;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   Chapter: 2-column
+───────────────────────────────────────────── */
+.dn-chapter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  padding: 10vh 0;
+}
+
+.dn-chapter > * { min-width: 0; }
+
+.dn-chapter--reverse { direction: rtl; }
+.dn-chapter--reverse > * { direction: ltr; }
+
+/* ─────────────────────────────────────────────
+   Text block (full-width)
+───────────────────────────────────────────── */
+.dn-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: none;
+}
+
+.dn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─────────────────────────────────────────────
+   Typography
+───────────────────────────────────────────── */
+.dn-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.dn-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+
+/* ─────────────────────────────────────────────
+   Media grid (2-up)
+───────────────────────────────────────────── */
+.dn-media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.dn-media-cell {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+
+.dn-media-cell img,
+.dn-media-cell video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────
+   Stats row
+───────────────────────────────────────────── */
+.dn-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dn-stat {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+}
+
+.dn-stat:last-child { border-right: none; }
+
+.dn-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
+}
+
+.dn-stat-label {
+  font-size: 14px;
+  color: #8a8a8a;
+  line-height: 1.4;
+}
+
+/* ─────────────────────────────────────────────
+   Pill tag
+───────────────────────────────────────────── */
+.dn-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.06);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #555;
+  width: fit-content;
+}
+
+/* ─────────────────────────────────────────────
+   Dark section
+───────────────────────────────────────────── */
+.dn-dark-section {
+  background: #0d0d0d;
+  border-radius: 20px;
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.dn-dark-section .dn-label { color: rgba(255,255,255,0.35); }
+.dn-dark-section .dn-title { color: #fff; }
+.dn-dark-section .case-body { color: rgba(255,255,255,0.65); }
+
+/* ─────────────────────────────────────────────
+   Mobile
+───────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .case-content  { padding: 40px 20px 80px; gap: 48px; }
+  .case-hero-title { font-size: 36px; }
+  .dn-title      { font-size: 28px; }
+  .case-meta     { grid-template-columns: 1fr; gap: 32px; }
+  .dn-chapter    { grid-template-columns: 1fr; gap: 32px; padding: 6vh 0; }
+  .dn-chapter--reverse { direction: ltr; }
+  .dn-media-grid { grid-template-columns: 1fr; gap: 12px; }
+  .dn-stats      { grid-template-columns: 1fr; }
+  .dn-stat       { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .dn-stat:last-child { border-bottom: none; }
+  .dn-dark-section { padding: 32px 24px; }
+}

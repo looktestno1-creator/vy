@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Denon Automotive — Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/denon.css" />
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <!-- ── Password Gate ── -->
+  <div id="pw-gate" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px; padding: 24px;
+  ">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);">Denon</span>
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin: 0;">Case study access</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;">
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="
+          width: 100%; padding: 14px 18px;
+          font-family: 'Manrope', sans-serif; font-size: 15px;
+          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 10px; color: #fff; outline: none;
+        "
+        onkeydown="if(event.key==='Enter')checkPassword()"
+      />
+      <p id="pw-error" style="font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f; display: none; margin: 0;">Incorrect password. Try again.</p>
+      <button onclick="checkPassword()" style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #fff; color: #000; border: none; border-radius: 10px;
+        cursor: pointer;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
+      if (sessionStorage.getItem('bw-case-auth') === '1') {
+        document.getElementById('pw-gate').style.display = 'none';
+      }
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      window.checkPassword = async function() {
+        const val = document.getElementById('pw-input').value;
+        const err = document.getElementById('pw-error');
+        const hash = await sha256(val);
+        if (hash === HASH) {
+          sessionStorage.setItem('bw-case-auth', '1');
+          document.getElementById('pw-gate').style.display = 'none';
+        } else {
+          err.style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      };
+    })();
+  </script>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="/index.html" onclick="sessionStorage.setItem('pt-arriving', '1'); return true;">
+      <span class="material-icons">arrow_back_ios</span>
+      Back
+    </a>
+  </nav>
+
+  <main class="case-content">
+
+    <!-- ── Hero ── -->
+    <header class="case-hero">
+      <p class="case-eyebrow">Digital experience</p>
+      <h1 class="case-hero-title">Vision for in-car user experience</h1>
+      <section class="case-meta">
+        <div>
+          <p class="case-meta-label">Role</p>
+          <ul class="case-scope-list">
+            <li>Lead UI &amp; UX (me)</li>
+            <li>Visual design</li>
+            <li>Interactions &amp; animation</li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-meta-label">Scope</p>
+          <p class="case-body">Designing a new in-car interface for Denon's re-entry into the automotive space, presented at CES 2025. A three-person team — I led UI, UX, visual design, and animation; a team member handled prototyping; and the principal designer guided overall direction.</p>
+        </div>
+        <div>
+          <p class="case-meta-label">Presented at</p>
+          <p class="case-body">CES 2025</p>
+        </div>
+      </section>
+    </header>
+
+    <!-- ── In-car experience ── -->
+    <section style="display: flex; flex-direction: column; gap: 40px;">
+      <div class="dn-text-block">
+        <p class="dn-label">In-car experience</p>
+        <h2 class="dn-title">Spatial sound, visualised</h2>
+        <p class="case-body">The primary screen gives driver and passenger individual control over their listening experience. Stereo and spatial modes are toggled from a shared top bar, while real-time audio visualisations — abstract, heat-mapped blobs — represent the sound field around each seat.</p>
+        <p class="case-body">Default and personalised presets are surfaced as quick actions, so adjusting the sound takes a single tap — no menus, no buried settings.</p>
+      </div>
+    </section>
+
+    <!-- ── Hero prototype embed ── -->    
+    <div class="dn-media-full dn-media-full--iframe">
+      <h2 class="dn-title">Interactive prototype</h2>
+      <iframe
+        src="https://looktestno1-creator.github.io/Denon-auto/"
+        title="Denon Automotive — interactive prototype"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <!-- ── Overview ── -->
+    <div class="dn-chapter">
+      <div class="dn-text">
+        <p class="dn-label">Overview</p>
+        <h2 class="dn-title">Denon automotive UI</h2>
+        <p class="case-body">For CES 2025, we designed a new interface for Denon as a bold statement of intent — a premium audio brand reclaiming its place inside the car. The brief was open: imagine what in-car audio could look like if it were truly designed for the listener.</p>
+        <p class="case-body">We focused on making something that felt alive — responding to the audio environment in real time, visualising sound spatially, and giving both driver and passenger meaningful control over their personal listening experience.</p>
+      </div>
+      <div class="dn-text" style="padding-top: 4vh;">
+        <p class="dn-label">The team</p>
+        <ul class="case-scope-list">
+          <li>1x Prototyping — hardware &amp; integration</li>
+          <li>1x UI, UX, visual design, visual direction, animation (me)</li>
+          <li>1x Principal designer - Overall direction & planning</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Stats ── -->
+    <div class="dn-stats">
+      <div class="dn-stat">
+        <span class="dn-stat-value">8</span>
+        <span class="dn-stat-label">Team members across design and engineering</span>
+      </div>
+      <div class="dn-stat">
+        <span class="dn-stat-value">CES</span>
+        <span class="dn-stat-label">Showcased at Consumer Electronics Show 2025</span>
+      </div>
+      <div class="dn-stat">
+        <span class="dn-stat-value">2</span>
+        <span class="dn-stat-label">Experience modes — in-car and out-of-car app</span>
+      </div>
+    </div>
+
+
+
+
+    <!-- ── Out of car ── -->
+    <div class="dn-chapter dn-chapter--reverse">
+      <div class="dn-text">
+        <p class="dn-label">Out of car experience</p>
+        <h2 class="dn-title">Sound beyond the vehicle</h2>
+        <p class="case-body">CES visitors could experience Denon audio outside the car through a companion app. The app extended the in-car visual language — the same spatial visualisations, the same personalisation controls — but on a mobile screen, letting attendees carry the experience away from the demo vehicle.</p>
+        <p class="case-body">This reinforced Denon's presence as a connected audio ecosystem rather than a single hardware install.</p>
+      </div>
+      <div class="dn-media-cell" style="border-radius: 16px; overflow: hidden;">
+        <img src="../../assets/images/hero/image1.png" alt="Denon companion app — out of car experience" />
+      </div>
+    </div>
+
+    <!-- ── Animations ── -->
+    <div class="dn-dark-section">
+      <div class="dn-text-block">
+        <p class="dn-label">Animations</p>
+        <h2 class="dn-title">Motion tied to the music</h2>
+        <p class="case-body">New animations were created specifically for personalised sound — the audio visualisations breathe and shift in response to the sound field, making the abstract feel tangible. Each preset has its own character: the default state is calm and symmetrical; personalised modes introduce asymmetry and warmth.</p>
+        <p class="case-body">The animations were designed to be background-present — never distracting while driving, but unmistakably alive when you glance at the screen.</p>
+      </div>
+      <div class="dn-media-grid">
+        <div class="dn-media-cell">
+          <video src="../../assets/videos/animations/denon-animation1.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="dn-media-cell">
+          <video src="../../assets/videos/animations/denon-spatial.mp4" autoplay loop muted playsinline></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Outcome ── -->
+    <div class="dn-text-block">
+      <p class="dn-label">Outcome</p>
+      <h2 class="dn-title">Denon, reimagined in the car</h2>
+      <p class="case-body">The interface was demoed at CES 2025 inside a Tesla, running on the car's native display with a hardware prototype built by the team. The demo attracted significant attention from automotive audio partners and press, positioning Denon as a serious contender in the next generation of in-car audio experience.</p>
+      <p class="case-body">The project demonstrated how a heritage audio brand can use design — not just sound quality — to differentiate in a crowded automotive market.</p>
+    </div>
+
+  </main>
+
+  <script src="../../js/transition.js"></script>
+  <script>
+    // Scale the 1280×800 iframe to fill its container
+    const protoWrap = document.querySelector('.dn-media-full--iframe');
+    const protoFrame = protoWrap.querySelector('iframe');
+    const PROTO_W = 1280, PROTO_H = 800;
+
+    function scaleProto() {
+      const containerW = protoWrap.offsetWidth;
+      const scale = containerW / PROTO_W;
+      protoFrame.style.transform = `scale(${scale})`;
+      // Adjust wrapper height to match scaled content
+      protoWrap.style.paddingBottom = '';
+      protoWrap.style.height = (PROTO_H * scale) + 'px';
+    }
+
+    scaleProto();
+    window.addEventListener('resize', scaleProto);
+  </script>
+</body>
+</html>
