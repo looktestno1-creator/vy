@@ -61,10 +61,9 @@
     const back = e.target.closest('a.case-nav-back');
     if (back) {
       e.preventDefault();
-      const origin = sessionStorage.getItem('pt-origin') || '/';
-      // pt-origin was set by the page we came FROM — but we're now on the
-      // destination page, so the previous page's origin is in pt-prev-origin
-      const dest = sessionStorage.getItem('pt-prev-origin') || '/';
+      // Use stored origin if set (normal flow); fall back to the link's href
+      // (handles direct navigation where pt-prev-origin was never written)
+      const dest = sessionStorage.getItem('pt-prev-origin') || back.getAttribute('href');
       navigateTo(dest);
       return;
     }

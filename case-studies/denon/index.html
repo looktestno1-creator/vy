@@ -46,7 +46,7 @@
         Continue
       </button>
       <button 
-        onclick="window.location.href='/index.html'; sessionStorage.setItem('pt-arriving', '1');"
+        onclick="sessionStorage.setItem('pt-arriving', '1'); window.location.href='../../index.html';"
       style="
         width: 100%; padding: 14px;
         font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
@@ -61,7 +61,7 @@
   <script>
     (function() {
       const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
-      if (sessionStorage.getItem('bw-case-auth') === '1') {
+      if (sessionStorage.getItem('denon-case-auth') === '1') {
         document.getElementById('pw-gate').style.display = 'none';
       }
       async function sha256(str) {
@@ -73,7 +73,7 @@
         const err = document.getElementById('pw-error');
         const hash = await sha256(val);
         if (hash === HASH) {
-          sessionStorage.setItem('bw-case-auth', '1');
+          sessionStorage.setItem('denon-case-auth', '1');
           document.getElementById('pw-gate').style.display = 'none';
         } else {
           err.style.display = 'block';
@@ -85,10 +85,10 @@
   </script>
 
   <nav class="case-nav">
-    <a class="case-nav-back" href="/index.html" onclick="sessionStorage.setItem('pt-arriving', '1'); return true;">
+    <a class="case-nav-back" href="../../index.html" onclick="sessionStorage.setItem('pt-arriving', '1'); return true;">
       <span class="material-icons">arrow_back_ios</span>
       Back
-    </a>
+    </a>  
   </nav>
 
   <main class="case-content">
