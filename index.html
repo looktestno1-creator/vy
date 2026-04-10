@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio 2026</title>
-  <link rel="icon" type="image/svg+xml" href="assets/icons/logo_layer.svg" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/Favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
@@ -106,7 +106,7 @@
           </div>
 
           <!-- Dashboard UI screenshot -->
-          <img src="assets/images/hero/image1.png" alt="Denon in-car UI" class="card-img-bottom" />
+          <img src="assets/images/hero/image1.png" alt="Denon in-car UI" class="card-img-denon" />
         </div>
         <div class="card-text">
           <p class="card-brand">2/3</p>
@@ -342,7 +342,7 @@
 
           Array.from(img.children).forEach((child) => {
             if (child.classList.contains('card-img-cover')) {
-              child.style.transform = `translate3d(-50%,${mid * 0.1}px,0)`;
+              child.style.transform = `translate3d(-50%,${mid * 0.2}px,0)`;
             } else if (child.classList.contains('blob-wrap')) {
               child.style.transform = `translate3d(0,${mid * 0.13}px,0)`;
             } else if (child.classList.contains('card-img-bottom')) {
