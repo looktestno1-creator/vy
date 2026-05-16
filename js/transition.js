@@ -40,6 +40,19 @@
     curtain.style.transform = 'translateY(100%)';
   }
 
+  // ── bfcache restore: browser Back/Forward reinstates frozen page,
+  //    curtain is still covering the screen — slide it away immediately ──
+  window.addEventListener('pageshow', function (evt) {
+    if (evt.persisted) {
+      curtain._navigating = false;           // allow future navigations
+      curtain.style.pointerEvents = 'none';
+      curtain.style.willChange    = 'transform';
+      curtain.style.transition    = `transform ${DURATION_IN}ms ${EASE_IN}`;
+      curtain.style.transform     = 'translateY(-100%)';
+      setTimeout(() => { curtain.style.willChange = 'auto'; }, DURATION_IN);
+    }
+  });
+
   // ── Exit: slide curtain up from below, then navigate ──
   function navigateTo(href) {
     if (curtain._navigating) return;
