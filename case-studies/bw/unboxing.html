@@ -12,6 +12,90 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/case-study-shared.css" />
   <link rel="stylesheet" href="../../css/cases/bw.css" />
+  <style>
+    /* ── Scroll-driven storyboard — full-width video with text overlay ─────────
+       Math: 5 sections × 100vh + 100vh tail = 600vh container.
+       Scrollable range = 500vh → each 100vh = 1/5 of the clip. Exact.
+    ──────────────────────────────────────────────────────────────────────────── */
+    .sv-container {
+      position: relative;
+      height: 600vh;
+    }
+
+    /* ── Video: sticky full-screen backdrop ── */
+    .sv-backdrop {
+      position: sticky;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+      z-index: 1;
+    }
+
+    .sv-backdrop video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Text chapters: absolute overlay that scrolls over the video ── */
+    .sv-chapters {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      pointer-events: none; /* let scroll pass through to the page */
+    }
+
+    .sv-section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      pointer-events: auto;
+    }
+
+    .sv-section-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 360px;
+      padding: 0 64px;
+    }
+
+    .sv-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #8a8a8a;
+    }
+
+    .sv-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #000;
+    }
+
+    .sv-body {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #5a5a5a;
+    }
+
+    @media (max-width: 767px) {
+      .sv-section-inner { max-width: 100%; padding: 0 24px; }
+      .sv-title         { font-size: 24px; }
+    }
+  </style>
+
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
@@ -91,7 +175,7 @@
   </script>
 
   <nav class="case-nav">
-    <a class="case-nav-back" href="../../index.html?overlay=bw">
+    <a class="case-nav-back" href="../bw/">
       <span class="material-icons">arrow_back_ios</span>
       Back
     </a>
@@ -341,6 +425,73 @@
 
   </main>
 
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       STORYBOARD — scroll-driven split layout
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <div class="sv-container" id="sv-container">
+
+    <!-- Full-screen sticky video backdrop -->
+    <div class="sv-backdrop">
+      <video
+        id="sv-video"
+        src="../../assets/videos/bw-storyboard/V3-web.mp4"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+    </div>
+
+    <!-- Text chapters scrolling over the video -->
+    <div class="sv-chapters">
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">01 — 05</span>
+          <h2 class="sv-title">The existing guide</h2>
+          <p class="sv-body">A look at the original Quick Start Guide — dense, monochromatic, and difficult to follow out of the box.</p>
+        </div>
+      </div>
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">02 — 05</span>
+          <h2 class="sv-title">Pain points identified</h2>
+          <p class="sv-body">User testing and collaborative feedback surfaced a clear set of issues: lack of hierarchy, poor legibility, and overfilled pages.</p>
+        </div>
+      </div>
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">03 — 05</span>
+          <h2 class="sv-title">Design exploration</h2>
+          <p class="sv-body">Separating controls from fitting, introducing colour hierarchy, and restructuring content into a logical sequence.</p>
+        </div>
+      </div>
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">04 — 05</span>
+          <h2 class="sv-title">Testing &amp; iteration</h2>
+          <p class="sv-body">Three rounds of testing with 13 participants, refining page order, reducing confusion, and validating the new layout.</p>
+        </div>
+      </div>
+
+      <!-- 100 vh gap: video plays its last segment while no text is shown -->
+      <div style="height: 100vh;"></div>
+
+      <!-- Section 5 at 500–600 vh: centred in viewport at max scroll -->
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">05 — 05</span>
+          <h2 class="sv-title">Final guide</h2>
+          <p class="sv-body">A clear, structured Quick Start Guide — now adopted across Bowers &amp; Wilkins and Denon headphones.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
   <script src="../../js/transition.js"></script>
   <script>
     const fold      = document.getElementById('qsg-fold');
@@ -396,6 +547,49 @@
       }
       if (e.key === 'Escape') closeFold();
     });
+  </script>
+
+  <script>
+    (function () {
+      const container = document.getElementById('sv-container');
+      const video     = document.getElementById('sv-video');
+      if (!container || !video) return;
+
+      let targetTime  = 0; // where scroll says we should be
+      let displayTime = 0; // smoothed value written to video
+      const LERP      = 0.08; // lower = smoother / lazier; raise for snappier
+
+      // Read scroll position → update target
+      function onScroll() {
+        const rect       = container.getBoundingClientRect();
+        const scrollable = container.offsetHeight - window.innerHeight;
+        const scrolled   = Math.max(0, -rect.top);
+        const progress   = Math.min(1, scrolled / scrollable);
+        targetTime = progress * video.duration;
+      }
+
+      // rAF loop: lerp displayTime toward targetTime each frame
+      function tick() {
+        displayTime += (targetTime - displayTime) * LERP;
+        // Only seek if the delta is meaningful (avoids unnecessary seeks)
+        if (Math.abs(displayTime - video.currentTime) > 0.001) {
+          video.currentTime = displayTime;
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function init() {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();    // seed target from current scroll position
+        tick();        // start the render loop
+      }
+
+      if (video.readyState >= 1) {
+        init();
+      } else {
+        video.addEventListener('loadedmetadata', init, { once: true });
+      }
+    })();
   </script>
 
 </body>
