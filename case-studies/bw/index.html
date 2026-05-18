@@ -16,13 +16,17 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
   <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
   <style>
-    /* ── Override shared defaults to match original overlay layout ── */
+    /* ── Base layout ── */
     .case-content { gap: 20vh; }
+
+    .case-hero-title {
+      font-size: clamp(48px, 5vw, 80px);
+    }
 
     .case-meta {
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: 160px;
+      gap: clamp(48px, 8vw, 160px);
       padding: 24px 0;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -45,18 +49,18 @@
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      gap: 10vw;
+      gap: clamp(48px, 8vw, 120px);
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-      padding: 15vh 0;
+      padding: clamp(80px, 12vh, 160px) 0;
     }
     .case-chapter.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
     .case-chapter .case-section {
-      flex: 0 0 300px;
+      flex: 0 0 clamp(240px, 25%, 340px);
       position: sticky;
       top: 100px;
     }
@@ -73,7 +77,7 @@
     }
     .case-section-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
+      font-size: clamp(20px, 2vw, 28px);
       font-weight: 700;
       line-height: 1.1;
       color: #000;
@@ -130,36 +134,35 @@
     }
     .sv-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px; font-weight: 700;
+      font-size: clamp(28px, 2.5vw, 44px);
+      font-weight: 700;
       line-height: 1.15; color: #000;
     }
     .sv-body {
       font-family: 'Manrope', sans-serif;
-      font-size: 16px; line-height: 1.7;
-      color: #5a5a5a; max-width: 30vw;
+      font-size: clamp(15px, 1.1vw, 18px);
+      line-height: 1.7;
+      color: #5a5a5a;
+      max-width: 400px;
     }
 
     /* ── Responsive ── */
     @media (max-width: 1023px) {
       .case-content    { padding: 60px 40px 100px; gap: 14vh; }
-      .case-hero-title { font-size: 44px; }
-      .case-meta       { gap: 64px; }
-      .case-chapter    { gap: 6vw; padding: 10vh 0; }
-      .case-chapter .case-section { flex: 0 0 240px; }
+      .case-meta       { gap: 48px; }
+      .case-chapter    { padding: 10vh 0; }
+      .case-chapter .case-section { flex: 0 0 220px; }
     }
     @media (max-width: 767px) {
       .case-content    { padding: 36px 20px 80px; gap: 10vh; }
       .case-hero       { gap: 16px; }
-      .case-hero-title { font-size: 32px; line-height: 1.1; }
       .case-hero-sub   { font-size: 16px; }
       .case-meta       { grid-template-columns: 1fr; gap: 28px; padding: 20px 0; }
       .case-awards img { height: 60px; }
       .case-chapter    { flex-direction: column; gap: 28px; padding: 7vh 0; }
       .case-chapter .case-section { flex: none; position: static; max-width: none; }
-      .case-section-title { font-size: 20px; }
       .case-body          { font-size: 16px; }
       .sv-section-inner   { padding: 0 24px; }
-      .sv-title           { font-size: 24px; }
       .sv-body            { max-width: 90vw; }
     }
   </style>
