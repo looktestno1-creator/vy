@@ -50,15 +50,15 @@
       " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
         Continue
       </button>
-      <button 
-        onclick="sessionStorage.setItem('pt-arriving', '1'); window.location.href='../../index.html';"
+      <button
+        onclick="history.length > 1 ? history.back() : (sessionStorage.setItem('pt-arriving', '1'), window.location.href='../../index.html');"
       style="
         width: 100%; padding: 14px;
         font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
         background: #000000; color: #ababab; border: none; border-radius: 10px;
         cursor: pointer;
       " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
-        Back to homepage
+        Back to previous
       </button>
     </div>
   </div>

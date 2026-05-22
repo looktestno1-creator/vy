@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quick Start Guides — Bowers &amp; Wilkins</title>
+  <meta name="description" content="Redesigning the quick start guide and unboxing experience for Bowers & Wilkins Pi8 earbuds." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yvefa.com/case-studies/bw/unboxing.html" />
+  <meta property="og:title" content="Quick Start Guides — Bowers & Wilkins" />
+  <meta property="og:description" content="Redesigning the quick start guide and unboxing experience for Bowers & Wilkins Pi8 earbuds." />
+  <meta property="og:image" content="https://yvefa.com/assets/images/hero/cover1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://yvefa.com/assets/images/hero/cover1.png" />
+  <link rel="canonical" href="https://yvefa.com/case-studies/bw/unboxing.html" />
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
   <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,13 +60,13 @@
       " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
         Continue
       </button>
-      <a href="../../index.html" style="
+      <a href="../../index.html" onclick="history.length > 1 ? (history.back(), event.preventDefault()) : null" style="
         display: block; width: 100%; padding: 14px; box-sizing: border-box;
         font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
         background: #000000; color: #ababab; border: none; border-radius: 10px;
         cursor: pointer; text-align: center; text-decoration: none;
       " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
-        Back to homepage
+        Back to previous
       </a>
     </div>
   </div>
@@ -91,7 +100,7 @@
   </script>
 
   <nav class="case-nav">
-    <a class="case-nav-back" href="../../index.html?overlay=bw">
+    <a class="case-nav-back" href="../bw/">
       <span class="material-icons">arrow_back_ios</span>
       Back
     </a>
@@ -397,6 +406,7 @@
       if (e.key === 'Escape') closeFold();
     });
   </script>
+
 
 </body>
 </html>
