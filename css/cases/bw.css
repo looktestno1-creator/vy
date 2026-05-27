@@ -1,0 +1,769 @@
+/* ── Unboxing / QSG page ── */
+
+.case-hero { max-width: none; }
+.case-hero-sub { max-width: none; }
+
+img { filter: grayscale(1); }
+
+/* Full-width image block */
+.ub-img-full {
+  width: 100%;
+}
+
+.ub-img-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.ub-img-full-coloured img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  filter: none;
+}
+
+.ub-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #8a8a8a;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* top scope  */
+.case-meta {
+  display: grid;
+  grid-template-columns: auto 1fr .5fr; 
+  gap: 120px;
+  align-items: top;
+}
+
+/* Side-by-side chapter */
+.ub-chapter {
+  padding: 10vh 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.ub-chapter > * { min-width: 0; }
+
+.ub-chapter-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ub-chapter-row {
+  padding: 10vh 0 10vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 80px;
+  align-items: center;
+}
+
+.ub-chapter--reverse {
+  direction: rtl;
+}
+
+.ub-chapter--reverse > * {
+  direction: ltr;
+}
+
+/* Text block (full-width, no image) */
+.ub-text-block {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Text column */
+.ub-text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.ub-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+
+.ub-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ub-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ub-list li {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  padding-left: 16px;
+  position: relative;
+}
+
+.ub-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #8a8a8a;
+}
+
+/* Single image */
+.ub-img {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Single colour image */
+.ub-img-colour img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ub-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* 2-column image grid */
+.ub-img-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Key issues 3-column */
+
+.ub-issues {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+.ub-issue {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ub-issue-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+.ub-issues-imgs {
+  display: grid;
+  gap: 24px;
+}
+
+/* Quote */
+.ub-quote {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  border-left: 3px solid #000;
+  padding-left: 32px;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   Z-Fold QSG Component
+───────────────────────────────────────────── */
+:root { --qpw: 200px; --qph: 264px; }
+
+.qsg-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  perspective: 1800px;
+  perspective-origin: left center;
+}
+
+.qsg-fold {
+  position: relative;
+  overflow: hidden;
+  width: var(--qpw);
+  border-radius: 6px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: width 0.75s cubic-bezier(0.65, 0, 0.35, 1), box-shadow 0.4s ease;
+}
+
+.qsg-fold.is-open {
+  width: calc(var(--qpw) * 6);
+  cursor: default;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.qsg-inner {
+  display: flex;
+  width: calc(var(--qpw) * 6);
+  height: var(--qph);
+}
+
+.qsg-panel {
+  position: relative;
+  width: var(--qpw);
+  height: var(--qph);
+  flex-shrink: 0;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+}
+
+.qsg-panel:first-child { transform: none; opacity: 1; cursor: pointer; }
+.qsg-fold.is-open .qsg-panel { transform: rotateY(0deg); opacity: 1; }
+.qsg-panel--tinted { background: #f5f5f3; }
+
+.qsg-fold-line {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1px; background: rgba(0,0,0,0.12); z-index: 2;
+}
+.qsg-fold-line--light { background: rgba(255,255,255,0.2); }
+
+.qsg-panel--cover { background: #111; justify-content: flex-end; }
+.qsg-cover-eyebrow {
+  font-size: 8px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: auto;
+}
+.qsg-cover-model {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 6px;
+}
+.qsg-cover-type {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45); line-height: 1.5;
+}
+.qsg-cover-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; margin-top: 10px; }
+
+.qsg-panel--back { background: #111; justify-content: flex-end; }
+.qsg-back-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px; font-weight: 700; color: #fff; margin-bottom: auto;
+}
+.qsg-back-divider { width: 24px; height: 1px; background: rgba(255,255,255,0.3); margin-bottom: 10px; }
+.qsg-back-url { font-size: 8px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+.qsg-back-support { font-size: 7px; letter-spacing: 0.04em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+
+.qsg-p-num { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 700; color: #aaa; letter-spacing: 0.06em; margin-bottom: 4px; }
+.qsg-p-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: #111; margin-bottom: 10px; line-height: 1.1; }
+.qsg-p-step { font-size: 10px; line-height: 1.55; color: #555; margin: 0; }
+.qsg-p-divider { width: 100%; height: 1px; background: #e8e8e8; margin: 12px 0; }
+
+.qsg-p-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.qsg-p-list li { font-size: 9.5px; color: #333; line-height: 1.4; padding-left: 12px; position: relative; }
+.qsg-p-list li::before { content: '—'; position: absolute; left: 0; color: #ccc; }
+
+.qsg-p-steps { list-style: none; display: flex; flex-direction: column; gap: 8px; counter-reset: step; }
+.qsg-p-steps li { font-size: 9.5px; color: #333; line-height: 1.45; padding-left: 18px; position: relative; counter-increment: step; }
+.qsg-p-steps li::before { content: counter(step); position: absolute; left: 0; top: 1px; width: 12px; height: 12px; background: #111; color: #fff; font-size: 7px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+.qsg-qr { width: 60px; height: 60px; margin: 10px 0 6px; }
+.qsg-qr svg { width: 100%; height: 100%; display: block; }
+.qsg-p-app { font-size: 8px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #aaa; }
+
+.qsg-close-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,0.08); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 10;
+}
+.qsg-close-btn .material-icons { font-size: 14px; color: #333; }
+.qsg-close-btn:hover { background: rgba(0,0,0,0.15); }
+.qsg-fold.is-open .qsg-close-btn { opacity: 1; pointer-events: all; }
+
+.qsg-hint {
+  font-size: 12px; font-weight: 600; color: #aaa;
+  letter-spacing: 0.05em; text-transform: uppercase; transition: opacity 0.3s ease;
+}
+
+/* Image inside a QSG panel */
+.qsg-p-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  margin-top: 10px;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+
+/* ─────────────────────────────────────────────
+   Mobile responsive
+───────────────────────────────────────────── */
+@media (max-width: 767px) {
+
+  /* ── Layout ── */
+  .case-content {
+    padding: 40px 24px 80px;
+    gap: 48px;
+  }
+
+  /* ── Typography ── */
+  .case-hero-title { font-size: 36px; }
+  .ub-title        { font-size: 28px; }
+  .ub-quote        { font-size: 18px; padding-left: 20px; }
+
+  /* ── Case meta: 3 cols → stacked ── */
+  .case-meta {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* ── Chapters: 2-col grid → single column ── */
+  .ub-chapter {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 6vh 0;
+  }
+
+  /* Undo RTL column-swap — just stack normally */
+  .ub-chapter--reverse {
+    direction: ltr;
+  }
+
+  .ub-chapter-row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 6vh 0;
+  }
+
+  /* ── Issues grid: auto-fill → single col ── */
+  .ub-issues-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* ── Key issues: 3-col → single col ── */
+  .ub-issues {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* ── 2-image grid → stack ── */
+  .ub-img-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* ── QSG: shrink panels + allow horizontal scroll when open ── */
+  :root {
+    --qpw: 130px;
+    --qph: 216px;
+  }
+
+  .qsg-scene {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: stretch;
+  }
+
+  .qsg-fold {
+    /* keep overflow hidden for the closed → open width animation */
+    flex-shrink: 0;
+  }
+
+  /* ── Reviews carousel ── */
+  .review-card {
+    padding: 24px;
+  }
+
+  .review-quote {
+    font-size: 14px;
+  }
+
+  .reviews-controls {
+    gap: 16px;
+  }
+
+  .reviews-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reviews-btn .material-icons {
+    font-size: 18px;
+  }
+}
+/* ── Product Experience page ── */
+
+.case-hero { max-width: none; }
+.case-hero-sub { max-width: none; }
+
+img { filter: grayscale(1); }
+
+/* ─────────────────────────────────────────────
+   Full-width image block
+───────────────────────────────────────────── */
+.ub-img-full {
+  width: 100%;
+}
+
+.ub-img-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.ub-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #8a8a8a;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   Case meta
+───────────────────────────────────────────── */
+.case-meta {
+  display: grid;
+  grid-template-columns: auto 1fr .5fr;
+  gap: 120px;
+  align-items: start;
+}
+
+/* ─────────────────────────────────────────────
+   Side-by-side chapter
+───────────────────────────────────────────── */
+.ub-chapter {
+  padding: 10vh 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.ub-chapter > * { min-width: 0; }
+
+.ub-chapter--reverse { direction: rtl; }
+.ub-chapter--reverse > * { direction: ltr; }
+
+/* ─────────────────────────────────────────────
+   Text block (full-width)
+───────────────────────────────────────────── */
+.ub-text-block {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ─────────────────────────────────────────────
+   Text column
+───────────────────────────────────────────── */
+.ub-text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.ub-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+
+.ub-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─────────────────────────────────────────────
+   Images
+───────────────────────────────────────────── */
+.ub-img {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ub-img img,
+.ub-img video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.ub-img-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ─────────────────────────────────────────────
+   Key issues 3-column
+───────────────────────────────────────────── */
+.ub-issues {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+.ub-issue {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ub-issue-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+/* ─────────────────────────────────────────────
+   Reviews Carousel
+───────────────────────────────────────────── */
+.reviews-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+.reviews-header {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.reviews-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Viewport: clips the overflowing track */
+.reviews-viewport {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Track: full-width flex row of cards */
+.reviews-track {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Each card takes exactly the container width */
+.review-card {
+  flex: 0 0 100%;
+  padding: 48px;
+  background: #f4f4f2;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+.review-sentiment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.review-sentiment--positive {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+
+.review-sentiment--mixed {
+  background: rgba(234, 179, 8, 0.12);
+  color: #b45309;
+}
+
+.review-sentiment--critical {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+.review-quote {
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  margin: 0;
+  font-style: italic;
+}
+
+.review-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.review-source-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.review-pub {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+  margin: 0;
+}
+
+.review-author {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.review-count {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ccc;
+  letter-spacing: 0.04em;
+}
+
+/* Controls row: prev / dots / next */
+.reviews-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.reviews-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.reviews-btn:hover {
+  border-color: #2a2a2a;
+}
+
+.reviews-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.reviews-btn .material-icons {
+  font-size: 20px;
+  color: #2a2a2a;
+}
+
+.reviews-dots {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+
+.review-dot {
+  height: 3px;
+  flex: 1;
+  border-radius: 2px;
+  border: none;
+  background: #e0e0e0;
+  cursor: pointer;
+  transition: background 0.25s;
+  padding: 0;
+}
+
+.review-dot.is-active {
+  background: #2a2a2a;
+}
+
+/* ─────────────────────────────────────────────
+   Mobile responsive
+───────────────────────────────────────────── */
+@media (max-width: 767px) {
+
+  .case-content { padding: 40px 24px 80px; gap: 48px; }
+  .case-hero-title { font-size: 36px; }
+  .ub-title { font-size: 28px; }
+
+  .case-meta { grid-template-columns: 1fr; gap: 32px; }
+
+  .ub-chapter {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 6vh 0;
+  }
+
+  .ub-chapter--reverse { direction: ltr; }
+
+  .ub-issues { grid-template-columns: 1fr; gap: 32px; }
+  .ub-img-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  .review-card { padding: 24px; }
+  .review-quote { font-size: 15px; }
+}

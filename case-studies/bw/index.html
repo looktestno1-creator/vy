@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bowers &amp; Wilkins — Vefa Yilmaz</title>
+  <meta name="description" content="End-to-end product design for Bowers & Wilkins — app experience, onboarding, and product unboxing." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yvefa.com/case-studies/bw/" />
+  <meta property="og:title" content="Bowers & Wilkins — Vefa Yilmaz" />
+  <meta property="og:description" content="End-to-end product design for Bowers & Wilkins — app experience, onboarding, and product unboxing." />
+  <meta property="og:image" content="https://yvefa.com/assets/images/hero/cover1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://yvefa.com/assets/images/hero/cover1.png" />
+  <link rel="canonical" href="https://yvefa.com/case-studies/bw/" />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+  <style>
+    /* ── Base layout ── */
+    .case-content { gap: 20vh; }
+
+    .case-hero-title {
+      font-size: clamp(48px, 5vw, 80px);
+    }
+
+    .case-meta {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: clamp(48px, 8vw, 160px);
+      padding: 24px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .case-awards {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .case-awards img {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .case-chapter {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: clamp(48px, 8vw, 120px);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+      padding: clamp(80px, 12vh, 160px) 0;
+    }
+    .case-chapter.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .case-chapter .case-section {
+      flex: 0 0 clamp(240px, 25%, 340px);
+      position: sticky;
+      top: 100px;
+    }
+    .case-chapter .case-imgs,
+    .case-chapter .case-img,
+    .case-chapter .case-img-grid {
+      flex: 1;
+      min-width: 0;
+    }
+    .case-imgs {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .case-section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #000;
+    }
+    .case-img img { filter: grayscale(100%); }
+    .case-content--chapters { padding-top: 0; }
+
+    /* ── Read more link ── */
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 16px 24px 16px 0;
+      font-family: 'Anybody', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #000;
+      text-decoration: underline;
+      text-decoration-style: solid;
+    }
+    .btn-arrow {
+      font-size: 14px;
+      line-height: 1;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+    .read-more:hover .btn-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ── Scroll-driven storyboard video ── */
+    .sv-container { position: relative; height: 600vh; }
+    .sv-backdrop {
+      position: sticky; top: 0;
+      width: 100vw; height: 100vh;
+      overflow: hidden; background: #000; z-index: 1;
+    }
+    .sv-backdrop video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sv-chapters { position: absolute; top: 0; left: 0; right: 0; z-index: 2; pointer-events: none; }
+    .sv-section { height: 100vh; display: flex; align-items: center; pointer-events: auto; }
+    .sv-section-inner {
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      padding: 0 64px; display: flex; flex-direction: column; gap: 16px;
+    }
+    .sv-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; color: #8a8a8a;
+    }
+    .sv-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 2.5vw, 44px);
+      font-weight: 700;
+      line-height: 1.15; color: #000;
+    }
+    .sv-body {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(15px, 1.1vw, 18px);
+      line-height: 1.7;
+      color: #5a5a5a;
+      max-width: 400px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1023px) {
+      .case-content    { padding: 60px 40px 100px; gap: 14vh; }
+      .case-meta       { gap: 48px; }
+      .case-chapter    { padding: 10vh 0; }
+      .case-chapter .case-section { flex: 0 0 220px; }
+    }
+    @media (max-width: 767px) {
+      .case-content    { padding: 36px 20px 80px; gap: 10vh; }
+      .case-hero       { gap: 16px; }
+      .case-hero-sub   { font-size: 16px; }
+      .case-meta       { grid-template-columns: 1fr; gap: 28px; padding: 20px 0; }
+      .case-awards img { height: 60px; }
+      .case-chapter    { flex-direction: column; gap: 28px; padding: 7vh 0; }
+      .case-chapter .case-section { flex: none; position: static; max-width: none; }
+      .case-body          { font-size: 16px; }
+      .sv-section-inner   { padding: 0 24px; }
+      .sv-body            { max-width: 90vw; }
+      .sv-container       { display: none; }
+    }
+    .case-meta.hero-anim { transition-delay: 900ms; }
+  </style>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="../../index.html">
+      <span class="material-icons">arrow_back_ios</span>
+      Back
+    </a>
+    <span class="case-nav-brand">Bowers &amp; Wilkins</span>
+  </nav>
+
+  <main class="case-content">
+
+    <header class="case-hero">
+      <p class="case-eyebrow hero-anim">Case studies</p>
+      <h1 class="case-hero-title hero-anim">Designing end-to-end experiences for the premium brand</h1>
+      <p class="case-hero-sub hero-anim">Software experience, physical product controls, interactions.</p>
+    </header>
+
+    <section class="case-meta hero-anim">
+      <div>
+        <p class="case-meta-label">Scope</p>
+        <ul class="case-scope-list">
+          <li>UX &amp; UI design</li>
+          <li>User research</li>
+          <li>Interaction design</li>
+        </ul>
+      </div>
+      <div>
+        <p class="case-meta-label">Contribution</p>
+        <p class="case-body">Leading end-to-end product experiences, conducting user research activities including ergonomic testing, collaborating with internal and external stakeholders on product vision and direction. Designing physical and digital interactions, thinking about every touch point for the user.</p>
+      </div>
+      <div>
+        <p class="case-meta-label">Awards</p>
+        <div class="case-awards">
+          <img src="../../assets/images/awards/yx6leS3EnLyApd259AbzpraT6xs.jpg" alt="iF Design Award" />
+          <img src="../../assets/images/awards/3pZoJCrshLhaIPkrTC9nyR9vOU.png" alt="Red Dot Award" />
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Scroll-driven storyboard video ── -->
+  <div class="sv-container" id="sv-container">
+
+    <div class="sv-backdrop">
+      <video id="sv-video" src="../../assets/videos/bw-storyboard/V3-web.mp4" muted playsinline preload="auto"></video>
+    </div>
+
+    <div class="sv-chapters">
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">01 — 05</span>
+          <h2 class="sv-title">Scroll to unbox</h2>
+          <p class="sv-body">The ideal onboarding experience for premium audio products is one users barely notice.</p>
+        </div>
+      </div>
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">02 — 05</span>
+          <h2 class="sv-title">Product reveal</h2>
+          <p class="sv-body">The first interactions — opening the box, understanding controls, pairing devices, learning gestures — shape whether the experience feels effortless or intimidating.</p>
+        </div>
+      </div>
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">03 — 05</span>
+          <h2 class="sv-title">First interaction</h2>
+          <p class="sv-body">Designing a seamless transition from ownership to emotional connection.</p>
+        </div>
+      </div>
+
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">04 — 05</span>
+          <h2 class="sv-title">First use</h2>
+          <p class="sv-body">At this stage, users begin to explore the product's capabilities and form their initial impressions. But for the showcase, i need to highlight the literature pack first.</p>
+        </div>
+      </div>
+
+      <!-- 100vh gap — video plays last segment with no text -->
+      <div style="height: 100vh;"></div>
+
+      <!-- Section 5 at 500vh — centred at max scroll -->
+      <div class="sv-section">
+        <div class="sv-section-inner">
+          <span class="sv-num">05 — 05</span>
+          <h2 class="sv-title">Quick Start Guide</h2>
+          <p class="sv-body">A clear, structured Quick Start Guide — now adopted across Bowers &amp; Wilkins and Denon headphones.</p>
+        </div>
+      </div>
+
+    </div><!-- /sv-chapters -->
+
+  </div><!-- /sv-container -->
+
+  <div class="case-content case-content--chapters">
+
+    <div class="case-chapter">
+      <section class="case-section">
+        <p class="case-eyebrow">Physical experience</p>
+        <h2 class="case-section-title">Unboxing experience</h2>
+        <p class="case-body">Prototyping, testing quick start guides for products.</p>
+        <a class="read-more" href="unboxing.html">
+          Read more
+          <img src="../../assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+        </a>
+      </section>
+      <div class="case-imgs">
+        <div class="case-img">
+          <img src="../../assets/images/bw/ez7BxJBwWOedlnC9oUoofipDQ.png" alt="B&W unboxing test session" loading="lazy" />
+        </div>
+        <div class="case-img">
+          <img src="../../assets/images/bw/dEsUVfwFlopqKi4HMJHwgnZftJE.png" alt="Packaging and QSG test" loading="lazy" />
+        </div>
+        <div class="case-img">
+          <img src="../../assets/images/bw/QYIb2izwQPqJWiKMENfGMn1Fk8.png" alt="Quick start guide overview" loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+    <div class="case-chapter">
+      <section class="case-section">
+        <h2 class="case-section-title">Product experience</h2>
+        <p class="case-body">Prototyping, testing product controls, button placement, observing natural wrist direction when idle / pressing state.</p>
+        <a class="read-more" href="product-experience.html">
+          Read more
+          <img src="../../assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+        </a>
+      </section>
+      <div class="case-img">
+        <img src="../../assets/images/bw/0W2WXBOI8M3bcTOvcoGauPZ8fyc.png" alt="B&W product controls testing" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="case-chapter">
+      <section class="case-section">
+        <p class="case-eyebrow">Digital experience</p>
+        <h2 class="case-section-title">App experience</h2>
+        <p class="case-body">Owning the planning and direction of the app experience by utilising AI for research and user testing, translating insights from reviews, analytics, product feedback, and community forums into clear priorities and opportunity areas.</p>
+        <a class="read-more" href="app-experience.html">
+          Read more
+          <img src="../../assets/icons/arrow_right.svg" alt="Arrow right" class="btn-arrow" aria-hidden="true" />
+        </a>
+      </section>
+      <div class="case-img">
+        <img src="../../assets/images/bw/Nsc35lHBZQ9uJjg4tKROn90E38.png" alt="B&W app experience design" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="case-chapter">
+      <section class="case-section">
+        <h2 class="case-section-title">Future concepts</h2>
+        <p class="case-body">Shaping future experience strategy by identifying critical pain points and using ongoing research insights to inform product direction. Currently leading a re-iteration of the app's information architecture to better align with user needs and behaviours.</p>
+      </section>
+      <div class="case-imgs">
+        <div class="case-img">
+          <img src="../../assets/images/bw/oY0yrKjuQA5M4WNMWtX59rUtDI.jpeg" alt="B&W future concept exploration" loading="lazy" />
+        </div>
+        <div class="case-img">
+          <img src="../../assets/images/bw/A0curKwKdtVkaZXVQWzekgDfJC8.png" alt="B&W concept wireframes" loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      var arriving = sessionStorage.getItem('pt-arriving') === '1';
+      var elems = [
+        document.querySelector('.case-eyebrow'),
+        document.querySelector('.case-hero-title'),
+        document.querySelector('.case-hero-sub'),
+      ];
+      var base    = arriving ? 680 : 150;
+      var stagger = [0, 140, 260];
+      elems.forEach(function (el, i) {
+        if (!el) return;
+        setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
+      });
+    })();
+  </script>
+  <script src="../../js/transition.js"></script>
+  <script>
+    // ── Case chapter appear animations ──
+    const chapterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.case-chapter').forEach(ch => chapterObserver.observe(ch));
+    const caseMeta = document.querySelector('.case-meta');
+    if (caseMeta) chapterObserver.observe(caseMeta);
+
+    // ── Scroll-driven video ──
+    (function () {
+      const container = document.getElementById('sv-container');
+      const video     = document.getElementById('sv-video');
+      if (!container || !video) return;
+
+      let targetTime  = 0;
+      let displayTime = 0;
+      const LERP = 0.08;
+
+      function onScroll() {
+        const rect       = container.getBoundingClientRect();
+        const scrollable = container.offsetHeight - window.innerHeight;
+        const scrolled   = Math.max(0, -rect.top);
+        targetTime = Math.min(1, scrolled / scrollable) * (video.duration || 0);
+      }
+
+      function tick() {
+        displayTime += (targetTime - displayTime) * LERP;
+        if (Math.abs(displayTime - video.currentTime) > 0.001) {
+          video.currentTime = displayTime;
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function init() {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        tick();
+      }
+
+      if (video.readyState >= 1) {
+        init();
+      } else {
+        video.addEventListener('loadedmetadata', init, { once: true });
+      }
+    })();
+  </script>
+
+</body>
+</html>
