@@ -1,9 +1,0 @@
-<svg preserveAspectRatio="xMidYMid meet" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 156 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Notch">
-<g id="Notch_2">
-<path d="M1.26018 1H154.692V16C154.692 25.3888 147.129 33 137.8 33H18.1519C8.82285 33 1.26018 25.3888 1.26018 16V1Z" fill="black"/>
-<path d="M1.49046 1L0 0C2.63371 0 1.29117 3.14875 1.29117 5.79934C1.29117 5.86656 1.2898 5.93345 1.28708 6H1.49046V1Z" fill="var(--fill-0, black)"/>
-<path d="M154.51 1L156 0C153.366 0 154.709 3.14875 154.709 5.79934C154.709 5.86656 154.71 5.93345 154.713 6H154.51V1Z" fill="var(--fill-0, black)"/>
-</g>
-</g>
-</svg>
