@@ -40,7 +40,7 @@ body {
 
 .case-nav-back:hover { opacity: 0.5; }
 
-.case-nav-back .material-icons { font-size: 18px; }
+.case-nav-back svg { width: 18px; height: 18px; flex-shrink: 0; }
 
 .case-nav-brand {
   font-family: 'Manrope', sans-serif;
