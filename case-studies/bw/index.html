@@ -366,6 +366,14 @@
   </script>
   <script src="../../js/transition.js"></script>
   <script>
+    // Back button on this page always returns to homepage. Also runs on
+    // pageshow so bfcache restores (triggered by the password gate's
+    // history.back()) don't leave pt-prev-origin pointing at a sub-page.
+    function _resetBackDest() {
+      sessionStorage.setItem('pt-prev-origin', window.location.origin + '/');
+    }
+    _resetBackDest();
+    window.addEventListener('pageshow', _resetBackDest);
     // ── Case chapter appear animations ──
     const chapterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
