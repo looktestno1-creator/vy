@@ -318,6 +318,11 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
       margin-top: 32px;
+      align-items: stretch;
+    }
+    .ia-wire-grid > div {
+      display: flex;
+      flex-direction: column;
     }
     .ia-wire-name {
       font-family: 'Space Grotesk', sans-serif;
@@ -328,14 +333,38 @@
       text-align: center;
     }
     .ia-wire-phone {
-      border: 2px solid #000;
-      border-radius: 22px;
-      padding: 14px 10px 10px;
+      flex: 1;
+      border: 3px solid #000;
+      border-radius: 30px;
+      padding: 12px 12px 14px;
       background: #fff;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      min-height: 380px;
+      min-height: 440px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    }
+    /* speaker notch */
+    .ia-wire-phone::before {
+      content: '';
+      display: block;
+      width: 54px;
+      height: 6px;
+      border-radius: 3px;
+      background: #000;
+      margin: 0 auto 12px;
+      flex-shrink: 0;
+    }
+    /* home indicator */
+    .ia-wire-phone::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 4px;
+      border-radius: 2px;
+      background: #d5d5d5;
+      margin: 8px auto 0;
+      flex-shrink: 0;
     }
     .ia-wire-pr {
       font-family: 'Manrope', sans-serif;
