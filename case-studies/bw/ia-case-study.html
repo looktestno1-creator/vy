@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App IA Case Study — Bowers &amp; Wilkins</title>
+  <meta name="description" content="Information architecture case study for the Bowers & Wilkins Music App — resolving the controls vs. streaming IA tension through four research phases: product reviews, card sorting, support tickets and dashboard analytics." />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/bw.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+
+  <style>
+    .case-meta.hero-anim { transition-delay: 900ms; }
+
+    /* Accessibility: lift muted greys from shared CSS to ≥4.5:1 contrast */
+    .case-eyebrow, .case-meta-label, .case-nav-brand { color: #6b6b6b; }
+
+    /* ── IA-page-specific components only ── */
+
+    /* Hero stats strip */
+    .ia-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      margin-top: 48px;
+    }
+    .ia-stat {
+      padding: 28px 32px 28px 24px;
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
+    .ia-stat:first-child { padding-left: 0; }
+    .ia-stat:last-child { border-right: none; padding-right: 0; }
+    .ia-stat-n {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1;
+      color: #000;
+      display: block;
+    }
+    .ia-stat-l {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b6b6b;
+      margin-top: 8px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    /* Section spacing */
+    .ia-section { padding: 80px 0 0; }
+
+    /* Section label — matches ub-label */
+    .ia-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #6b6b6b;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    /* Divider */
+    .ia-rule {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 80px;
+    }
+
+    /* Pullquote — matches ub-quote */
+    .ia-pullquote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 400;
+      line-height: 1.4;
+      color: #000;
+      border-left: 3px solid #000;
+      padding-left: 32px;
+      margin: 40px 0 0;
+      font-style: italic;
+      max-width: 760px;
+    }
+    .ia-pullquote-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      color: #6b6b6b;
+      margin-top: 14px;
+      padding-left: 35px;
+      max-width: 640px;
+      line-height: 1.65;
+    }
+
+    /* Chips */
+    .ia-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+    .ia-chip {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 100px;
+      color: #6b6b6b;
+    }
+
+    /* Callout */
+    .ia-callout {
+      border-left: 2px solid rgba(0,0,0,0.2);
+      padding: 16px 24px;
+      margin-top: 24px;
+      background: #f9f9f9;
+    }
+    .ia-callout-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 8px;
+    }
+    .ia-callout p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      color: #333;
+    }
+
+    /* Versus bar */
+    .ia-versus { margin-top: 40px; }
+    .ia-versus-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 10px;
+    }
+    .ia-versus-bar {
+      display: flex;
+      height: 52px;
+      border: 1px solid rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+    .ia-versus-a {
+      background: #000;
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+    .ia-versus-b {
+      background: #f5f5f5;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      font-size: 13px;
+      color: #6b6b6b;
+      border-left: 1px solid rgba(0,0,0,0.08);
+      white-space: nowrap;
+    }
+    .ia-versus-note {
+      font-size: 12px;
+      color: #6b6b6b;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    /* Stat grid */
+    .ia-stat-grid   { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.08); }
+    .ia-stat-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; margin-top: 32px; background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.08); }
+    .ia-stat-card {
+      background: #fff;
+      padding: 28px 24px;
+    }
+    .ia-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 4.5vw, 52px);
+      line-height: 1;
+      color: #000;
+    }
+    .ia-num.grey { color: #6b6b6b; }
+    .ia-num-label { font-size: 13px; color: #6b6b6b; margin-top: 10px; line-height: 1.5; }
+    .ia-num-sub { font-size: 11px; color: #767676; margin-top: 6px; }
+
+    /* Chart frame */
+    .ia-chart {
+      border: 1px solid rgba(0,0,0,0.1);
+      margin-top: 20px;
+      background: #fff;
+    }
+    .ia-chart-head {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      background: #fafafa;
+    }
+    .ia-chart-cap {
+      padding: 12px 18px;
+      font-size: 13px;
+      color: #6b6b6b;
+      line-height: 1.65;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      background: #fafafa;
+    }
+    .ia-chart-cap strong { color: #000; }
+
+    .ia-chart-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+    .ia-chart-pair .ia-chart { margin-top: 0; }
+
+    /* Method grid */
+    .ia-method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-top: 32px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .ia-method-card {
+      background: #fff;
+      padding: 24px;
+    }
+    .ia-method-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 10px;
+    }
+    .ia-method-card p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      color: #595959;
+      line-height: 1.7;
+    }
+
+    /* Card sort comparison */
+    .ia-sort-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-top: 32px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .ia-sort-col { background: #fff; padding: 24px; }
+    .ia-sort-col-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 20px;
+    }
+    .ia-sort-group { margin-bottom: 18px; }
+    .ia-sort-group:last-child { margin-bottom: 0; }
+    .ia-sort-tab {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 8px 12px;
+      background: #000;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .ia-sort-count {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .ia-sort-items {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #595959;
+      padding: 0 2px;
+    }
+    .ia-sort-note {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      color: #6b6b6b;
+      margin-top: 14px;
+    }
+
+    /* Wireframes */
+    .ia-wire-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .ia-wire-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .ia-wire-phone {
+      border: 2px solid #000;
+      border-radius: 22px;
+      padding: 14px 10px 10px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 380px;
+    }
+    .ia-wire-pr {
+      font-family: 'Manrope', sans-serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #767676;
+      margin-top: 6px;
+    }
+    .ia-wire-pr:first-child { margin-top: 0; }
+    .ia-wire-block {
+      border: 1px solid #000;
+      border-radius: 4px;
+      padding: 7px 6px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #000;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .ia-wire-block.sub { border-color: #767676; color: #6b6b6b; }
+    .ia-wire-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .ia-wire-tabbar {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding-top: 10px;
+      border-top: 1px solid #eee;
+    }
+    .ia-wire-tab {
+      font-family: 'Manrope', sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      text-align: center;
+      padding: 6px 0;
+      border-radius: 11px;
+      border: 1px solid #ccc;
+      color: #6b6b6b;
+    }
+    .ia-wire-tab.on { background: #000; color: #fff; border-color: #000; }
+
+    /* Profile split */
+    .ia-profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+    .ia-profile-card {
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 28px 24px;
+      background: #fafafa;
+    }
+    .ia-profile-icon { font-size: 26px; margin-bottom: 12px; }
+    .ia-profile-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #000;
+      margin-bottom: 4px;
+    }
+    .ia-profile-sub {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 12px;
+    }
+    .ia-profile-detail { font-size: 14px; color: #595959; line-height: 1.7; }
+    .ia-profile-data { margin-top: 14px; display: flex; flex-direction: column; gap: 4px; }
+    .ia-profile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      padding: 7px 10px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .ia-profile-key { color: #6b6b6b; }
+    .ia-profile-val { font-weight: 700; color: #000; font-size: 12px; }
+
+    /* IA Layers */
+    .ia-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-top: 32px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(0,0,0,0.08);
+    }
+    .ia-layer { display: flex; align-items: stretch; background: #fff; }
+    .ia-layer-tag {
+      display: flex;
+      align-items: center;
+      min-width: 130px;
+      padding: 20px 18px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #000;
+      flex-shrink: 0;
+    }
+    .ia-layer.l2 .ia-layer-tag { background: #222; }
+    .ia-layer.l3 .ia-layer-tag { background: #444; }
+    .ia-layer-body { padding: 20px 28px; flex: 1; }
+    .ia-layer-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #000;
+      margin-bottom: 6px;
+    }
+    .ia-layer-desc { font-size: 13px; color: #595959; line-height: 1.7; }
+    .ia-layer-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .ia-layer-chip {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border: 1px solid rgba(0,0,0,0.12);
+      color: #6b6b6b;
+    }
+
+    /* Bar chart */
+    .ia-bar-block {
+      border: 1px solid rgba(0,0,0,0.1);
+      margin-top: 28px;
+    }
+    .ia-bar-head {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      background: #fafafa;
+    }
+    .ia-bar-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+    .ia-bar-row { display: flex; align-items: center; gap: 14px; }
+    .ia-bar-lbl { font-size: 13px; color: #333; flex-shrink: 0; width: 210px; }
+    .ia-bar-track { flex: 1; height: 5px; background: #f0f0f0; }
+    .ia-bar-fill { height: 100%; background: #000; }
+    .ia-bar-fill.faint { background: #ccc; }
+    .ia-bar-val { font-size: 12px; font-weight: 700; color: #6b6b6b; width: 32px; text-align: right; }
+    .ia-bar-note { padding: 10px 18px; font-size: 11px; color: #767676; border-top: 1px solid rgba(0,0,0,0.06); background: #fafafa; }
+
+    /* Quote cards */
+    .ia-quote-list { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+    .ia-quote-card {
+      padding: 16px 20px;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-left: 2px solid rgba(0,0,0,0.15);
+      background: #fafafa;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #333;
+    }
+    .ia-quote-src {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #767676;
+      margin-bottom: 6px;
+    }
+
+    /* Outcome list */
+    .ia-outcome-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-top: 28px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(0,0,0,0.06);
+    }
+    .ia-outcome-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px 24px;
+      background: #fff;
+      font-size: 15px;
+      line-height: 1.75;
+      color: #333;
+    }
+    .ia-outcome-arrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #767676;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Two-col */
+    .ia-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-top: 32px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* Footer */
+    .ia-footer {
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 80px;
+      padding: 32px 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .ia-footer span { font-size: 12px; color: #767676; }
+
+    /* Sub-heading */
+    .ia-sub-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: #000;
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .ia-stats { grid-template-columns: repeat(2,1fr); }
+      .ia-stat:nth-child(odd) { padding-left: 0; }
+      .ia-stat:nth-child(even) { border-right: none; padding-right: 0; }
+      .ia-chart-pair { grid-template-columns: 1fr; }
+      .ia-method-grid { grid-template-columns: 1fr; }
+      .ia-sort-compare { grid-template-columns: 1fr; }
+      .ia-wire-grid { grid-template-columns: 1fr 1fr; }
+      .ia-profile-grid { grid-template-columns: 1fr; }
+      .ia-two-col { grid-template-columns: 1fr; }
+      .ia-stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .ia-stats { grid-template-columns: 1fr 1fr; }
+      .ia-stat-grid, .ia-stat-grid-2 { grid-template-columns: 1fr; }
+      .ia-bar-lbl { width: 130px; font-size: 12px; }
+      .ia-layer-tag { min-width: 80px; font-size: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Password Gate ── -->
+  <div id="pw-gate" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px; padding: 24px;
+  ">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);">Bowers &amp; Wilkins</span>
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin: 0;">Case study access</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;">
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="
+          width: 100%; padding: 14px 18px;
+          font-family: 'Manrope', sans-serif; font-size: 15px;
+          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 10px; color: #fff; outline: none;
+          transition: border-color 0.2s;
+        "
+        onkeydown="if(event.key==='Enter')checkPassword()"
+      />
+      <p id="pw-error" style="font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f; display: none; margin: 0;">Incorrect password. Try again.</p>
+      <button onclick="checkPassword()" style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #fff; color: #000; border: none; border-radius: 10px;
+        cursor: pointer; transition: opacity 0.2s;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Continue
+      </button>
+      <a href="index.html" onclick="history.length > 1 ? (history.back(), event.preventDefault()) : null" style="
+        display: block; width: 100%; padding: 14px; box-sizing: border-box;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #000; color: #ababab; border: none; border-radius: 10px;
+        cursor: pointer; text-align: center; text-decoration: none;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Back to previous
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
+      if (sessionStorage.getItem('bw-case-auth') === '1') {
+        document.getElementById('pw-gate').style.display = 'none';
+      }
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      window.checkPassword = async function() {
+        const val = document.getElementById('pw-input').value;
+        const err = document.getElementById('pw-error');
+        const hash = await sha256(val);
+        if (hash === HASH) {
+          sessionStorage.setItem('bw-case-auth', '1');
+          document.getElementById('pw-gate').style.display = 'none';
+          gtag('event', 'case_study_unlock', { case_study: 'bw_ia_case_study' });
+        } else {
+          gtag('event', 'case_study_unlock_failed', { case_study: 'bw_ia_case_study' });
+          err.style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      };
+    })();
+  </script>
+
+<nav class="case-nav">
+  <a class="case-nav-back" href="index.html">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z"/></svg>
+    Back
+  </a>
+  <span class="case-nav-brand">Bowers &amp; Wilkins</span>
+</nav>
+
+<main class="case-content">
+
+  <!-- Hero -->
+  <header class="case-hero">
+    <p class="case-eyebrow hero-anim">Digital experience &nbsp;·&nbsp; Information Architecture</p>
+    <h1 class="case-hero-title hero-anim">Product Controls or Streaming Hub? Resolving the B&amp;W App's IA Tension</h1>
+    <section class="case-meta hero-anim">
+      <div>
+        <p class="case-meta-label">Scope</p>
+        <ul class="case-scope-list">
+          <li>IA research</li>
+          <li>Behavioural analytics</li>
+          <li>User research</li>
+          <li>Navigation design</li>
+        </ul>
+      </div>
+      <div>
+        <p class="case-meta-label">Overview</p>
+        <p class="case-body">An evidence-based investigation into how users actually engage with the B&W Music App — and what that tells us about where the information hierarchy should sit. Four research phases — product reviews, card sorting, support tickets, dashboard analytics — one consistent finding.</p>
+      </div>
+      <div>
+        <p class="case-meta-label">Duration</p>
+        <p class="case-body">6 months of data<br>(Dec 2025 – May 2026)</p>
+      </div>
+    </section>
+
+    <div class="ia-stats">
+      <div class="ia-stat">
+        <span class="ia-stat-n">1.4M+</span>
+        <span class="ia-stat-l">Control interactions / month</span>
+      </div>
+      <div class="ia-stat">
+        <span class="ia-stat-n">44:1</span>
+        <span class="ia-stat-l">Controls-to-streaming support ratio</span>
+      </div>
+      <div class="ia-stat">
+        <span class="ia-stat-n">2.10★</span>
+        <span class="ia-stat-l">App store avg vs 4.49★ hardware</span>
+      </div>
+      <div class="ia-stat">
+        <span class="ia-stat-n">4</span>
+        <span class="ia-stat-l">Research phases, same answer</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- The Problem -->
+  <section class="ia-section">
+    <p class="ia-label">The Problem</p>
+    <h2 class="ub-title">A Product With Two Competing Purposes</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">The B&W Music App serves two distinct functions. The first is a <strong>product controller</strong> — managing ANC modes, EQ, device connections, firmware, and headphone settings across the Px7 S3, Px8 S2, and Pi8. The second is a <strong>streaming music hub</strong> — integrating services like Tidal, Amazon Music, Qobuz and Tunein, providing a home page with personalised recommendations.</p>
+    <p class="case-body" style="margin-top:16px; max-width:740px">These two purposes are not necessarily the same hierarchy. How they are weighted relative to each other has implications for navigation structure, home screen design, and onboarding priority. The question this case study investigates is: what does actual usage data tell us about which surface users engage with more — and what that suggests for where the app's IA places its emphasis?</p>
+
+    <blockquote class="ia-pullquote">
+      Do B&amp;W users engage with the app primarily to control their headphones, or to listen to music through it?
+    </blockquote>
+    <p class="ia-pullquote-sub">The answer shapes navigation hierarchy, home screen design, and onboarding priority — making it worth examining carefully before investing in either direction.</p>
+
+    <div class="ia-chips" style="margin-top:32px">
+      <span class="ia-chip">Information Architecture</span>
+      <span class="ia-chip">Behavioural Analytics</span>
+      <span class="ia-chip">User Research</span>
+      <span class="ia-chip">Navigation Design</span>
+      <span class="ia-chip">Feature Prioritisation</span>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Approach -->
+  <section class="ia-section">
+    <p class="ia-label">Approach</p>
+    <h2 class="ub-title">The Research Journey — Four Phases, Four Reasons</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Rather than starting from the analytics, the investigation was built outside-in: first what customers say in the wild, then how they think, then what breaks for them, and only then what the behavioural data shows. Each phase was chosen for a specific reason, and each fed the next.</p>
+
+    <div class="ia-method-grid">
+      <div class="ia-method-card">
+        <p class="ia-method-label">01 · Product reviews</p>
+        <p><strong>Why:</strong> product sales channels are a rich source of unprompted feedback. They focus mainly on hardware — but occasionally touch on the app, and those mentions reveal where the app sits in the overall product experience. 2,374 retail reviews plus 3,220 app store reviews were analysed.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">02 · Card sorting</p>
+        <p><strong>Why:</strong> mental models. For an app that combines streaming and product controls, I needed to understand how natural categorisation works for users — to validate assumptions about the existing nav structure and uncover patterns. Planned and led the activity together with the UX designer.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">03 · Customer support tickets</p>
+        <p><strong>Why:</strong> support tickets surface the biggest pain points — people contact support because something matters enough to fix. 1,762 Px7 S3 tickets (AI-categorised into 164 categories) gave a measure of the overall weight of each topic.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">04 · Dashboard analytics</p>
+        <p><strong>Why:</strong> to understand the most-used parts of the app — product controls and streaming-service interaction counts. Ten behavioural signals across every major surface, over a 6-month window (Dec '25 – May '26).</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Phase 01: Product Reviews -->
+  <section class="ia-section">
+    <p class="ia-label">Phase 01 · Product Reviews</p>
+    <h2 class="ub-title">Loved Hardware, Resented App</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">The journey started in the sales channels. Retail reviews focus mainly on the hardware — but where they touch the app, the tone shifts sharply. The B&W Music App averages 2.10★ across 3,220 direct app store reviews, compared to 4.49★ for the hardware across 2,374 retail product reviews. App store reviews skew toward users who had something to report, and the dataset spans 2021–2026 so some older complaints may already be addressed. But the gap set the agenda for everything that followed: <strong>the app, not the hardware, is where the experience breaks.</strong></p>
+
+    <div class="ia-two-col">
+      <div class="ia-stat-card">
+        <div class="ia-num">↑ 4.49★</div>
+        <div class="ia-num-label">Hardware rating — retail product reviews (Px7 S3, Px8 S2, Pi8) across Amazon, Best Buy, Shopee</div>
+        <div class="ia-num-sub">85.8% positive · 2,374 reviews · Jun '25–May '26</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">↓ 2.10★</div>
+        <div class="ia-num-label">App rating — direct app store reviews on Google Play and the App Store</div>
+        <div class="ia-num-sub">68.5% negative · 3,220 reviews · 2021–2026</div>
+      </div>
+    </div>
+
+    <div class="ia-stat-grid" style="margin-top:1px">
+      <div class="ia-stat-card">
+        <div class="ia-num">54.6%</div>
+        <div class="ia-num-label">of all app store reviews are 1-star — the absolute figure should be read alongside the topic distribution</div>
+        <div class="ia-num-sub">1,759 of 3,220 reviews</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">67.6%</div>
+        <div class="ia-num-label">of app reviews mention controls or connectivity keywords — vs only 14.8% mentioning streaming services</div>
+        <div class="ia-num-sub">2,177 controls · 477 streaming</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">↓ 2.02★</div>
+        <div class="ia-num-label">Google Play average vs 2.22★ on App Store — Android users report slightly more friction, consistent with Bluetooth complaints</div>
+        <div class="ia-num-sub">1,925 Google Play · 1,295 App Store</div>
+      </div>
+    </div>
+
+    <div class="ia-quote-list">
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Px7 S3 review · 1★</div>
+        "The B&W app is not compatible with the headphones so all the functionality — button customisation, sound control etc — cannot be accessed. I'm surprised the product was released this way."
+      </div>
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">App Store · Germany · 1★</div>
+        "Bad app, great headphones."
+      </div>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Phase 02: Card Sorting -->
+  <section class="ia-section">
+    <p class="ia-label">Phase 02 · Card Sorting</p>
+    <h2 class="ub-title">Mapping Mental Models — Users Restructured the App</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Reviews told us where the pain was; they couldn't tell us how users <em>think</em>. For an app that combines two fundamentally different jobs — controlling a physical product and browsing streaming services — the existing navigation embeds assumptions about how those jobs relate. I planned and led two card sorting studies together with the UX designer to test those assumptions. Study one was an open sort to surface the natural categories; study two (April 2026) was a hybrid sort with 15 participants (13 valid) designed to re-validate the first study's findings and stress-test whether a three-tab model — Home / Library / Settings — holds at scale. Participants could create their own categories, including "I don't need this."</p>
+
+    <div class="ia-sort-compare">
+      <div class="ia-sort-col">
+        <div class="ia-sort-col-head">Current structure</div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Home <span class="ia-sort-count">7 items</span></div>
+          <div class="ia-sort-items">ANC control · Device connection · Recently played · Curated by B&amp;W · Discover · Browse services · Link services</div>
+        </div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Library <span class="ia-sort-count">favourites &amp; playlists</span></div>
+          <div class="ia-sort-items">Favourited albums, artists, tracks · Own playlists</div>
+        </div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Search <span class="ia-sort-count">own tab</span></div>
+          <div class="ia-sort-items">Cross-service search · AI playlist generator</div>
+        </div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Settings <span class="ia-sort-count">20 items</span></div>
+          <div class="ia-sort-items">Touch controls · Device info · Help · ANC settings · EQ · Auto-play/pause · Speaker grouping · Software update · Streaming quality · Add device · Rename device · Support · Email preferences · App details · Account · Legal · Bluetooth devices · Factory reset · Remove product · Link services</div>
+        </div>
+      </div>
+      <div class="ia-sort-col">
+        <div class="ia-sort-col-head">Participants' categorisation</div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Home <span class="ia-sort-count">4 items</span></div>
+          <div class="ia-sort-items">Notification inbox · Paired bluetooth devices · ANC settings* · Link services</div>
+        </div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Library <span class="ia-sort-count">absorbed Search</span></div>
+          <div class="ia-sort-items">Browse services &amp; discover content · Search for things to listen to · Build playlists with AI</div>
+        </div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Settings <span class="ia-sort-count">18 items</span></div>
+          <div class="ia-sort-items">Touch customisation · Device info · Help · ANC settings* · EQ · Auto-play/pause · Speaker grouping · Software update · Streaming quality · Add device · Rename device · Support · Email preferences · App details · Account · Bluetooth devices · Factory reset · Remove product</div>
+        </div>
+        <div class="ia-sort-group">
+          <div class="ia-sort-tab">Not needed <span class="ia-sort-count">new pile</span></div>
+          <div class="ia-sort-items">Discover other products / explore the brand · Legal documents</div>
+        </div>
+      </div>
+    </div>
+    <p class="ia-sort-note">* ANC settings split between Home (47%) and Settings (40%) in round one — the one card users wanted in two places at once.</p>
+
+    <div class="ia-bar-block" style="margin-top:28px">
+      <div class="ia-bar-head">Where the Mental Model Was Near-Unanimous — Placement Agreement</div>
+      <div class="ia-bar-body">
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Account management → Settings</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:93%"></div></div><span class="ia-bar-val">93%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Update software → Settings</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:93%"></div></div><span class="ia-bar-val">93%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Library content → Library</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:93%"></div></div><span class="ia-bar-val">93%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Touch customisation → Settings</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:87%"></div></div><span class="ia-bar-val">87%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">AI playlist building → Library</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:87%"></div></div><span class="ia-bar-val">87%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Factory reset → Settings</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:87%"></div></div><span class="ia-bar-val">87%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Email preferences → Settings</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:87%"></div></div><span class="ia-bar-val">87%</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Search → Library</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:67%"></div></div><span class="ia-bar-val">67%</span></div>
+      </div>
+      <div class="ia-bar-note">% of participants placing the card in that category, round one (n=15). Admin and device-management tasks sorted cleanly; content tasks consolidated into Library.</div>
+    </div>
+
+    <div class="ia-method-grid" style="margin-top:28px">
+      <div class="ia-method-card">
+        <p class="ia-method-label">Search lost its tab</p>
+        <p>No participant kept Search as a top-level destination. 67% placed it in Library and 33% in Home — an action inside the music space, not a place of its own. The current four-tab structure dedicates 25% of the nav to something users see as a feature of the music area.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Home was decluttered</p>
+        <p>Participants kept Home minimal: notification inbox (67% in round two), paired devices (47%), ANC (47%), and service linking (47%). Editorial and discovery cards moved out — recommendations split between Home (53%) and Library (47%), and brand-discovery content went to "I don't need this."</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">A rejection pile emerged</p>
+        <p>Given the option, participants used "I don't need this" deliberately: brand exploration was flagged by 4 of 13 in study two ("I'd already decided what kind of headphones I want"), legal documents by 3 of 13 ("just kind of adds bloat"). Cross-sell content triggered active aversion — "if you put ads in an app like this, you're gonna lose me pretty quickly."</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Frequency drives Home, not function</p>
+        <p>The dominant mental model behind the contested cards — ANC (Home 47% / Settings 40%), quick-adjust (60/40), EQ (40/33), paired devices (47/40): Home = anything I touch every day; Settings = anything I configure once and never reopen. High-frequency controls kept drifting out of Settings into Home regardless of what they "are."</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Three tabs feels too few</p>
+        <p>Unprompted, 4 of 13 vocal participants in study two invented a fourth tab — "Help," "Device Settings," "My Account," an "About" section — to relieve an overloaded Settings. The current Settings holds 20 items; participants kept trying to break it apart.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Library = streaming surface</p>
+        <p>Participants mapped Library to Spotify / Apple Music conventions — playlists, search, recommendations, podcasts, browsing. "Things I already have" landed cleanly; "discover" sometimes leaked to Home. The takeaway: don't fight the streaming-app mental model users already carry.</p>
+      </div>
+    </div>
+
+    <div class="ia-quote-list">
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Study 2 · ar1994</div>
+        "Even in Apple settings, you find your details in settings — that's naturally where I'd go."
+      </div>
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Study 2 · lameloball14</div>
+        "Active noise cancellation — this is home."
+      </div>
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Study 2 · lostb0y</div>
+        "These are all things I'm gonna do once and never again. They don't need to be visible in the library or home."
+      </div>
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Study 2 · pender92</div>
+        "Build playlists and discover music using AI — that's library."
+      </div>
+    </div>
+
+    <div class="ia-callout" style="margin-top:24px">
+      <div class="ia-callout-label">IA Implication — Five Takeaways</div>
+      <p>Study two confirmed study one's headline: Settings is overloaded, Home is under-used, and high-frequency controls (ANC, EQ, paired devices) belong on Home or in a quick-settings drawer. Three tabs is the actual problem — participants invented a fourth tab but named it differently each time ("Help," "Device Settings," "My Account"); what the fourth tab should actually be only became clear in the dashboard phase. Library should mirror streaming-app conventions rather than fight them. Cross-sell content damages trust and should sit behind explicit opt-in. And users sort by "do I touch this daily," not by category — frequency beats function. That gave us a structural hypothesis to test against behavioural data: if controls anchor the mental model, usage should split the same way. The support tickets and dashboard sized it.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Phase 03: Support Tickets -->
+  <section class="ia-section">
+    <p class="ia-label">Phase 03 · Support Tickets</p>
+    <h2 class="ub-title">Weighing the Pain: Controls Lead by a Wide Margin</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Support tickets capture the biggest pain points — people contact support because something matters enough to fix. 1,762 Px7 S3 customer support tickets, AI-categorised into 164 issue categories, gave a measure of the overall weight of each topic. Product controls and app functionality account for 524 tickets (30%). Streaming-specific issues account for 12 (0.7%).</p>
+
+    <div class="ia-stat-grid">
+      <div class="ia-stat-card">
+        <div class="ia-num">44:1</div>
+        <div class="ia-num-label">Controls-to-streaming ticket ratio across 1,762 Px7 S3 support contacts</div>
+        <div class="ia-num-sub">Controls: 524 tickets (30%) · Streaming: 12 (0.7%)</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">105</div>
+        <div class="ia-num-label">ANC Performance tickets — the single largest technical issue category, ahead of Bluetooth (86) and Firmware (52)</div>
+        <div class="ia-num-sub">ANC is both the most-used feature and the most-complained-about</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num grey">83</div>
+        <div class="ia-num-label">Spatial Audio + LE Audio tickets — users asking when firmware will upgrade the controls surface, not when streaming will improve</div>
+        <div class="ia-num-sub">63 Spatial Audio · 20 LE Audio / Auracast</div>
+      </div>
+    </div>
+
+    <div class="ia-bar-block">
+      <div class="ia-bar-head">Top Control-Related Issue Categories — Px7 S3 Support Tickets</div>
+      <div class="ia-bar-body">
+        <div class="ia-bar-row"><span class="ia-bar-lbl">ANC Performance</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:100%"></div></div><span class="ia-bar-val">105</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Bluetooth Connection</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:82%"></div></div><span class="ia-bar-val">86</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Spatial Audio (demand)</span><div class="ia-bar-track"><div class="ia-bar-fill faint" style="width:60%"></div></div><span class="ia-bar-val">63</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Wear Sensor</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:53%"></div></div><span class="ia-bar-val">56</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Firmware Update Fails</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:50%"></div></div><span class="ia-bar-val">52</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">Can't connect to app</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:48%"></div></div><span class="ia-bar-val">50</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">LE Audio / Auracast</span><div class="ia-bar-track"><div class="ia-bar-fill faint" style="width:19%"></div></div><span class="ia-bar-val">20</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl">EQ Settings</span><div class="ia-bar-track"><div class="ia-bar-fill" style="width:18%"></div></div><span class="ia-bar-val">19</span></div>
+        <div class="ia-bar-row"><span class="ia-bar-lbl" style="color:#767676">Streaming Services (all)</span><div class="ia-bar-track"><div class="ia-bar-fill faint" style="width:7%"></div></div><span class="ia-bar-val" style="color:#767676">12</span></div>
+      </div>
+      <div class="ia-bar-note">Dark = active problems &nbsp;·&nbsp; Light = feature requests &nbsp;·&nbsp; Lightest = streaming</div>
+    </div>
+
+    <h3 class="ia-sub-heading">Streaming Model Clarity: A Small but Instructive Signal</h3>
+    <p class="case-body" style="max-width:740px">Within the 12 streaming tickets, one is worth noting for what it suggests about IA legibility. A user's tracks were playing for only 30 seconds. The support agent explained that the app does not offer streaming services — the user had cancelled their subscriptions and didn't understand the dependency. A separate ticket asks whether Spotify will be available "soon."</p>
+
+    <div class="ia-quote-list">
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Support ticket — streaming model confusion</div>
+        "Customer's songs only play for 30 seconds in the B&W Music App because they cancelled their streaming subscriptions. He was informed the App does not offer streaming services and as he is not subscribed to any of them he can't hear the whole songs."
+      </div>
+      <div class="ia-quote-card">
+        <div class="ia-quote-src">Support ticket — Spotify expectation unmet</div>
+        "I have just purchased the lovely Px7 S3 headphones. I was hoping to use Spotify as my streaming service. This does not seem to be available. Can I ask if this service is soon going to be available?"
+      </div>
+    </div>
+
+    <div class="ia-callout">
+      <div class="ia-callout-label">IA Implication — Streaming Model Legibility</div>
+      <p>Surfacing the streaming model clearly at the point of entry — which services are supported, and that an active subscription is required — would reduce this category of confusion. Something as simple as "Connect your Tidal, Qobuz or Amazon Music account" communicates the dependency before users encounter it mid-session. Spotify's absence should be stated upfront, not discovered.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Phase 04: Dashboard -->
+  <section class="ia-section">
+    <p class="ia-label">Phase 04 · Dashboard Analytics</p>
+    <h2 class="ub-title">Sizing the Domains: What the Behavioural Data Shows</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">The final phase put numbers on everything the previous three suggested. To understand the most-used parts of the app, ten behavioural signals were analysed across every major surface — product control interactions and streaming-service interaction counts — over a 6-month window. Four findings emerged.</p>
+    <p class="ia-sort-note">Charts are redrawn from the analytics dashboard and are illustrative of scale and trend rather than exact values.</p>
+  </section>
+
+  <!-- Finding 01 -->
+  <section class="ia-section">
+    <p class="ia-label">Dashboard · Finding 01</p>
+    <h2 class="ub-title">Product Controls Dominate — by a Factor of 3×</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">When all control-side interactions are summed, the app's product control surfaces generate over 1.4 million interactions per month. Total streaming engagement runs at roughly 500k per month. Controls account for around 74% of all recorded app interactions, with streaming accounting for the remaining 26%.</p>
+
+    <div class="ia-versus">
+      <div class="ia-versus-labels">
+        <span>Product Controls</span>
+        <span>Streaming / Music Hub</span>
+      </div>
+      <div class="ia-versus-bar">
+        <div class="ia-versus-a" style="width:74%">1.4M+ / month &nbsp;·&nbsp; 74%</div>
+        <div class="ia-versus-b">~500k / month &nbsp;·&nbsp; 26%</div>
+      </div>
+      <p class="ia-versus-note">Combined monthly interactions, Dec '25 – May '26 average. Control-side: ANC (QAP + Settings) + EQ + headphone connections. Streaming-side: browse plays + homepage interactions + search selections.</p>
+    </div>
+
+    <div class="ia-stat-grid">
+      <div class="ia-stat-card">
+        <div class="ia-num">1M+</div>
+        <div class="ia-num-label">ANC mode changes per month across QAP and Settings — the single largest interaction category in the app</div>
+        <div class="ia-num-sub">QAP: 640–720k · Settings: 370–450k</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">430–560k</div>
+        <div class="ia-num-label">EQ adjustments per month — bass and treble roughly equal, confirming users are actively shaping their sound</div>
+        <div class="ia-num-sub">Declining trend Dec '25 → May '26</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">155–195k</div>
+        <div class="ia-num-label">Headphone connections per month via QAP alone — the primary device connection pathway</div>
+        <div class="ia-num-sub">Settings-path: only ~28k / month</div>
+      </div>
+    </div>
+
+    <div class="ia-chart-pair">
+      <div class="ia-chart">
+        <div class="ia-chart-head">ANC Changes via QAP — Dec '25 to Jun '26</div>
+        <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">200k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">400k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,178.8 180,174.0 290,178.8 400,176.4 510,171.6 620,174.0 730,181.1" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,159.8 180,155.0 290,162.1 400,157.4 510,152.6 620,155.0 730,162.1" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,98.0 180,90.9 290,102.8 400,95.6 510,88.5 620,93.2 730,107.5" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="107.5" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">On</text>
+          <line x1="136" y1="296" x2="158" y2="296" stroke="#999" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="164" y="300" fill="#333" font-size="11">Passthrough</text>
+          <line x1="265" y1="296" x2="287" y2="296" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <text x="293" y="300" fill="#333" font-size="11">Off</text>
+          </svg>
+        </div>
+        <div class="ia-chart-cap"><strong>640–720k interactions/month.</strong> "On" dominates at ~45–50%, passthrough ~25–30%, off ~20%. Users are actively cycling through ANC modes — not setting and forgetting.</div>
+      </div>
+      <div class="ia-chart">
+        <div class="ia-chart-head">ANC Changes via Settings — Dec '25 to Jun '26</div>
+        <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">250k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">500k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,98.0 180,86.6 290,92.3 400,88.5 510,79.0 620,82.8 730,109.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="109.4" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">ANC changes via Settings</text>
+          </svg>
+        </div>
+        <div class="ia-chart-cap"><strong>370–450k additional interactions/month</strong> via the Settings path — two entry points totalling over 1M monthly adjustments.</div>
+      </div>
+    </div>
+
+    <div class="ia-chart">
+      <div class="ia-chart-head">EQ Changes In-App — Dec '25 to Jun '26</div>
+      <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">150k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">300k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,79.0 180,82.2 290,91.7 400,94.8 510,104.3 620,110.7 730,117.0" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,72.7 180,79.0 290,85.3 400,91.7 510,98.0 620,107.5 730,113.8" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="113.8" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">Bass</text>
+          <line x1="150" y1="296" x2="172" y2="296" stroke="#999" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="178" y="300" fill="#333" font-size="11">Treble</text>
+          </svg>
+        </div>
+      <div class="ia-chart-cap"><strong>430–560k EQ adjustments/month</strong>, split equally between bass and treble. The 6-month declining trend (−23%) may signal users hitting the ceiling of the current 5-band EQ's capabilities.</div>
+    </div>
+
+    <div class="ia-chart-pair">
+      <div class="ia-chart">
+        <div class="ia-chart-head">Headphone Connections — QAP</div>
+        <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">100k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">200k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,88.5 180,79.0 290,93.2 400,83.8 510,64.8 620,74.2 730,102.8" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="102.8" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">Connections via QAP</text>
+          </svg>
+        </div>
+        <div class="ia-chart-cap"><strong>QAP connects: 155–195k/month.</strong> The Quick Access Panel is where users connect to their headphones — not Settings.</div>
+      </div>
+      <div class="ia-chart">
+        <div class="ia-chart-head">Headphone Connections — Settings</div>
+        <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">20k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">40k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,117.0 180,107.5 290,121.8 400,112.2 510,102.8 620,107.5 730,131.2" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="131.2" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">Connections via Settings</text>
+          </svg>
+        </div>
+        <div class="ia-chart-cap"><strong>Settings connects: ~25–31k/month.</strong> Only 1/6th of QAP volume — used for initial device setup, not regular reconnection.</div>
+      </div>
+    </div>
+
+    <div class="ia-callout">
+      <div class="ia-callout-label">IA Implication</div>
+      <p>ANC controls, EQ, and device connection generate significantly more interactions than streaming. An IA that positions these behind a music-first home screen may be misaligned with how the majority of users are currently engaging with the app. The Quick Access Panel pattern — surfacing controls immediately — appears well-suited to the observed usage profile.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Finding 02 -->
+  <section class="ia-section">
+    <p class="ia-label">Dashboard · Finding 02</p>
+    <h2 class="ub-title">Streaming Is Used — But Not for Discovery</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Streaming interactions are real and substantial at ~500k/month. But the nature of that engagement matters as much as the volume. Users are not using B&W's streaming hub to find new music — they are using it to continue what they were already listening to. The home page functions as a "resume" button, not a discovery surface.</p>
+
+    <div class="ia-chart">
+      <div class="ia-chart-head">Home Page Content Interactions — Dec '25 to Jun '26</div>
+      <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">100k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">200k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,235.8 180,232.9 290,234.8 400,233.8 510,232.9 620,233.8 730,236.7" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,174.0 180,164.5 290,169.2 400,166.4 510,159.8 620,162.6 730,178.8" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,107.5 180,98.0 290,107.5 400,99.9 510,88.5 620,93.2 730,117.0" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="117.0" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">recentplay</text>
+          <line x1="192" y1="296" x2="214" y2="296" stroke="#999" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="220" y="300" fill="#333" font-size="11">discover-feature</text>
+          <line x1="356" y1="296" x2="378" y2="296" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <text x="384" y="300" fill="#333" font-size="11">all other modules</text>
+          </svg>
+        </div>
+      <div class="ia-chart-cap"><strong>recentplay and discover-feature account for the vast majority of home page interactions.</strong> All other modules — recommended-playlist, cuts, linkable-services, recommended-song, sources — are marginal. Users are returning to content they already know.</div>
+    </div>
+
+    <div class="ia-chart">
+      <div class="ia-chart-head">Track Plays From Music We Suggest on Home Page — Dec '25 to Jun '26</div>
+      <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">25k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">50k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,234.8 180,234.8 290,234.8 400,231.0 510,234.8 620,234.8 730,238.6" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,124.6 180,117.0 290,120.8 400,113.2 510,109.4 620,113.2 730,132.2" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="132.2" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">recentplay</text>
+          <line x1="192" y1="296" x2="214" y2="296" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <text x="220" y="300" fill="#333" font-size="11">all recommendation modules</text>
+          </svg>
+        </div>
+      <div class="ia-chart-cap"><strong>recentplay generates ~85–90% of all homepage suggestion plays</strong> (37–41k/month total). Recommended-playlist, recommended-song, cuts, and recommended-album together account for under 10%.</div>
+    </div>
+
+    <div class="ia-chart">
+      <div class="ia-chart-head">Track Plays From Music Service Browse Pages — Dec '25 to Jun '26</div>
+      <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">40k</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">80k</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="180" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan</text>
+          <text x="290" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar</text>
+          <text x="510" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr</text>
+          <text x="620" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">May</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jun '26</text>
+          <polyline points="70,207.2 180,202.5 290,204.9 400,202.5 510,200.1 620,202.5 730,209.6" fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="1 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,171.6 180,166.9 290,169.2 400,164.5 510,162.1 620,166.9 730,178.8" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="2 3" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,143.1 180,138.4 290,145.5 400,136.0 510,131.2 620,136.0 730,150.2" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,119.4 180,112.2 290,117.0 400,107.5 510,102.8 620,107.5 730,131.2" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="131.2" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">Amazon Music</text>
+          <line x1="206" y1="296" x2="228" y2="296" stroke="#999" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="234" y="300" fill="#333" font-size="11">Tidal</text>
+          <line x1="293" y1="296" x2="315" y2="296" stroke="#999" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <text x="321" y="300" fill="#333" font-size="11">Tunein</text>
+          <line x1="387" y1="296" x2="409" y2="296" stroke="#ccc" stroke-width="1.5" stroke-dasharray="1 4"/>
+          <text x="415" y="300" fill="#333" font-size="11">Others</text>
+          </svg>
+        </div>
+      <div class="ia-chart-cap"><strong>Browse plays run at 150–185k/month.</strong> Amazon Music, Tidal and Tunein account for ~80% of plays. Users are accessing services they already subscribe to — not adopting the B&W hub as their primary listening environment.</div>
+    </div>
+
+    <div class="ia-callout">
+      <div class="ia-callout-label">IA Implication</div>
+      <p>The streaming surface's job in the IA appears to be providing a convenient path back to content users already know. Discovery modules receive comparatively little engagement — which may suggest deprioritising or repositioning them, though further research into their placement and visibility would be useful before drawing firm conclusions.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Finding 03 -->
+  <section class="ia-section">
+    <p class="ia-label">Dashboard · Finding 03</p>
+    <h2 class="ub-title">Two Distinct User Profiles Within the Streaming Surface</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Search behaviour reveals that not all streaming users are alike. Browse plays and search selections show different service distributions — pointing to two separate user profiles with different needs and different IA requirements within the streaming layer.</p>
+
+    <div class="ia-chart">
+      <div class="ia-chart-head">Selecting an Item From Search Results — Share by Service, Dec '25 to Jun '26</div>
+      <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <text x="150" y="37" text-anchor="end" fill="#333" font-size="12">Tidal</text>
+          <rect x="165" y="24" width="468" height="18" fill="#000"/>
+          <text x="643" y="37" fill="#000" font-size="12" font-weight="700">45%</text>
+          <text x="150" y="75" text-anchor="end" fill="#333" font-size="12">Qobuz</text>
+          <rect x="165" y="62" width="260" height="18" fill="#555"/>
+          <text x="435" y="75" fill="#000" font-size="12" font-weight="700">25%</text>
+          <text x="150" y="113" text-anchor="end" fill="#333" font-size="12">Amazon Music</text>
+          <rect x="165" y="100" width="156" height="18" fill="#999"/>
+          <text x="331" y="113" fill="#000" font-size="12" font-weight="700">15%</text>
+          <text x="150" y="151" text-anchor="end" fill="#333" font-size="12">Tunein</text>
+          <rect x="165" y="138" width="104" height="18" fill="#767676"/>
+          <text x="279" y="151" fill="#000" font-size="12" font-weight="700">10%</text>
+          <text x="150" y="189" text-anchor="end" fill="#333" font-size="12">Other</text>
+          <rect x="165" y="176" width="52" height="18" fill="#ddd"/>
+          <text x="227" y="189" fill="#000" font-size="12" font-weight="700">5%</text>
+          </svg>
+        </div>
+      <div class="ia-chart-cap"><strong>Tidal (~45%) and Qobuz (~25%) dominate search</strong> — a markedly different profile from browse plays where Amazon and Tunein lead. Search users are audiophile-oriented, looking for specific content on high-fidelity platforms.</div>
+    </div>
+
+    <div class="ia-profile-grid">
+      <div class="ia-profile-card">
+        <div class="ia-profile-icon">🎧</div>
+        <div class="ia-profile-title">The Returner</div>
+        <div class="ia-profile-sub">Majority — casual / habitual</div>
+        <div class="ia-profile-detail">Opens the app to reconnect a device, adjust ANC for a new environment, and get back to what they were listening to. Does not browse for new music inside B&W. Relies on recentplay and their own streaming app.</div>
+        <div class="ia-profile-data">
+          <div class="ia-profile-row"><span class="ia-profile-key">Primary surface</span><span class="ia-profile-val">QAP / Controls</span></div>
+          <div class="ia-profile-row"><span class="ia-profile-key">Streaming behaviour</span><span class="ia-profile-val">recentplay only</span></div>
+          <div class="ia-profile-row"><span class="ia-profile-key">Preferred services</span><span class="ia-profile-val">Amazon / Tunein</span></div>
+        </div>
+      </div>
+      <div class="ia-profile-card">
+        <div class="ia-profile-icon">🎼</div>
+        <div class="ia-profile-title">The Audiophile Seeker</div>
+        <div class="ia-profile-sub">Minority — intentional / high-fidelity</div>
+        <div class="ia-profile-detail">Opens the app to find specific content on Tidal or Qobuz and fine-tune the listening experience. Uses EQ actively, searches for artists or albums, and expects the app to function as a genuine hi-fi control surface.</div>
+        <div class="ia-profile-data">
+          <div class="ia-profile-row"><span class="ia-profile-key">Primary surface</span><span class="ia-profile-val">EQ + Search</span></div>
+          <div class="ia-profile-row"><span class="ia-profile-key">Streaming behaviour</span><span class="ia-profile-val">Active search</span></div>
+          <div class="ia-profile-row"><span class="ia-profile-key">Preferred services</span><span class="ia-profile-val">Tidal / Qobuz</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ia-callout" style="margin-top:16px">
+      <div class="ia-callout-label">IA Implication</div>
+      <p>The IA does not need to choose between these two profiles — but designing the default state for the Returner (fast access to controls + recentplay) while keeping the Audiophile Seeker's path to EQ and search short would serve both. A tiered navigation structure — controls first, curated streaming secondary — appears well-matched to the observed usage split.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Finding 04 -->
+  <section class="ia-section">
+    <p class="ia-label">Dashboard · Finding 04</p>
+    <h2 class="ub-title">A Sharp Usage Decline — and the Controls–Streaming Relationship</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Overall app usage declined significantly between April and May 2026. The steepness of the drop — particularly on the Settings surface — suggests a specific event may be involved: a firmware update, a compatibility issue, or an app store release. What the data does show is the relationship between the two surfaces when usage drops: controls and streaming fall together, with controls leading.</p>
+
+    <div class="ia-chart">
+      <div class="ia-chart-head">App Usage by Surface — Dec '25 to Apr '26</div>
+      <div style="padding:28px 24px 14px;background:#fff;">
+          <svg viewBox="0 0 760 308" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Manrope',sans-serif;">
+          <line x1="70" y1="250" x2="730" y2="250" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" fill="#767676" font-size="11">0</text>
+          <line x1="70" y1="155.0" x2="730" y2="155.0" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="159.0" text-anchor="end" fill="#767676" font-size="11">1.5M</text>
+          <line x1="70" y1="60" x2="730" y2="60" stroke="#ececec" stroke-width="1"/>
+          <text x="62" y="64" text-anchor="end" fill="#767676" font-size="11">3M</text>
+          <text x="70" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Dec '25</text>
+          <text x="235" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Jan '26</text>
+          <text x="400" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Feb '26</text>
+          <text x="565" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Mar '26</text>
+          <text x="730" y="272" text-anchor="middle" fill="#6b6b6b" font-size="11">Apr '26</text>
+          <polyline points="70,247.5 235,247.5 400,247.5 565,247.5 730,247.5" fill="none" stroke="#ddd" stroke-width="1.5" stroke-dasharray="1 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,227.8 235,225.3 400,227.2 565,226.6 730,224.7" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,193.0 235,183.5 400,187.9 565,183.5 730,170.8" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>
+          <polyline points="70,98.0 235,79.0 400,91.7 565,85.3 730,60.0" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="730" cy="60.0" r="3.5" fill="#000"/>
+          <line x1="70" y1="296" x2="92" y2="296" stroke="#000" stroke-width="2.5"/>
+          <text x="98" y="300" fill="#333" font-size="11">Settings</text>
+          <line x1="178" y1="296" x2="200" y2="296" stroke="#999" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="206" y="300" fill="#333" font-size="11">Browse</text>
+          <line x1="272" y1="296" x2="294" y2="296" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <text x="300" y="300" fill="#333" font-size="11">Player</text>
+          <line x1="366" y1="296" x2="388" y2="296" stroke="#ddd" stroke-width="1.5" stroke-dasharray="1 4"/>
+          <text x="394" y="300" fill="#333" font-size="11">Library &amp; Search</text>
+          </svg>
+        </div>
+      <div class="ia-chart-cap"><strong>Settings dominates all surfaces at 2.4–3M interactions/month.</strong> Browse holds a distant second at 900k–1.25M. Player, Library, and Search remain near-zero by comparison. The hierarchy is clear: users live in Settings and Browse — everything else is marginal.</div>
+    </div>
+
+    <div class="ia-callout" style="margin-top:24px">
+      <div class="ia-callout-label">The Fourth Tab, Resolved</div>
+      <p>Card sorting showed participants reaching for a fourth tab without agreeing on what it was. The dashboard answered it: Settings is the highest-interacted surface in the app, and the bulk of that traffic is product management — device info, connections, renaming, adding and removing products. Users can own multiple speakers and headphones, just headphones, or just speakers — which points to a dedicated <strong>Devices</strong> tab: a product listing showing all owned products, separating "manage my products" from app-level settings.</p>
+    </div>
+
+    <div class="ia-stat-grid-2" style="margin-top:24px">
+      <div class="ia-stat-card">
+        <div class="ia-num">↓ 73%</div>
+        <div class="ia-num-label">Settings surface decline Apr → May '26. Cause unconfirmed — possibly firmware, compatibility, or a release event</div>
+      </div>
+      <div class="ia-stat-card">
+        <div class="ia-num">↓ 72%</div>
+        <div class="ia-num-label">Browse surface decline in the same period — both surfaces fall together, with controls leading the drop</div>
+      </div>
+    </div>
+
+    <div class="ia-callout" style="margin-top:24px">
+      <div class="ia-callout-label">Review Corroboration</div>
+      <p>Of 125 critical product reviews (1–3★) over the trailing 12 months, the top complaints are Bluetooth/connectivity (39), firmware failure (10), app compatibility (9), and customer service (13). Streaming-related complaints total 1 in the same window. Product reviews also show negativity rising to 29% in March 2026 — approximately one month before the usage decline in the data.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Recommendation -->
+  <section class="ia-section">
+    <p class="ia-label">Recommendation</p>
+    <h2 class="ub-title">The IA Hierarchy the Data Supports</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Taken together, the four research phases suggest a three-layer hierarchy, delivered through a four-tab navigation: <strong>Home / Library / Devices / Settings</strong>. Devices is the tab card sorting asked for and the dashboard named — a product listing for every owned speaker and headphone, pulling product management out of an overloaded Settings. Reviews, mental models, support weight and behavioural data all point consistently in the same direction, though the right balance would benefit from further user testing to validate.</p>
+
+    <div class="ia-layers">
+      <div class="ia-layer l1">
+        <div class="ia-layer-tag">Primary</div>
+        <div class="ia-layer-body">
+          <div class="ia-layer-title">Product Controls — ANC, EQ, Device Management</div>
+          <div class="ia-layer-desc">The default landing state. Quick Access Panel as the home surface: connected device status, ANC mode toggle, EQ shortcut, battery, firmware state. This is what 74% of app interactions are already doing — the IA should reflect it.</div>
+          <div class="ia-layer-chips">
+            <span class="ia-layer-chip">1.4M+ interactions/month</span>
+            <span class="ia-layer-chip">Both user profiles</span>
+            <span class="ia-layer-chip">Drives retention</span>
+          </div>
+        </div>
+      </div>
+      <div class="ia-layer l2">
+        <div class="ia-layer-tag">Secondary</div>
+        <div class="ia-layer-body">
+          <div class="ia-layer-title">Continue Listening — recentplay + linked services</div>
+          <div class="ia-layer-desc">One tap from the primary layer. Surface the last-played content with a direct play action. Link to Amazon, Tidal, Tunein and Qobuz — the services users are actually using — rather than B&W's own editorial curation. This is what recentplay's ~85–90% share of homepage plays demands.</div>
+          <div class="ia-layer-chips">
+            <span class="ia-layer-chip">~37–41k plays/month from homepage</span>
+            <span class="ia-layer-chip">Returner profile</span>
+            <span class="ia-layer-chip">Low editorial investment needed</span>
+          </div>
+        </div>
+      </div>
+      <div class="ia-layer l3">
+        <div class="ia-layer-tag">Tertiary</div>
+        <div class="ia-layer-body">
+          <div class="ia-layer-title">Browse &amp; Discover — service browsing, search, editorial</div>
+          <div class="ia-layer-desc">Accessible but not prominent. Full service browse pages (Amazon, Tidal, Qobuz, Tunein), search with service filtering, and optional editorial recommendations. The Audiophile Seeker finds this valuable; the Returner ignores it. Critically: the entry point must make the dependency model explicit — "Connect your Tidal or Qobuz account" — so users understand it's a passthrough, not a B&W-owned service. Spotify's absence should be surfaced here, not discovered mid-session.</div>
+          <div class="ia-layer-chips">
+            <span class="ia-layer-chip">150–185k browse plays/month</span>
+            <span class="ia-layer-chip">Audiophile Seeker profile</span>
+            <span class="ia-layer-chip">Dependency model must be legible</span>
+            <span class="ia-layer-chip">No Spotify — state it upfront</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ia-callout" style="margin-top:24px">
+      <div class="ia-callout-label">What This Is Not</div>
+      <p>This hierarchy does not deprioritise streaming as a feature — it deprioritises the current home screen's over-investment in discovery modules that users have already demonstrated they do not engage with. B&W's streaming integration is real and valuable; it just belongs in the second and third layer, not the first.</p>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Wireframes -->
+  <section class="ia-section">
+    <p class="ia-label">Concept · Wireframes</p>
+    <h2 class="ub-title">The Four-Tab IA, Sketched</h2>
+    <p class="case-body" style="margin-top:20px; max-width:740px">Early wireframes translating the hierarchy into screens. Each surface is zoned by priority — what the research says users touch most sits highest. The bottom navigation carries the four tabs the studies converged on: <strong>Home / Library / Devices / Settings</strong>.</p>
+
+    <div class="ia-wire-grid">
+      <div>
+        <div class="ia-wire-name">Home</div>
+        <div class="ia-wire-phone">
+          <p class="ia-wire-pr">1st priority</p>
+          <div class="ia-wire-block">Notification inbox</div>
+          <div class="ia-wire-block">Product status — battery · codec</div>
+          <div class="ia-wire-row">
+            <div class="ia-wire-block">ANC</div>
+            <div class="ia-wire-block">EQ</div>
+          </div>
+          <div class="ia-wire-row">
+            <div class="ia-wire-block">Spatial</div>
+            <div class="ia-wire-block">Multipoint</div>
+          </div>
+          <div class="ia-wire-block">Product controls entry →</div>
+          <p class="ia-wire-pr">2nd priority</p>
+          <div class="ia-wire-block">Resume — last played ▸</div>
+          <div class="ia-wire-row">
+            <div class="ia-wire-block">MSP entry</div>
+            <div class="ia-wire-block">+ Link new MSP</div>
+          </div>
+          <p class="ia-wire-pr">3rd priority</p>
+          <div class="ia-wire-row">
+            <div class="ia-wire-block sub">B&amp;W playlists</div>
+            <div class="ia-wire-block sub">TBD</div>
+          </div>
+          <div class="ia-wire-tabbar">
+            <span class="ia-wire-tab on">Home</span><span class="ia-wire-tab">Library</span><span class="ia-wire-tab">Devices</span><span class="ia-wire-tab">Settings</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ia-wire-name">Library</div>
+        <div class="ia-wire-phone">
+          <p class="ia-wire-pr">1st priority</p>
+          <div class="ia-wire-block">Search</div>
+          <div class="ia-wire-block">Recently played</div>
+          <div class="ia-wire-block">Playlists (new)</div>
+          <p class="ia-wire-pr">2nd priority</p>
+          <div class="ia-wire-block">Discover</div>
+          <div class="ia-wire-block">MSP</div>
+          <div class="ia-wire-block">Link new — Tidal · Qobuz · Amazon<br>(subscription required)</div>
+          <p class="ia-wire-pr">3rd priority</p>
+          <div class="ia-wire-block sub">TBD</div>
+          <div class="ia-wire-tabbar">
+            <span class="ia-wire-tab">Home</span><span class="ia-wire-tab on">Library</span><span class="ia-wire-tab">Devices</span><span class="ia-wire-tab">Settings</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ia-wire-name">Devices</div>
+        <div class="ia-wire-phone">
+          <p class="ia-wire-pr">1st priority</p>
+          <div class="ia-wire-block">Headphones</div>
+          <p class="ia-wire-pr">2nd priority</p>
+          <div class="ia-wire-block">Spaces / speakers</div>
+          <p class="ia-wire-pr">3rd priority</p>
+          <div class="ia-wire-block">Product help &amp; accessories — for owned products</div>
+          <p class="ia-wire-pr">4th priority</p>
+          <div class="ia-wire-block sub">TBD</div>
+          <div class="ia-wire-tabbar">
+            <span class="ia-wire-tab">Home</span><span class="ia-wire-tab">Library</span><span class="ia-wire-tab on">Devices</span><span class="ia-wire-tab">Settings</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ia-wire-name">Settings</div>
+        <div class="ia-wire-phone">
+          <p class="ia-wire-pr">App-level only</p>
+          <div class="ia-wire-block">Account</div>
+          <div class="ia-wire-block">Codec info</div>
+          <div class="ia-wire-block">App info</div>
+          <div class="ia-wire-block">Warranty</div>
+          <div class="ia-wire-block sub">…</div>
+          <div class="ia-wire-tabbar">
+            <span class="ia-wire-tab">Home</span><span class="ia-wire-tab">Library</span><span class="ia-wire-tab">Devices</span><span class="ia-wire-tab on">Settings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="ia-sub-heading">Home Adapts to What You Own</h3>
+    <p class="case-body" style="max-width:740px">Because ownership varies — multiple speakers and headphones, just headphones, or just speakers — Home is composed per ownership profile rather than fixed. The hierarchy stays the same; the first-priority zone changes.</p>
+
+    <div class="ia-method-grid" style="margin-top:24px">
+      <div class="ia-method-card">
+        <p class="ia-method-label">Headphones only</p>
+        <p>Product status, then ANC / EQ / Spatial / Multipoint as the quick-control grid, with an entry into full product controls. Streaming (MSP) second, B&amp;W playlists third.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Speakers only</p>
+        <p>Speaker product status with EQ and a controls entry — no ANC or multipoint, so the control grid shrinks rather than showing irrelevant tiles. Streaming second, playlists third.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Headphones + speakers</p>
+        <p>Headphone card first with ANC / Multipoint and a controls entry, with additional products one swipe away as a paginated stack. Streaming second, playlists third.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Why it works</p>
+        <p>This is "frequency beats function" applied: the daily-touch controls from card sorting hold the first zone in every variant, streaming continuation holds the second, and editorial content stays third — matching the usage proportions the dashboard measured.</p>
+      </div>
+    </div>
+
+    <h3 class="ia-sub-heading">Three Decisions Layered on Top</h3>
+    <div class="ia-method-grid" style="margin-top:24px">
+      <div class="ia-method-card">
+        <p class="ia-method-label">A global quick-settings drawer</p>
+        <p>ANC split Home (47%) / Settings (40%) in card sorting — users want it in two places at once. Rather than picking a side, ANC / EQ / connection live in a pull-down drawer reachable from any tab. The dashboard already validates the pattern: the QAP path beats the Settings path 6:1 for connections.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Cross-sell becomes earned, not pushed</p>
+        <p>"Discover other products" damaged trust in both studies, so shopping never gets a tile. Accessories appear inside the detail page of a product you own, and the Devices tab's empty states do the legitimate version: a "just headphones" owner sees a contextual, opt-in invitation to add a speaker — not an ad.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Streaming dependency, stated upfront</p>
+        <p>The support tickets showed users discovering mid-session that the app streams nothing itself — 30-second clips after a cancelled subscription, Spotify expected but absent. The link-service tile names the supported services and the subscription requirement at the point of entry, not after.</p>
+      </div>
+      <div class="ia-method-card">
+        <p class="ia-method-label">Validation before build</p>
+        <p>Next step: tree-test the four-tab IA against the current three-tab baseline, then instrument tab-interaction share post-launch against the Dec '25 – Jun '26 dashboard baseline. Success looks like Settings traffic redistributing to Home and Devices — and the app rating closing the gap to the hardware's 4.49★.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="ia-rule">
+
+  <!-- Reflection -->
+  <section class="ia-section">
+    <p class="ia-label">Reflection</p>
+    <h2 class="ub-title">What This Work Demonstrates</h2>
+
+    <div class="ia-outcome-list">
+      <div class="ia-outcome-item">
+        <span class="ia-outcome-arrow">→</span>
+        <span><strong>Behaviour over assumption.</strong> The instinct to lead with music in a headphone app is understandable — B&W makes premium audio products. But the data is unambiguous: users come to control their headphones first. An IA grounded in that reality serves them better than one built around what the product team might hope they do.</span>
+      </div>
+      <div class="ia-outcome-item">
+        <span class="ia-outcome-arrow">→</span>
+        <span><strong>Breadth of signals matters.</strong> No single chart answered the question. The ANC volume established the scale of controls usage. The recentplay dominance revealed what streaming actually means to users. The Apr–May decline exposed the causal relationship. The search/browse service split uncovered two user profiles hiding inside a single aggregate number. The answer only emerged from holding all ten signals together.</span>
+      </div>
+      <div class="ia-outcome-item">
+        <span class="ia-outcome-arrow">→</span>
+        <span><strong>Mixed methods, consistent direction.</strong> Product reviews, a card sorting study, support tickets, and ten behavioural signals all show controls engagement substantially outpacing streaming — and a mental model that keeps the two domains separate. Each method has its own limitations, but the consistency of direction across all four phases gives reasonable confidence in the overall finding.</span>
+      </div>
+      <div class="ia-outcome-item">
+        <span class="ia-outcome-arrow">→</span>
+        <span><strong>IA is not just navigation structure.</strong> The hierarchy recommendation here has implications for the home screen (QAP as default, not a content feed) and feature investment (ANC + EQ depth before editorial music recommendations). IA decisions cascade across the entire product.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ia-footer">
+    <span>B&amp;W Music App &nbsp;·&nbsp; Information Architecture Case Study &nbsp;·&nbsp; June 2026</span>
+    <span>4 research phases &nbsp;·&nbsp; 5,594 reviews &nbsp;·&nbsp; 2 card sort studies &nbsp;·&nbsp; 1,762 support tickets &nbsp;·&nbsp; 10 behavioural signals</span>
+  </footer>
+
+</main>
+
+  <script>
+    (function () {
+      var arriving = sessionStorage.getItem('pt-arriving') === '1';
+      var elems = [
+        document.querySelector('.case-eyebrow'),
+        document.querySelector('.case-hero-title'),
+      ];
+      var base    = arriving ? 680 : 150;
+      var stagger = [0, 140];
+      elems.forEach(function (el, i) {
+        if (!el) return;
+        setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
+      });
+
+      var metaEl = document.querySelector('.case-meta');
+      if (metaEl) {
+        var metaObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); }
+          });
+        }, { threshold: 0.1 });
+        metaObs.observe(metaEl);
+      }
+    })();
+  </script>
+  <script src="../../js/transition.js"></script>
+
+</body>
+</html>
