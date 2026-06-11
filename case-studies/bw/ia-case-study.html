@@ -19,6 +19,17 @@
   <style>
     .case-meta.hero-anim { transition-delay: 900ms; }
 
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1);
+    }
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* Accessibility: lift muted greys from shared CSS to ≥4.5:1 contrast */
     .case-eyebrow, .case-meta-label, .case-nav-brand { color: #6b6b6b; }
 
@@ -744,7 +755,7 @@
   </header>
 
   <!-- The Problem -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">The Problem</p>
     <h2 class="ub-title">A Product With Two Competing Purposes</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">The B&W Music App serves two distinct functions. The first is a <strong>product controller</strong> — managing ANC modes, EQ, device connections, firmware, and headphone settings across the Px7 S3, Px8 S2, and Pi8. The second is a <strong>streaming music hub</strong> — integrating services like Tidal, Amazon Music, Qobuz and Tunein, providing a home page with personalised recommendations.</p>
@@ -767,7 +778,7 @@
   <hr class="ia-rule">
 
   <!-- Approach -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Approach</p>
     <h2 class="ub-title">The Research Journey — Four Phases, Four Reasons</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Rather than starting from the analytics, the investigation was built outside-in: first what customers say in the wild, then how they think, then what breaks for them, and only then what the behavioural data shows. Each phase was chosen for a specific reason, and each fed the next.</p>
@@ -795,7 +806,7 @@
   <hr class="ia-rule">
 
   <!-- Phase 01: Product Reviews -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Phase 01 · Product Reviews</p>
     <h2 class="ub-title">Loved Hardware, Resented App</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">The journey started in the sales channels. Retail reviews focus mainly on the hardware — but where they touch the app, the tone shifts sharply. The B&W Music App averages 2.10★ across 3,220 direct app store reviews, compared to 4.49★ for the hardware across 2,374 retail product reviews. App store reviews skew toward users who had something to report, and the dataset spans 2021–2026 so some older complaints may already be addressed. But the gap set the agenda for everything that followed: <strong>the app, not the hardware, is where the experience breaks.</strong></p>
@@ -846,7 +857,7 @@
   <hr class="ia-rule">
 
   <!-- Phase 02: Card Sorting -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Phase 02 · Card Sorting</p>
     <h2 class="ub-title">Mapping Mental Models — Users Restructured the App</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Reviews told us where the pain was; they couldn't tell us how users <em>think</em>. For an app that combines two fundamentally different jobs — controlling a physical product and browsing streaming services — the existing navigation embeds assumptions about how those jobs relate. I planned and led two card sorting studies together with the UX designer to test those assumptions. Study one was an open sort to surface the natural categories; study two (April 2026) was a hybrid sort with 15 participants (13 valid) designed to re-validate the first study's findings and stress-test whether a three-tab model — Home / Library / Settings — holds at scale. Participants could create their own categories, including "I don't need this."</p>
@@ -963,7 +974,7 @@
   <hr class="ia-rule">
 
   <!-- Phase 03: Support Tickets -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Phase 03 · Support Tickets</p>
     <h2 class="ub-title">Weighing the Pain: Controls Lead by a Wide Margin</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Support tickets capture the biggest pain points — people contact support because something matters enough to fix. 1,762 Px7 S3 customer support tickets, AI-categorised into 164 issue categories, gave a measure of the overall weight of each topic. Product controls and app functionality account for 524 tickets (30%). Streaming-specific issues account for 12 (0.7%).</p>
@@ -1025,7 +1036,7 @@
   <hr class="ia-rule">
 
   <!-- Phase 04: Dashboard -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Phase 04 · Dashboard Analytics</p>
     <h2 class="ub-title">Sizing the Domains: What the Behavioural Data Shows</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">The final phase put numbers on everything the previous three suggested. To understand the most-used parts of the app, ten behavioural signals were analysed across every major surface — product control interactions and streaming-service interaction counts — over a 6-month window. Four findings emerged.</p>
@@ -1033,7 +1044,7 @@
   </section>
 
   <!-- Finding 01 -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Dashboard · Finding 01</p>
     <h2 class="ub-title">Product Controls Dominate — by a Factor of 3×</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">When all control-side interactions are summed, the app's product control surfaces generate over 1.4 million interactions per month. Total streaming engagement runs at roughly 500k per month. Controls account for around 74% of all recorded app interactions, with streaming accounting for the remaining 26%.</p>
@@ -1218,7 +1229,7 @@
   <hr class="ia-rule">
 
   <!-- Finding 02 -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Dashboard · Finding 02</p>
     <h2 class="ub-title">Streaming Is Used — But Not for Discovery</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Streaming interactions are real and substantial at ~500k/month. But the nature of that engagement matters as much as the volume. Users are not using B&W's streaming hub to find new music — they are using it to continue what they were already listening to. The home page functions as a "resume" button, not a discovery surface.</p>
@@ -1328,7 +1339,7 @@
   <hr class="ia-rule">
 
   <!-- Finding 03 -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Dashboard · Finding 03</p>
     <h2 class="ub-title">Two Distinct User Profiles Within the Streaming Surface</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Search behaviour reveals that not all streaming users are alike. Browse plays and search selections show different service distributions — pointing to two separate user profiles with different needs and different IA requirements within the streaming layer.</p>
@@ -1391,7 +1402,7 @@
   <hr class="ia-rule">
 
   <!-- Finding 04 -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Dashboard · Finding 04</p>
     <h2 class="ub-title">A Sharp Usage Decline — and the Controls–Streaming Relationship</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Overall app usage declined significantly between April and May 2026. The steepness of the drop — particularly on the Settings surface — suggests a specific event may be involved: a firmware update, a compatibility issue, or an app store release. What the data does show is the relationship between the two surfaces when usage drops: controls and streaming fall together, with controls leading.</p>
@@ -1454,7 +1465,7 @@
   <hr class="ia-rule">
 
   <!-- Recommendation -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Recommendation</p>
     <h2 class="ub-title">The IA Hierarchy the Data Supports</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Taken together, the four research phases suggest a three-layer hierarchy, delivered through a four-tab navigation: <strong>Home / Library / Devices / Settings</strong>. Devices is the tab card sorting asked for and the dashboard named — a product listing for every owned speaker and headphone, pulling product management out of an overloaded Settings. Reviews, mental models, support weight and behavioural data all point consistently in the same direction, though the right balance would benefit from further user testing to validate.</p>
@@ -1508,7 +1519,7 @@
   <hr class="ia-rule">
 
   <!-- Wireframes -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Concept · Wireframes</p>
     <h2 class="ub-title">The Four-Tab IA, Sketched</h2>
     <p class="case-body" style="margin-top:20px; max-width:740px">Early wireframes translating the hierarchy into screens. Each surface is zoned by priority — what the research says users touch most sits highest. The bottom navigation carries the four tabs the studies converged on: <strong>Home / Library / Devices / Settings</strong>.</p>
@@ -1641,7 +1652,7 @@
   <hr class="ia-rule">
 
   <!-- Reflection -->
-  <section class="ia-section">
+  <section class="ia-section fade-in">
     <p class="ia-label">Reflection</p>
     <h2 class="ub-title">What I've learned so far </h2>
 
@@ -1665,7 +1676,7 @@
     </div>
   </section>
 
-  <footer class="ia-footer">
+  <footer class="ia-footer fade-in">
     <span>B&amp;W Music App &nbsp;·&nbsp; Information Architecture Case Study &nbsp;·&nbsp; June 2026</span>
     <span>4 research phases &nbsp;·&nbsp; 5,594 reviews &nbsp;·&nbsp; 2 card sort studies &nbsp;·&nbsp; 1,762 support tickets &nbsp;·&nbsp; 10 behavioural signals</span>
   </footer>
@@ -1695,6 +1706,16 @@
         }, { threshold: 0.1 });
         metaObs.observe(metaEl);
       }
+
+      var fadeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+      document.querySelectorAll('.fade-in').forEach(function(el) { fadeObserver.observe(el); });
     })();
   </script>
   <script src="../../js/transition.js"></script>
