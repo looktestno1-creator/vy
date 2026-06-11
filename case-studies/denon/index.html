@@ -14,6 +14,19 @@
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <style>
+    .case-meta.hero-anim { transition-delay: 900ms; }
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1);
+    }
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
   <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
 </head>
 <body>
@@ -103,7 +116,7 @@
     <header class="case-hero">
       <p class="case-eyebrow hero-anim">Digital experience</p>
       <h1 class="case-hero-title hero-anim">Vision for in-car user experience</h1>
-      <section class="case-meta">
+      <section class="case-meta hero-anim">
         <div>
           <p class="case-meta-label">Role</p>
           <ul class="case-scope-list">
@@ -125,7 +138,7 @@
 
     <!-- ── In-car experience ── -->
     <section style="display: flex; flex-direction: column; gap: 40px;">
-      <div class="dn-text-block">
+      <div class="dn-text-block fade-in">
         <p class="dn-label">In-car experience</p>
         <h2 class="dn-title">Spatial sound, visualised</h2>
         <p class="case-body">The primary screen gives driver and passenger individual control over their listening experience. Stereo and spatial modes are toggled from a shared top bar, while real-time audio visualisations — abstract, heat-mapped blobs — represent the sound field around each seat.</p>
@@ -134,7 +147,7 @@
     </section>
 
     <!-- ── Hero prototype embed ── -->
-    <h2 class="dn-title">Interactive prototype</h2>
+    <h2 class="dn-title fade-in">Interactive prototype</h2>
     <div class="dn-media-full dn-media-full--iframe">
       <iframe
         src="https://looktestno1-creator.github.io/Denon-auto/"
@@ -145,7 +158,7 @@
     </div>
 
     <!-- ── Overview ── -->
-    <div class="dn-chapter">
+    <div class="dn-chapter fade-in">
       <div class="dn-text">
         <p class="dn-label">Overview</p>
         <h2 class="dn-title">Denon automotive UI</h2>
@@ -163,7 +176,7 @@
     </div>
 
     <!-- ── Stats ── -->
-    <div class="dn-stats">
+    <div class="dn-stats fade-in">
       <div class="dn-stat">
         <span class="dn-stat-value">8</span>
         <span class="dn-stat-label">Team members across design and engineering</span>
@@ -182,7 +195,7 @@
 
 
     <!-- ── Out of car ── -->
-    <div class="dn-chapter dn-chapter--reverse">
+    <div class="dn-chapter dn-chapter--reverse fade-in">
       <div class="dn-text">
         <p class="dn-label">Out of car experience</p>
         <h2 class="dn-title">Sound beyond the vehicle</h2>
@@ -195,14 +208,14 @@
     </div>
 
     <!-- ── Animations ── -->
-    <div class="dn-dark-section">
+    <div class="dn-dark-section fade-in">
       <div class="dn-text-block">
         <p class="dn-label">Animations</p>
         <h2 class="dn-title">Motion tied to the music</h2>
         <p class="case-body">New animations were created specifically for personalised sound — the audio visualisations breathe and shift in response to the sound field, making the abstract feel tangible. Each preset has its own character: the default state is calm and symmetrical; personalised modes introduce asymmetry and warmth.</p>
         <p class="case-body">The animations were designed to be smooth and fluid — never distracting while driving, but noticeable when you glance at the screen.</p>
       </div>
-      <div class="dn-media-grid">
+      <div class="dn-media-grid fade-in">
         <div class="dn-media-cell">
           <video src="../../assets/videos/animations/denon-animation1.mp4" autoplay loop muted playsinline></video>
         </div>
@@ -214,17 +227,17 @@
 
     <!-- ── CES 2025 gallery ── -->
     <section style="display: flex; flex-direction: column; gap: 16px;">
-      <div class="dn-text-block">
+      <div class="dn-text-block fade-in">
         <p class="dn-label">CES 2025 — Las Vegas</p>
         <h2 class="dn-title">On the show floor</h2>
         <p class="case-body">The concept ran live at the Audio Foundry booth — a wrapped Tesla Model Y carrying the Denon gradient, with the interface on the car's native display. Alongside it: Denon's brand book extending the same visual language into print.</p>
       </div>
 
-      <div class="dn-media-full">
+      <div class="dn-media-full fade-in">
         <img src="../../assets/images/denon/ces-booth-car.webp" alt="Audio Foundry booth at CES 2025 — Denon-wrapped Tesla Model Y on the stand" loading="lazy" />
       </div>
 
-      <div class="dn-media-grid">
+      <div class="dn-media-grid fade-in">
         <div class="dn-media-cell">
           <img src="../../assets/images/denon/ces-car-side.webp" alt="Denon livery close-up — gradient wrap with Dirac, Tymphany and Sonified partner marks" loading="lazy" />
         </div>
@@ -233,21 +246,21 @@
         </div>
       </div>
 
-      <div class="dn-media-full">
+      <div class="dn-media-full fade-in">
         <img src="../../assets/images/denon/ces-booth-front.webp" alt="Front view of the demo car at the Audio Foundry booth, Denon, Dirac, Sonified and Tymphany marks on the bonnet" loading="lazy" />
       </div>
 
-      <div class="dn-text-block" style="margin-top: 24px;">
+      <div class="dn-text-block fade-in" style="margin-top: 24px;">
         <p class="dn-label">Inside the car</p>
         <h2 class="dn-title">The interface, live on the native display</h2>
         <p class="case-body">Inside the demo vehicle, the concept ran on the car's own centre screen — spatial seat visualisation, per-passenger Sound Focus, immersion control and the personalised sound blob, all responding in real time. Denon speakers were installed throughout the cabin, tying the interface to the sound it controls.</p>
       </div>
 
-      <div class="dn-media-full">
+      <div class="dn-media-full fade-in">
         <img src="../../assets/images/denon/ces-ui-display.webp" alt="The Denon automotive interface running live on the Tesla's native display — spatial seat view, immersion slider and passenger Sound Focus" loading="lazy" />
       </div>
 
-      <div class="dn-media-grid">
+      <div class="dn-media-grid fade-in">
         <div class="dn-media-cell" style="aspect-ratio: 4 / 3;">
           <img src="../../assets/images/denon/ces-ui-closeup.webp" alt="Close-up of the interface — Passenger Sound Focus with the personalised sound visualisation" loading="lazy" style="height: 100%; object-fit: cover;" />
         </div>
@@ -273,6 +286,26 @@
         if (!el) return;
         setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
       });
+
+      var metaEl = document.querySelector('.case-meta');
+      if (metaEl) {
+        var metaObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); }
+          });
+        }, { threshold: 0.1 });
+        metaObs.observe(metaEl);
+      }
+
+      var fadeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.fade-in').forEach(function(el) { fadeObserver.observe(el); });
     })();
   </script>
   <script src="../../js/transition.js"></script>
