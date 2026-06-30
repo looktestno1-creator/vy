@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PayCO — Fintech Wallet Case Study</title>
+  <meta name="description" content="Redesigning PayCO, a fintech wallet — app UX & UI, information architecture, a complete design system and a new marketing website, across iOS and Android." />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/payco.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <style>
+    .case-meta.hero-anim { transition-delay: 900ms; }
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1);
+    }
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="../../index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z"/></svg>
+      Back
+    </a>
+  </nav>
+
+  <main class="case-content">
+
+    <!-- ── Hero ── -->
+    <header class="case-hero">
+      <p class="case-eyebrow hero-anim">Fintech · App &amp; marketing site</p>
+      <h1 class="case-hero-title hero-anim">Redesigning PayCO, a fintech wallet — end to end</h1>
+      <p class="case-hero-sub hero-anim">PayCO helps people manage their everyday money through an intuitive wallet app. I led the redesign of both the app and the marketing website.</p>
+      <section class="case-meta hero-anim">
+        <div>
+          <p class="case-meta-label">Role</p>
+          <ul class="case-scope-list">
+            <li>Lead Product Designer (me)</li>
+            <li>UX &amp; UI</li>
+            <li>Design system &amp; illustration</li>
+            <li>Motion &amp; animation</li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-meta-label">Scope</p>
+          <p class="case-body">App UX &amp; UI, information architecture, a complete design system, and a new marketing website — rebuilt for both iOS and Android.</p>
+        </div>
+        <div>
+          <p class="case-meta-label">Duration</p>
+          <p class="case-body">6 weeks</p>
+        </div>
+      </section>
+    </header>
+
+    <!-- ── Hero image ── -->
+    <div class="pc-media-full">
+      <img src="../../assets/images/payco/payco-hero.jpg" alt="PayCO wallet — redesigned home screen on an iPhone, showing a £920.00 balance with quick actions and cashback" />
+    </div>
+
+    <!-- ── Overview ── -->
+    <section style="display: flex; flex-direction: column; gap: 32px;">
+      <div class="pc-text-block fade-in">
+        <p class="pc-label">Overview</p>
+        <h2 class="pc-title">An outdated app, an off-standard site</h2>
+        <p class="case-body">The app was outdated and needed a fresh look along with a completely redesigned UX to align with current user behaviours and patterns. The marketing website was equally dated — no longer in line with current UX &amp; UI fundamentals. My role was to redesign the UX &amp; UI of both the app and the marketing site.</p>
+      </div>
+      <div class="pc-media-grid fade-in">
+        <div class="pc-media-cell">
+          <img src="../../assets/images/payco/payco-web-1.jpg" alt="The PayCO marketing website on a laptop — a green hero with 'Easy, fast, secure.' and app store links" loading="lazy" />
+        </div>
+        <div class="pc-media-cell" style="background:#33484f;">
+          <img src="../../assets/images/payco/payco-home.jpg" alt="The redesigned PayCO home screen held in hand — £920.00 balance, quick actions and cashback offers" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Process ── -->
+    <section style="display: flex; flex-direction: column; gap: 24px;">
+      <div class="pc-text-block fade-in">
+        <p class="pc-label">Process</p>
+        <h2 class="pc-title">Reverse-engineering the product</h2>
+        <p class="case-body">The app was already coded but shipped without any documented flows or screens, so my first task was to reconstruct the journeys from screenshots of the live product. From there I ran internal stakeholder interviews to understand the scope and the problems, mapped the flows, catalogued issues as major or minor, and identified the primary and secondary actions, priorities and requirements that the redesign had to serve.</p>
+      </div>
+      <div class="pc-media-full fade-in">
+        <img src="../../assets/images/payco/payco-web-2.jpg" alt="PayCO marketing website sections across three laptops — 24/7 money transfer, cards and secure withdraw and deposit" loading="lazy" />
+      </div>
+    </section>
+
+    <!-- ── UX process — Before / After ── -->
+    <section style="display: flex; flex-direction: column; gap: 40px;">
+      <div class="pc-text-block fade-in">
+        <p class="pc-label">UX process</p>
+        <h2 class="pc-title">A new layout &amp; information architecture</h2>
+        <p class="case-body">I designed multiple iterations, taking the flows, requirements and limitations to the team for feedback every week, suggesting additional use cases and improvements along the way. The result was a renewed layout and information architecture — toggle below to compare the existing app with the redesign.</p>
+      </div>
+
+      <div class="pc-ba fade-in" id="payco-ba">
+        <div class="pc-ba-toggle" role="tablist" aria-label="Before and after comparison">
+          <button class="pc-ba-btn is-active" data-state="before" role="tab" aria-selected="true">Before</button>
+          <button class="pc-ba-btn" data-state="after" role="tab" aria-selected="false">After</button>
+        </div>
+        <div class="pc-ba-stage">
+          <img class="pc-ba-img is-active" data-state="before" src="../../assets/images/payco/payco-before.jpg" alt="The existing PayCO app — the old teal cards screen before the redesign" />
+          <img class="pc-ba-img" data-state="after" src="../../assets/images/payco/payco-cards.jpg" alt="The redesigned PayCO cards screen — clean layout with green accents and card controls" />
+        </div>
+      </div>
+
+      <div class="pc-media-full fade-in">
+        <img src="../../assets/images/payco/payco-screens.jpg" alt="A montage of redesigned PayCO app screens — home, accounts, transactions, spending summary and cards" loading="lazy" />
+      </div>
+    </section>
+
+    <!-- ── UI scope — design system ── -->
+    <section style="display: flex; flex-direction: column; gap: 40px;">
+      <div class="pc-text-block fade-in">
+        <p class="pc-label">UI scope</p>
+        <h2 class="pc-title">Crafting the UI &amp; design system</h2>
+        <p class="case-body">The UI was crafted around the established look and feel: a minimalist design with a clean off-white background, subtle grey sections and clear, well-defined divisions. I created the app illustrations, built the design system and styleguide, and led the visual direction for both the app and the website — with colours subtly adjusted to land the right feel.</p>
+      </div>
+      <div class="pc-media-full fade-in">
+        <img src="../../assets/images/payco/payco-design-system.png" alt="The PayCO design system — input and search states, custom illustrations for success, warnings and rewards, action buttons and the icon set on a dark navy canvas" loading="lazy" />
+      </div>
+      <div class="pc-chapter pc-chapter--reverse fade-in">
+        <div class="pc-text">
+          <p class="pc-label">Optimised flows</p>
+          <h2 class="pc-title">Single-tap key actions</h2>
+          <p class="case-body">New flows were optimised for both platforms, keeping the important actions — like sending money — front and centre, with motion and animation aligned to each platform's guidelines.</p>
+        </div>
+        <div class="pc-media-cell" style="background:#cfd4d8;">
+          <img src="../../assets/images/payco/payco-send.jpg" alt="The PayCO Send money flow — recipient details and a numeric keypad to enter an amount" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Brand identity ── -->
+    <section style="display: flex; flex-direction: column; gap: 40px;">
+      <div class="pc-text-block fade-in">
+        <p class="pc-label">Brand identity</p>
+        <h2 class="pc-title">A refreshed PayCO mark</h2>
+        <p class="case-body">The brand identity was updated alongside the product — a stacked "Pay / CO" mark in navy and lime that reads clearly at app-icon scale, in push notifications and across the marketing site.</p>
+      </div>
+      <div class="pc-media-grid fade-in">
+        <div class="pc-media-cell" style="background:var(--pc-navy);">
+          <img src="../../assets/images/payco/payco-app-icon.jpg" alt="The redesigned PayCO app icon — a stacked Pay / CO mark glowing on a dark home screen" loading="lazy" />
+        </div>
+        <div class="pc-media-cell" style="background:#0a1124;">
+          <img src="../../assets/images/payco/payco-notification.png" alt="A PayCO push notification on the lock screen — 'Money received. John Doe sent you £20.'" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Result ── -->
+    <section style="display: flex; flex-direction: column; gap: 32px;">
+      <div class="pc-text-block fade-in">
+        <p class="pc-label">Result</p>
+        <h2 class="pc-title">A completely new app</h2>
+        <p class="case-body">A renewed information architecture and flows, a new brand identity, a complete design system, a set of illustrations for features, warnings, success and error states, and new animations and app motion design aligned with iOS and Android guidelines.</p>
+      </div>
+      <div class="pc-stats fade-in">
+        <div class="pc-stat">
+          <span class="pc-stat-value">6 wks</span>
+          <span class="pc-stat-label">End-to-end redesign — app and marketing site</span>
+        </div>
+        <div class="pc-stat">
+          <span class="pc-stat-value">2</span>
+          <span class="pc-stat-label">Platforms — flows optimised for iOS &amp; Android</span>
+        </div>
+        <div class="pc-stat">
+          <span class="pc-stat-value">1</span>
+          <span class="pc-stat-label">Complete design system, with custom illustrations and states</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      var arriving = sessionStorage.getItem('pt-arriving') === '1';
+      var elems = [
+        document.querySelector('.case-eyebrow'),
+        document.querySelector('.case-hero-title'),
+        document.querySelector('.case-hero-sub'),
+      ];
+      var base    = arriving ? 680 : 150;
+      var stagger = [0, 140, 260];
+      elems.forEach(function (el, i) {
+        if (!el) return;
+        setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
+      });
+
+      var metaEl = document.querySelector('.case-meta');
+      if (metaEl) {
+        var metaObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); }
+          });
+        }, { threshold: 0.1 });
+        metaObs.observe(metaEl);
+      }
+
+      var fadeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.fade-in').forEach(function(el) { fadeObserver.observe(el); });
+
+      // ── Before / After switch ──
+      var ba = document.getElementById('payco-ba');
+      if (ba) {
+        var btns = ba.querySelectorAll('.pc-ba-btn');
+        var imgs = ba.querySelectorAll('.pc-ba-img');
+        btns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var state = btn.getAttribute('data-state');
+            btns.forEach(function (b) {
+              var on = b.getAttribute('data-state') === state;
+              b.classList.toggle('is-active', on);
+              b.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            imgs.forEach(function (im) {
+              im.classList.toggle('is-active', im.getAttribute('data-state') === state);
+            });
+            gtag('event', 'payco_before_after', { state: state });
+          });
+        });
+      }
+    })();
+  </script>
+  <script src="../../js/transition.js"></script>
+</body>
+</html>

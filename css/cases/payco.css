@@ -1,0 +1,278 @@
+/* ── PayCO fintech wallet case study ── */
+
+:root {
+  --pc-lime: #9EE635;
+  --pc-navy: #0E1A33;
+}
+
+/* Wider canvas — larger visuals */
+.case-content { max-width: 1320px; }
+
+.case-hero { max-width: none; }
+
+/* ─────────────────────────────────────────────
+   Before / After switch
+───────────────────────────────────────────── */
+.pc-ba {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pc-ba-toggle {
+  align-self: center;
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 100px;
+}
+
+.pc-ba-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #5a5a5a;
+  padding: 10px 30px;
+  border-radius: 100px;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pc-ba-btn.is-active {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+}
+
+.pc-ba-btn[data-state="after"].is-active {
+  background: var(--pc-lime);
+  color: #18240a;
+}
+
+.pc-ba-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2100 / 1460;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.pc-ba-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.pc-ba-img.is-active { opacity: 1; }
+
+/* ─────────────────────────────────────────────
+   Case meta — 3-column override
+───────────────────────────────────────────── */
+.case-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ─────────────────────────────────────────────
+   Full-width image / video block
+───────────────────────────────────────────── */
+.pc-media-full {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--pc-navy);
+}
+
+.pc-media-full img,
+.pc-media-full video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.pc-caption {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #8a8a8a;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   Chapter: 2-column
+───────────────────────────────────────────── */
+.pc-chapter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 10vh 0;
+}
+
+.pc-chapter > * { min-width: 0; }
+
+.pc-chapter--reverse { direction: rtl; }
+.pc-chapter--reverse > * { direction: ltr; }
+
+/* ─────────────────────────────────────────────
+   Text blocks
+───────────────────────────────────────────── */
+.pc-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: none;
+}
+
+.pc-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─────────────────────────────────────────────
+   Typography
+───────────────────────────────────────────── */
+.pc-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.pc-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+
+/* ─────────────────────────────────────────────
+   Media grid (2-up)
+───────────────────────────────────────────── */
+.pc-media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pc-media-cell {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--pc-navy);
+}
+
+.pc-media-cell img,
+.pc-media-cell video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────
+   Before / after
+───────────────────────────────────────────── */
+.pc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.06);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #555;
+  width: fit-content;
+}
+
+.pc-tag--after {
+  background: var(--pc-lime);
+  color: #18240a;
+}
+
+.pc-ba-cell { display: flex; flex-direction: column; gap: 16px; }
+
+/* ─────────────────────────────────────────────
+   Stats row
+───────────────────────────────────────────── */
+.pc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pc-stat {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+}
+
+.pc-stat:last-child { border-right: none; }
+
+.pc-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
+}
+
+.pc-stat-label {
+  font-size: 14px;
+  color: #8a8a8a;
+  line-height: 1.4;
+}
+
+/* ─────────────────────────────────────────────
+   Dark section (PayCO navy)
+───────────────────────────────────────────── */
+.pc-dark-section {
+  background: var(--pc-navy);
+  border-radius: 20px;
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.pc-dark-section .pc-label { color: var(--pc-lime); }
+.pc-dark-section .pc-title { color: #fff; }
+.pc-dark-section .case-body { color: rgba(255,255,255,0.65); }
+
+/* ─────────────────────────────────────────────
+   Mobile
+───────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .case-content  { padding: 40px 20px 80px; gap: 48px; }
+  .case-hero-title { font-size: 36px; }
+  .pc-title      { font-size: 28px; }
+  .case-meta     { grid-template-columns: 1fr; gap: 32px; }
+  .pc-chapter    { grid-template-columns: 1fr; gap: 32px; padding: 6vh 0; }
+  .pc-chapter--reverse { direction: ltr; }
+  .pc-media-grid { grid-template-columns: 1fr; gap: 12px; }
+  .pc-stats      { grid-template-columns: 1fr; }
+  .pc-stat       { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .pc-stat:last-child { border-bottom: none; }
+  .pc-dark-section { padding: 32px 24px; }
+}

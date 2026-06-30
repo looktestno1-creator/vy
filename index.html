@@ -73,7 +73,7 @@
           <img src="assets/images/hero/cover1.webp" alt="Bowers & Wilkins — hand holding phone" class="card-img-cover" />
         </div>
         <div class="card-text">
-          <p class="card-brand hero-anim">1/3</p>
+          <p class="card-brand hero-anim">1/4</p>
           <h2 class="card-title hero-anim">Designing end-to-end experiences: Bowers & Wilkins</h2>
             <a class="read-more hero-anim" href="case-studies/bw/index.html" id="bw-read-more">
               Read more
@@ -120,7 +120,7 @@
           <img src="assets/images/hero/image1.webp" alt="Denon in-car UI" class="card-img-denon" loading="lazy" />
         </div>
         <div class="card-text">
-          <p class="card-brand hero-anim">2/3</p>
+          <p class="card-brand hero-anim">2/4</p>
           <h2 class="card-title hero-anim">Vision for in-car user experience</h2>
           <a class="read-more hero-anim" href="case-studies/denon/" id="denon-read-more" aria-label="Read more about Denon in-car user experience">
             Read more
@@ -129,7 +129,24 @@
         </div>
       </article>
 
-      <!-- Card 3: Denon — healing -->
+      <!-- Card 3: PayCO — fintech wallet -->
+      <article class="card">
+        <div class="card-image card-image--payco">
+          <video class="card-vid-payco" autoplay loop muted playsinline aria-label="PayCO fintech wallet — redesigned app, front view">
+            <source src="assets/videos/PayCO/PayCO-Front-view-lottie_2.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="card-text">
+          <p class="card-brand hero-anim">3/4</p>
+          <h2 class="card-title hero-anim">Redesigning a fintech wallet, end to end: PayCO</h2>
+          <a class="read-more hero-anim" href="case-studies/payco/index.html" id="payco-read-more" aria-label="Read more about the PayCO fintech wallet redesign">
+            Read more
+            <img src="assets/icons/arrow_right.svg" alt="" class="btn-arrow" aria-hidden="true" />
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 4: Denon — healing -->
       <article class="card">
         <div class="card-image">
 
@@ -151,7 +168,7 @@
           </div>
         </div>
         <div class="card-text">
-          <p class="card-brand hero-anim">3/3</p>
+          <p class="card-brand hero-anim">4/4</p>
           <h2 class="card-title hero-anim">Building a Multisensory Product Experience for a Premium Audio Brand</h2>
           <p class="card-brand hero-anim">Coming soon</p>
         </div>
@@ -251,7 +268,10 @@
       // Card image parallax — desktop only; clear transforms on smaller screens
       if (window.innerWidth <= 1024) {
         cardImages.forEach((img) => {
-          Array.from(img.children).forEach((child) => { child.style.transform = ''; });
+          Array.from(img.children).forEach((child) => {
+            if (child.classList.contains('card-vid-payco')) return;
+            child.style.transform = '';
+          });
         });
       } else {
         cardImages.forEach((img) => {
@@ -259,7 +279,9 @@
           const mid = (r.top + r.height / 2) - vh / 2;
 
           Array.from(img.children).forEach((child) => {
-            if (child.classList.contains('card-img-cover')) {
+            if (child.classList.contains('card-vid-payco')) {
+              return;
+            } else if (child.classList.contains('card-img-cover')) {
               child.style.transform = `translate3d(-50%,${mid * 0.2}px,0)`;
             } else if (child.classList.contains('blob-wrap')) {
               child.style.transform = `translate3d(0,${mid * 0.13}px,0)`;
@@ -366,6 +388,21 @@
     }, { threshold: 0.25 });
 
     document.querySelectorAll('.card-text').forEach(ct => cardTextObserver.observe(ct));
+
+    // ── PayCO video scale-up reveal (from the bottom) ──
+    const paycoVid = document.querySelector('.card-vid-payco');
+    if (paycoVid) {
+      const paycoVidObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, { threshold: 0.35 });
+      paycoVidObserver.observe(paycoVid);
+    }
 
   </script>
   <script src="js/transition.js"></script>
