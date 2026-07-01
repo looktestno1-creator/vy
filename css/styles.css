@@ -131,6 +131,10 @@ body {
   height: 800px;
   flex-shrink: 0;
   will-change: transform;
+  /* Skip rendering off-screen cards (layout/paint/raster). auto remembers the
+     real size once painted, so heights stay correct across breakpoints. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px auto 800px;
 }
 
 /* Left image pane */

@@ -269,7 +269,9 @@
       // Header parallax (cheap composited translate) + blur driven by overlap.
       headerSection.style.transform = `translate3d(0,${(scrollY * 0.7).toFixed(1)}px,0)`;
       const overlap = Math.max(0, headerRect.bottom - cardRects[0].top);
-      const blurPx  = snap(Math.min(20, overlap * 0.08), 1);   // quantise → few re-blurs
+      // Cap the radius (blur cost grows with radius) and quantise to 2px steps
+      // so the expensive Gaussian repaint fires as rarely as possible.
+      const blurPx  = snap(Math.min(14, overlap * 0.08), 2);
       if (blurPx !== lastBlur) {
         headerSection.style.filter = blurPx > 0 ? `blur(${blurPx}px)` : '';
         lastBlur = blurPx;
