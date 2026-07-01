@@ -392,15 +392,16 @@
     // ── PayCO video scale-up reveal (from the bottom) ──
     const paycoVid = document.querySelector('.card-vid-payco');
     if (paycoVid) {
+      // One-shot reveal: play the scale-up once, then stop observing so
+      // scrolling back and forth past the threshold can't re-trigger it.
       const paycoVidObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-          } else {
-            entry.target.classList.remove('is-visible');
+            paycoVidObserver.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.35 });
+      }, { threshold: 0.3, rootMargin: '0px 0px -8% 0px' });
       paycoVidObserver.observe(paycoVid);
     }
 
