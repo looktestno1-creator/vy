@@ -241,68 +241,80 @@
     const cardImages    = document.querySelectorAll('.card-image');
     const cards         = document.querySelectorAll('.card');
     let rafId = null;
+    let lastBlur = -1;
+    let isDesktop = window.innerWidth > 1024;
+
+    // Snap a value to a fixed step so we emit far fewer distinct transform/
+    // filter values — each unique scale or blur radius otherwise forces the
+    // GPU to re-rasterise, which is what made the cards stutter on scroll.
+    const snap = (v, s) => Math.round(v / s) * s;
 
     function updateParallax() {
+      rafId = null;
       const scrollY = window.scrollY;
       const vh = window.innerHeight;
 
       // ── Batch reads ──
-      const headerRect   = headerSection.getBoundingClientRect();
-      const firstCardTop = cards[0].getBoundingClientRect().top;
-
-      const cardScales = Array.from(cards).map((card) => {
-        const r = card.getBoundingClientRect();
-        const visiblePx = Math.max(0, Math.min(vh, r.bottom) - Math.max(0, r.top));
-        const ratio     = visiblePx / Math.min(r.height, vh);
-        return 0.9 + ratio * 0.1;
-      });
+      const headerRect = headerSection.getBoundingClientRect();
+      const cardRects  = Array.from(cards, (c) => c.getBoundingClientRect());
+      const imgMids    = isDesktop
+        ? Array.from(cardImages, (img) => {
+            const r = img.getBoundingClientRect();
+            return (r.top + r.height / 2) - vh / 2;
+          })
+        : null;
 
       // ── Batch writes ──
 
-      // Header parallax + blur driven by card overlap
-      const overlap  = Math.max(0, headerRect.bottom - firstCardTop);
-      const blurPx   = Math.min(20, overlap * 0.08);
-      headerSection.style.transform = `translate3d(0,${scrollY * 0.7}px,0)`;
-      headerSection.style.filter    = blurPx > 0 ? `blur(${blurPx}px)` : '';
+      // Header parallax (cheap composited translate) + blur driven by overlap.
+      headerSection.style.transform = `translate3d(0,${(scrollY * 0.7).toFixed(1)}px,0)`;
+      const overlap = Math.max(0, headerRect.bottom - cardRects[0].top);
+      const blurPx  = snap(Math.min(20, overlap * 0.08), 1);   // quantise → few re-blurs
+      if (blurPx !== lastBlur) {
+        headerSection.style.filter = blurPx > 0 ? `blur(${blurPx}px)` : '';
+        lastBlur = blurPx;
+      }
 
-      // Card image parallax — desktop only; clear transforms on smaller screens
-      if (window.innerWidth <= 1024) {
-        cardImages.forEach((img) => {
+      // Card image parallax — desktop only.
+      if (isDesktop) {
+        cardImages.forEach((img, idx) => {
+          const mid = imgMids[idx];
           Array.from(img.children).forEach((child) => {
             if (child.classList.contains('card-vid-payco')) return;
-            child.style.transform = '';
-          });
-        });
-      } else {
-        cardImages.forEach((img) => {
-          const r = img.getBoundingClientRect();
-          const mid = (r.top + r.height / 2) - vh / 2;
-
-          Array.from(img.children).forEach((child) => {
-            if (child.classList.contains('card-vid-payco')) {
-              return;
-            } else if (child.classList.contains('card-img-cover')) {
-              child.style.transform = `translate3d(-50%,${mid * 0.2}px,0)`;
-            } else if (child.classList.contains('blob-wrap')) {
-              child.style.transform = `translate3d(0,${mid * 0.13}px,0)`;
-            } else if (child.classList.contains('card-img-bottom')) {
-              child.style.transform = `translate3d(0,${mid * 0.04}px,0)`;
-            } else {
-              child.style.transform = `translate3d(0,${mid * 0.1}px,0)`;
-            }
+            let ty, tx = '0';
+            if (child.classList.contains('card-img-cover'))       { ty = mid * 0.2;  tx = '-50%'; }
+            else if (child.classList.contains('blob-wrap'))       { ty = mid * 0.13; }
+            else if (child.classList.contains('card-img-bottom')) { ty = mid * 0.04; }
+            else                                                  { ty = mid * 0.1;  }
+            const next = `translate3d(${tx},${Math.round(ty)}px,0)`;
+            if (child._pt !== next) { child.style.transform = next; child._pt = next; }
           });
         });
       }
 
-      // Card scale: 0.9 off-screen → 1.0 fully visible
+      // Card scale: 0.9 off-screen → 1.0 fully visible (snapped to cut re-rasters).
       cards.forEach((card, i) => {
-        card.style.transform = `scale(${cardScales[i].toFixed(4)})`;
+        const r = cardRects[i];
+        const visiblePx = Math.max(0, Math.min(vh, r.bottom) - Math.max(0, r.top));
+        const ratio     = visiblePx / Math.min(r.height, vh);
+        const scale     = snap(0.9 + ratio * 0.1, 0.005);
+        if (card._ps !== scale) { card.style.transform = `scale(${scale})`; card._ps = scale; }
       });
-
-      rafId = null;
     }
 
     window.addEventListener('scroll', () => {
+      if (!rafId) rafId = requestAnimationFrame(updateParallax);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      isDesktop = window.innerWidth > 1024;
+      // Leaving desktop: clear any parallax offsets left on the children.
+      if (!isDesktop) {
+        cardImages.forEach((img) => Array.from(img.children).forEach((child) => {
+          if (child.classList.contains('card-vid-payco')) return;
+          child.style.transform = ''; child._pt = '';
+        }));
+      }
       if (!rafId) rafId = requestAnimationFrame(updateParallax);
     }, { passive: true });
 
