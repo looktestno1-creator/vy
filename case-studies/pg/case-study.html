@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Re-Designing Payment Gateway Platform — UX Case Study</title>
+  <meta name="description" content="Redesigning a payment gateway platform with 450+ screens — a step-by-step UX case study: research, IA rebuild, card sorting, UX anatomy, styleguide, design system and before/after dashboards." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yvefa.com/case-studies/pg/case-study.html" />
+  <meta property="og:title" content="Payment Gateway Platform — UX Case Study — Vefa Yilmaz" />
+  <meta property="og:description" content="A step-by-step UX case study: research, IA rebuild, card sorting, UX anatomy, styleguide, design system and before/after dashboards." />
+  <meta property="og:image" content="https://yvefa.com/assets/images/pg/works-wide.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://yvefa.com/assets/images/pg/works-wide.jpg" />
+  <link rel="canonical" href="https://yvefa.com/case-studies/pg/case-study.html" />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=DM+Sans:wght@600&family=Inter:wght@400;600&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/pg.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="./index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z"/></svg>
+      Back
+    </a>
+  </nav>
+
+  <main class="pg-page">
+
+    <!-- ── Hero ── -->
+    <header class="pg-hero">
+      <h1 class="pg-hero-title hero-anim">Re-designing payment <br />gateway platform</h1>
+      <div class="pg-stats hero-anim">
+        <div class="pg-stat"><span class="pg-stat-num">13000+</span><span class="pg-stat-label">users</span></div>
+        <div class="pg-stat"><span class="pg-stat-num">3</span><span class="pg-stat-label">platforms</span></div>
+        <div class="pg-stat"><span class="pg-stat-num">10+</span><span class="pg-stat-label">brands</span></div>
+        <div class="pg-stat"><span class="pg-stat-num">420+</span><span class="pg-stat-label">hrs</span></div>
+      </div>
+    </header>
+
+    <!-- ── Timeline ── -->
+    <div class="pg-timeline">
+
+      <!-- Start -->
+      <div class="pg-node pg-node--start">
+        <span class="pg-node-pill">Start</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <!-- Intro -->
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Intro</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="2048" height="768" src="../../assets/images/pg/intro-overview.png" alt="Overview of the existing payment gateway platform — a sprawling map of 450+ screens" loading="lazy" />
+          </div>
+          <p class="pg-intro-text">Redesigning a platform with over 450 screens was a significant challenge. Breaking down major tasks into smaller, manageable sub-tasks and creating detailed to-do lists was essential for clear communication with internal stakeholders and maintaining an organized workflow.</p>
+          <div class="pg-mini-cards">
+            <div class="pg-mini-card">
+              <h3>Users were unhappy with the experience</h3>
+              <p>PMs got called directly by customers to ask about where a specific feature was, or certain things could be done.</p>
+            </div>
+            <div class="pg-mini-card">
+              <h3>Non-scalable platform</h3>
+              <p>the existing platform wasn't scalable. Additional features were all added into a top navigation bar where a "more" icon would reveal all sub-menu items.</p>
+            </div>
+            <div class="pg-mini-card">
+              <h3>The platform needed new foundations for IA, UX, UI, and design library that is scalable, flexible, simple, clear, and most of all, understandable.</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 1 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 1 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>The plan</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="2048" height="958" src="../../assets/images/pg/plan-roadmap.png" alt="Weekly roadmap board with detailed UX tasks and to-do lists" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Need</h3>
+              <div class="pg-row-text"><p>Capture all major and minor UX tasks to document progress.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Created a roadmap for every week and added detailed tasks to track the progress + define all steps needed.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text">
+                <p>Transparent communication with the internal stakeholders</p>
+                <p>A solid foundation for long-term UX and UI task management within the team.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 2 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 2 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Stakeholder interviews</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <iframe class="pg-video-frame" style="aspect-ratio:426/240" src="https://player.vimeo.com/video/935992433?muted=1&amp;autoplay=1&amp;autopause=0&amp;loop=1" title="Stakeholder interviews — documented flows walkthrough" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Need</h3>
+              <div class="pg-row-text"><p>Getting more information about everything. (needs, short term and long term plans, team dynamics, customer feedback)</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>16+ hours of calls with the internal team (PM, PO, Dev). Identified user types, account types, and actions taken by each.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text"><p>A comprehensive documentation of existing flows, with additional notes, flowcharts, and details. This became the foundation for the entire project moving forward.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- more on step 2 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">More on step 2</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Understanding user profiles / personas</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="2048" height="742" src="../../assets/images/pg/personas.png" alt="User profiles and personas mapped with their actions and requirements" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Need</h3>
+              <div class="pg-row-text"><p>Listing actions and requirements for each user profile / persona.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Aligning with the PMs, understanding the scope of actions</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text"><p>Inventory of actions in order of user profile hierarchy</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 3 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 3 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Competitor analysis</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="2048" height="1065" src="../../assets/images/pg/competitor-analysis.png" alt="Competitor analysis board comparing flows, screens, features and patterns" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Need</h3>
+              <div class="pg-row-text"><p>Understanding the common patterns, industry best practices, primary competitors, UX &amp; UI decisions.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Comprehensive competitor analysis of flows, screens, features, patterns.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text"><p>A comprehensive report of competitors, capturing their strengths, weaknesses, user flows, interactions which later informed improvements areas.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 4 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 4 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Benchmark report</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="1966" height="2048" src="../../assets/images/pg/benchmark-report.png" alt="Benchmark report summarising flows with pros and cons" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Need</h3>
+              <div class="pg-row-text"><p>The board of benchmark flows was too big and too difficult to follow. I needed a clean, neat summary.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Created a report summarising flows, assessing pros and cons, to summarise all of the findings.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text"><p>It saved us a lot of time and i was able to use this report as a reference point for certain decisions - going back and forth between pros and cons of every option i iterated.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 5 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 5 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Content audit</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="2048" height="1459" src="../../assets/images/pg/content-audit-board.png" alt="Content audit board covering the full platform inventory" loading="lazy" />
+          </div>
+          <div class="pg-media pg-media--duo">
+            <img width="2048" height="1545" src="../../assets/images/pg/content-audit-groups.png" alt="Content audit — screens grouped by colour-coded categories" loading="lazy" />
+            <div class="pg-duo-right">
+              <img width="2048" height="1540" src="../../assets/images/pg/content-audit-screens.png" alt="Content audit — detailed screen-by-screen inventory" loading="lazy" />
+              <div class="pg-stat-badge"><span class="pg-stat-num">410+</span><span class="pg-stat-label">screens</span></div>
+            </div>
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Need</h3>
+              <div class="pg-row-text"><p>The board of benchmark flows was too big and too difficult to follow. I needed a clean, neat summary.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Created a report summarising flows, assessing pros and cons, to summarise all of the findings.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text"><p>It saved us a lot of time and i was able to use this report as a reference point for certain decisions - going back and forth between pros and cons of every option i iterated.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 6 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 6 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Deconstructing the existing platform</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media-pair">
+            <div class="pg-media">
+              <img width="2048" height="919" src="../../assets/images/pg/deconstruct-flows.png" alt="Deconstructed merchant details screen broken into content blocks" loading="lazy" />
+            </div>
+            <div class="pg-media">
+              <img width="1994" height="2048" src="../../assets/images/pg/deconstruct-inventory.png" alt="Inventory list of must-haves for the most important screens" loading="lazy" />
+            </div>
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Problem</h3>
+              <div class="pg-row-text"><p>The main problem was the hierarchy of content and confusing information architecture.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text">
+                <p>Deconstructed the most important screens (such as the merchant details screen)</p>
+                <p>Created an inventory list of must-haves for the most important screens.</p>
+              </div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text">
+                <p>This exercise set the tone for the upcoming tasks and revealed that the entire platform could be streamlined into two interchangeable templates. I identified that only two templates were needed to support the primary user actions and the most common interactions:</p>
+                <ul>
+                  <li>A <strong>summarized view</strong> for content categories (e.g., transactions, merchants, customers).</li>
+                  <li>A <strong>detailed view</strong> for individual content items within a category (e.g., a single transaction, merchant, or customer).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 7 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 7 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Rebuilding the IA</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="1788" height="1282" src="../../assets/images/pg/ia-colour-groups.png" alt="Screens grouped into colour-coded categories to rebuild the information architecture" loading="lazy" />
+          </div>
+          <div class="pg-media">
+            <img width="1880" height="1516" src="../../assets/images/pg/ia-descriptions.png" alt="Written descriptions compiled for each colour-grouped screen cluster" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Problem</h3>
+              <div class="pg-row-text"><p>The main problem was the hierarchy of content and confusing information architecture.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text">
+                <p>Deconstructed the most important screens (such as the merchant details screen)</p>
+                <p>Created an inventory list of must-haves for the most important screens.</p>
+              </div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text">
+                <p>This exercise set the tone for the upcoming tasks and revealed that the entire platform could be streamlined into two interchangeable templates. I identified that only two templates were needed to support the primary user actions and the most common interactions:</p>
+                <ul>
+                  <li>A <strong>summarized view</strong> for content categories (e.g., transactions, merchants, customers).</li>
+                  <li>A <strong>detailed view</strong> for individual content items within a category (e.g., a single transaction, merchant, or customer).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 8 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 8 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>User testing / card sorting</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="1710" height="1218" src="../../assets/images/pg/card-sorting.png" alt="Card sorting session results — groupings mapped against team mental models" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Problem</h3>
+              <div class="pg-row-text"><p>Having compiled descriptions for the colour-grouped screens, i had to find a way to asses the effectiveness and intuitiveness of the groupings.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Facilitated card sorting sessions with the internal team to assess how well the groupings align with their mental models.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text">
+                <p>Identified Common Themes and discrepancies in groupings.</p>
+                <p>Improved Labeling</p>
+                <p>Gathered insights for navigation improvements.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 9 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 9 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>The IA</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="2048" height="1724" src="../../assets/images/pg/ia-final.png" alt="The new information architecture — left panel navigation divided into three sections" loading="lazy" />
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row">
+              <h3>Problem</h3>
+              <div class="pg-row-text">
+                <p>The existing navigation</p>
+                <ul>
+                  <li>Grouped all content categories in a single location,</li>
+                  <li>lacked a clear structure,</li>
+                  <li>Did not adhere to a proper UX structure.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="pg-row">
+              <h3>Action</h3>
+              <div class="pg-row-text"><p>Organized menu items based on relevance, user profiles, and insights from card sorting results.</p></div>
+            </div>
+            <div class="pg-row">
+              <h3>Result</h3>
+              <div class="pg-row-text"><p><strong>Enhanced content discovery:</strong> By dividing the left panel into three sections, I developed a scalable solution. The top section is visible to all users, the second section is designated for administrative accounts, and the final section is reserved for platform-related actions, which is aimed to reduce the cognitive load.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- step 10 -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">step 10 of 10</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>UX Anatomy</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media pg-media--cols">
+            <div class="pg-media-col">
+              <p>Table view</p>
+              <img width="2048" height="1456" src="../../assets/images/pg/ux-table-view.png" alt="UX anatomy — the table view template" loading="lazy" />
+            </div>
+            <div class="pg-media-col">
+              <p>Preview</p>
+              <img width="2048" height="1456" src="../../assets/images/pg/ux-preview.png" alt="UX anatomy — the preview panel template" loading="lazy" />
+            </div>
+            <div class="pg-media-col">
+              <p>Detail view</p>
+              <img width="1440" height="1024" src="../../assets/images/pg/ux-detail-view.png" alt="UX anatomy — the detail view template" loading="lazy" />
+            </div>
+          </div>
+          <div class="pg-rows">
+            <div class="pg-row pg-row--full">
+              <div class="pg-row-text">
+                <p>In terms of UX, these 3 screens cover %80 of the platform requirements. As previously mentioned, the need was to have</p>
+                <ul>
+                  <li>A <strong>summarized view</strong> for content categories (e.g., transactions, merchants, customers).</li>
+                  <li>A <strong>detailed view</strong> for individual content items within a category (e.g., a single transaction, merchant, or customer).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- UX -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">UX</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Anatomy in action</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <iframe class="pg-video-frame" style="aspect-ratio:314/240" src="https://player.vimeo.com/video/929637874?muted=1&amp;autoplay=1&amp;autopause=0&amp;loop=1" title="UX anatomy in action — interactive walkthrough" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- UI -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">UI</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>The look &amp; feel</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <iframe class="pg-video-frame" style="aspect-ratio:300/240" src="https://player.vimeo.com/video/929649229?muted=1&amp;autoplay=1&amp;autopause=0&amp;loop=1" title="The look and feel — UI walkthrough" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Styleguide -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">Styleguide</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Colours</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media pg-media--tall">
+            <img width="1569" height="2048" src="../../assets/images/pg/styleguide-colours.png" alt="Styleguide — the colour palette" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Typography</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media pg-media--tall">
+            <img width="1287" height="2048" src="../../assets/images/pg/styleguide-typography.png" alt="Styleguide — the typography scale" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Iconography</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media pg-media--tall">
+            <img width="976" height="1052" src="../../assets/images/pg/styleguide-iconography.png" alt="Styleguide — the icon set" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Design system -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">Design system</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <div class="pg-card-title"><h2>Navigation components</h2></div>
+        <div class="pg-card-body">
+          <div class="pg-media">
+            <img width="1657" height="2048" src="../../assets/images/pg/ds-navigation.png" alt="Design system — navigation component variants and states" loading="lazy" style="max-height:592px;width:auto;" />
+            <img width="384" height="1064" src="../../assets/images/pg/ds-navigation-mini.png" alt="Design system — compact navigation variant" loading="lazy" style="max-height:395px;width:auto;" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Before / after -->
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-pill">Before / after</span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <button class="pg-card-title pg-ba-head" type="button" aria-pressed="false" aria-label="Toggle between before and after — Main dashboard redesign">
+          <h2>Main dashboard redesign</h2>
+          <span class="pg-switch"><span class="pg-switch-knob"></span></span>
+        </button>
+        <div class="pg-card-body">
+          <div class="pg-media pg-ba-stage">
+            <img width="2048" height="1052" class="is-active" src="../../assets/images/pg/ba-main-before.png" alt="Main dashboard before the redesign" loading="lazy" />
+            <img width="2048" height="1052" src="../../assets/images/pg/ba-main-after.png" alt="Main dashboard after the redesign" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <div class="pg-node">
+        <span class="pg-node-line"></span>
+        <span class="pg-node-line"></span>
+      </div>
+
+      <section class="pg-card">
+        <button class="pg-card-title pg-ba-head" type="button" aria-pressed="false" aria-label="Toggle between before and after — Dashboard redesign">
+          <h2>Dashboard redesign</h2>
+          <span class="pg-switch"><span class="pg-switch-knob"></span></span>
+        </button>
+        <div class="pg-card-body">
+          <div class="pg-media pg-ba-stage">
+            <img width="2048" height="1535" class="is-active" src="../../assets/images/pg/ba-dash-before.png" alt="Detail dashboard before the redesign" loading="lazy" />
+            <img width="2048" height="1535" src="../../assets/images/pg/ba-dash-after.png" alt="Detail dashboard after the redesign" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+
+        <div class="footer-cta">
+          <h2 class="footer-heading">
+            <span class="footer-h-row">Let's&nbsp;<span class="footer-cycle-wrap"><span class="footer-cycle-track"><span>discover</span><span>work</span><span>create</span><span>discover</span></span></span></span>
+            <span class="footer-h-row">together</span>
+          </h2>
+          <a class="footer-btn" href="mailto:hi@yvefa.com">
+            Get In Touch
+            <span class="footer-btn-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></svg>
+            </span>
+          </a>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="footer-contact">
+            <p class="footer-label">Contact</p>
+            <a href="mailto:hi@yvefa.com" class="footer-email">hi@yvefa.com</a>
+          </div>
+          <div class="footer-socials">
+            <a class="footer-social-btn" href="https://www.behance.net/yvefa" target="_blank" rel="noopener" aria-label="Behance">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.82,121.39A42,42,0,0,0,86,52H32A12,12,0,0,0,20,64V192a12,12,0,0,0,12,12H90a46,46,0,0,0,27.82-82.61ZM44,76H86a18,18,0,0,1,0,36H44ZM90,180H44V136H90a22,22,0,0,1,0,44ZM156,76a12,12,0,0,1,12-12h64a12,12,0,0,1,0,24H168A12,12,0,0,1,156,76Zm44,24a52,52,0,0,0,0,104,51.45,51.45,0,0,0,22.7-5.21,12,12,0,1,0-10.49-21.58A27.73,27.73,0,0,1,200,180a28.05,28.05,0,0,1-25.3-16H240a12,12,0,0,0,12-12A52.06,52.06,0,0,0,200,100Zm-25.3,40a28,28,0,0,1,50.6,0Z"/></svg>
+            </a>
+            <a class="footer-social-btn" href="https://linkedin.com/in/yvefa/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,20H40A20,20,0,0,0,20,40V216a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V40A20,20,0,0,0,216,20Zm-4,192H44V44H212ZM112,176V124a12,12,0,0,1,21.43-7.41A40,40,0,0,1,192,152v24a12,12,0,0,1-24,0V152a16,16,0,0,0-32,0v24a12,12,0,0,1-24,0ZM96,124v52a12,12,0,0,1-24,0V124a12,12,0,0,1,24,0ZM68,80A16,16,0,1,1,84,96,16,16,0,0,1,68,80Z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-copyright">
+          <p>Vefa Yilmaz © 2026</p>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      // ── Hero entrance ──
+      var arriving = sessionStorage.getItem('pt-arriving') === '1';
+      var base = arriving ? 680 : 150;
+      [document.querySelector('.pg-hero-title'), document.querySelector('.pg-stats')].forEach(function (el, i) {
+        if (!el) return;
+        setTimeout(function () { el.classList.add('is-visible'); }, base + i * 180);
+      });
+
+      // ── Scroll reveals: timeline nodes + cards ──
+      var revealObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.pg-node, .pg-card').forEach(function (el) { revealObs.observe(el); });
+
+      // ── Before / After switches ──
+      document.querySelectorAll('.pg-ba-head').forEach(function (head) {
+        head.addEventListener('click', function () {
+          var after = head.getAttribute('aria-pressed') !== 'true';
+          head.setAttribute('aria-pressed', after ? 'true' : 'false');
+          var imgs = head.closest('.pg-card').querySelectorAll('.pg-ba-stage img');
+          imgs[0].classList.toggle('is-active', !after);
+          imgs[1].classList.toggle('is-active', after);
+          if (typeof gtag === 'function') gtag('event', 'pg_before_after', { state: after ? 'after' : 'before' });
+        });
+      });
+
+      // ── Footer word cycle ──
+      var footerTrack = document.querySelector('.footer-cycle-track');
+      if (footerTrack) {
+        var footerItems = footerTrack.querySelectorAll('span');
+        var footerIdx = 0;
+        setInterval(function () {
+          footerIdx++;
+          var itemH = footerItems[0].offsetHeight;
+          footerTrack.style.transition = 'transform 0.65s ease-out';
+          footerTrack.style.transform = 'translateY(-' + footerIdx * itemH + 'px)';
+          if (footerIdx === footerItems.length - 1) {
+            setTimeout(function () {
+              footerTrack.style.transition = 'none';
+              footerTrack.style.transform = 'translateY(0)';
+              footerIdx = 0;
+            }, 650);
+          }
+        }, 2200);
+      }
+    })();
+  </script>
+  <script src="../../js/transition.js"></script>
+</body>
+</html>

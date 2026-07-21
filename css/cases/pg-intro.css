@@ -1,0 +1,357 @@
+/* ── Payment Gateway Platform — project intro ──
+   Portfolio-styled entry page; links to the full
+   step-by-step case study (case-study.html). */
+
+/* Wider canvas, matching PayCO */
+.case-content { max-width: 1320px; }
+.case-hero { max-width: none; }
+
+/* 3-column meta, matching PayCO */
+.case-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ── Text blocks ── */
+.pgi-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 820px;
+}
+
+.pgi-text-block--wide { max-width: 900px; }
+
+.pgi-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.pgi-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+
+.pgi-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pgi-list li {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #2a2a2a;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.pgi-list li:first-child { border-top: 1px solid rgba(0, 0, 0, 0.08); }
+
+/* ── Media ── */
+.pgi-media-full {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.pgi-media-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.pgi-video {
+  width: 100%;
+  /* matches the Vimeo videos' native ratio so the player fills the frame */
+  aspect-ratio: 426 / 240;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #141211;
+}
+
+.pgi-video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.pgi-media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pgi-media-cell {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.pgi-media-cell img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Dark result section + CTA (site footer language) ── */
+.pgi-dark {
+  background: #141211;
+  border-radius: 20px;
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.pgi-dark .pgi-label { color: rgba(255, 255, 255, 0.45); }
+.pgi-dark .pgi-title { color: #fff; }
+.pgi-dark .case-body { color: rgba(255, 255, 255, 0.65); max-width: 820px; }
+
+.pgi-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 10px 10px 24px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 100px;
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.pgi-cta:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pgi-cta-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transform: rotate(-45deg);
+}
+
+.pgi-cta-icon svg { width: 16px; height: 16px; fill: #000; }
+
+/* ── Before / After (matching PayCO toggle) ── */
+.pgi-ba {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pgi-ba-toggle {
+  align-self: center;
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 100px;
+}
+
+.pgi-ba-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #5a5a5a;
+  padding: 10px 30px;
+  border-radius: 100px;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pgi-ba-btn.is-active {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+}
+
+.pgi-ba-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2880 / 1480;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.pgi-ba-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.pgi-ba-img.is-active { opacity: 1; }
+
+/* ── Fade-in on scroll ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1);
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Site footer (full-bleed below the case content) ── */
+.site-footer { background: #141211; width: 100%; }
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 64px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.footer-cta { display: flex; flex-direction: column; gap: 48px; }
+
+.footer-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(56px, 8vw, 112px);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-h-row { display: flex; align-items: flex-end; }
+
+.footer-cycle-wrap {
+  overflow: hidden;
+  display: inline-block;
+  height: 1.05em;
+  vertical-align: bottom;
+}
+
+.footer-cycle-track { display: flex; flex-direction: column; }
+
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 10px 10px 24px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 100px;
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.footer-btn:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.footer-btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transform: rotate(-45deg);
+}
+
+.footer-btn-icon svg { width: 16px; height: 16px; fill: #000; }
+
+.footer-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 8px;
+}
+
+.footer-email {
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-email:hover { opacity: 0.55; }
+
+.footer-socials { display: flex; gap: 10px; }
+
+.footer-social-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+
+.footer-social-btn:hover { border-color: #fff; }
+
+.footer-social-btn svg { width: 20px; height: 20px; fill: #fff; }
+
+.footer-copyright { padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+
+.footer-copyright p { font-size: 14px; color: rgba(255, 255, 255, 0.3); }
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .case-content { padding: 40px 20px 80px; gap: 48px; }
+  .case-hero-title { font-size: 36px; }
+  .pgi-title { font-size: 28px; }
+  .case-meta { grid-template-columns: 1fr; gap: 32px; }
+  .pgi-media-grid { grid-template-columns: 1fr; gap: 12px; }
+  .pgi-dark { padding: 32px 24px; }
+  .footer-inner { padding: 64px 20px 40px; gap: 48px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
+}
