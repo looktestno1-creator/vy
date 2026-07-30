@@ -36,6 +36,79 @@
 </head>
 <body>
 
+  <!-- ── Password Gate — same pattern as the Denon in-car study, in this
+       case study's own type and colour tokens. Client work stays behind it. ── -->
+  <div id="pw-gate" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0B131A;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px; padding: 24px;
+  ">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <span style="font-family: 'Space Mono', ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);">Denon PerL Pro</span>
+      <h1 style="font-family: Archivo, 'Helvetica Neue', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin: 0;">Case study access</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;">
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="
+          width: 100%; padding: 14px 18px;
+          font-family: 'Manrope', sans-serif; font-size: 15px;
+          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 10px; color: #fff; outline: none;
+        "
+        onkeydown="if(event.key==='Enter')checkPassword()"
+      />
+      <p id="pw-error" style="font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f; display: none; margin: 0;">Incorrect password. Try again.</p>
+      <button onclick="checkPassword()" style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #ED4D33; color: #fff; border: none; border-radius: 10px;
+        cursor: pointer;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Continue
+      </button>
+      <button
+        onclick="history.length > 1 ? history.back() : (sessionStorage.setItem('pt-arriving', '1'), window.location.href='../../index.html');"
+      style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: transparent; color: #ababab; border: none; border-radius: 10px;
+        cursor: pointer;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Back to previous
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
+      if (sessionStorage.getItem('denon-perl-case-auth') === '1') {
+        document.getElementById('pw-gate').style.display = 'none';
+      }
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      window.checkPassword = async function() {
+        const val = document.getElementById('pw-input').value;
+        const err = document.getElementById('pw-error');
+        const hash = await sha256(val);
+        if (hash === HASH) {
+          sessionStorage.setItem('denon-perl-case-auth', '1');
+          document.getElementById('pw-gate').style.display = 'none';
+          gtag('event', 'case_study_unlock', { case_study: 'denon-perl' });
+        } else {
+          gtag('event', 'case_study_unlock_failed', { case_study: 'denon-perl' });
+          err.style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      };
+    })();
+  </script>
+
   <!-- ── Nav — shared pattern ── -->
   <nav class="case-nav">
     <a class="case-nav-back" href="../../index.html">
