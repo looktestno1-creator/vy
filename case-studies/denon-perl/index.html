@@ -9,16 +9,17 @@
   <meta property="og:url" content="https://yvefa.com/case-studies/denon-perl/" />
   <meta property="og:title" content="Denon PerL Pro — Vefa Yilmaz" />
   <meta property="og:description" content="Redesigning the Denon PerL Pro app — UX, UI, animations and flows for a premium personalised audio experience." />
-  <meta property="og:image" content="https://yvefa.com/assets/images/hero/image1.png" />
+  <meta property="og:image" content="https://yvefa.com/assets/images/denon-perl/img-2.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://yvefa.com/assets/images/hero/image1.png" />
+  <meta name="twitter:image" content="https://yvefa.com/assets/images/denon-perl/img-2.png" />
   <link rel="canonical" href="https://yvefa.com/case-studies/denon-perl/" />
   <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
   <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Anybody:ital,wght@0,700;1,700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <!-- Manrope for the shared nav; Archivo + Space Mono are this case study's own scale. -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
   <link rel="stylesheet" href="denon-perl.css" />
 
   <!-- Google Analytics -->
@@ -43,296 +44,585 @@
     </a>
   </nav>
 
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       HERO — full-viewport image
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-hero">
-    <img
-      class="dp-hero-bg"
-      src="https://framerusercontent.com/images/kt3aJNMy7vkbH9Iq9cxj9LVKsNI.jpg"
-      alt="Denon PerL Pro earbuds"
-    />
-    <div class="dp-hero-overlay"></div>
-    <div class="dp-hero-text">
-      <h1 class="dp-hero-title hero-anim">Denon headphones</h1>
-      <p class="dp-hero-sub hero-anim">My role was to redesign the app for the Denon PerL Pro — UX, UI, animations, and flows.</p>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="shell hero-bar">
+    <span class="wordmark">DENON</span>
+    <span class="hero-bar__meta">Product Design Case Study · 2025</span>
+  </div>
+
+  <div class="shell">
+    <p class="eyebrow">Multi-touchpoint audio system</p>
+    <h1 class="hero-h1">One system,<br>multiple<br><em>touchpoints.</em></h1>
+    <p class="hero-body">One design language spanning visual, motion, sound and voice — carrying a 115-year-old audio brand from a functional utility into a premium, personalised experience worthy of the hardware.</p>
+  </div>
+
+  <div class="shell hero-meta">
+    <div>
+      <div class="label">Role</div>
+      <div class="hero-meta__value">Lead Product Designer<br><span>UX · UI · Motion · Sound</span></div>
     </div>
-  </section>
-
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       OVERVIEW + earbuds in-situ image
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">Overview</p>
-      <h2 class="case-section-title">Overview</h2>
-      <p class="case-body">
-        After acquiring Nura, there was a need to redesign the app to accommodate the new requirements for the Denon brand identity and app experience.
-      </p>
+    <div>
+      <div class="label">Timeline</div>
+      <div class="hero-meta__value">2024 — 2025</div>
     </div>
-  </section>
+    <div>
+      <div class="label">Team</div>
+      <div class="hero-meta__value">Product Design<br><span>Engineering · Hardware · Audio</span></div>
+    </div>
+    <div>
+      <div class="label">Status</div>
+      <div class="hero-meta__value">App — in progress<br><span>Automotive concept · Visual language shipped</span></div>
+    </div>
+  </div>
+</header>
 
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       PROCESS — 7 steps + process artefact image
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">How we got there</p>
-      <h2 class="case-section-title">Process</h2>
-      <div class="dp-steps">
+<main>
 
-        <div class="dp-step">
-          <span class="dp-step-label">Understand</span>
-          <p class="case-body">User testing sessions to uncover major and minor pain points in the existing, re-skinned Nura app.</p>
-        </div>
+  <!-- ============ 01 CONTEXT ============ -->
+  <section class="section section--context" aria-labelledby="context-title">
+    <p class="eyebrow eyebrow--loose">01 — Context</p>
+    <h2 class="h2 h2--wide" id="context-title">A 115-year-old brand with legacy in craftsmanship and audio — born in Japan, now extending into headphones.</h2>
+    <p class="lede lede--wide">The experience had to reflect that history and legacy, yet feel forward-looking and unafraid of technology. My job was to hold both at once.</p>
+    <p class="lede lede--wide lede--tight">After Denon acquired Nura, the PerL Pro app needed to move off inherited foundations and onto the requirements of the Denon brand identity and app experience.</p>
 
-        <div class="dp-step">
-          <span class="dp-step-label">Analyse</span>
-          <p class="case-body">After analysing user testing results and researching online feedback on the existing app, all major and minor points of improvement were listed.</p>
-        </div>
-
-        <div class="dp-step">
-          <span class="dp-step-label">Identify, prioritise &amp; refine</span>
-          <p class="case-body">Changes were labelled, prioritised and taken into action.</p>
-        </div>
-
-        <div class="dp-step">
-          <span class="dp-step-label">Initiate</span>
-          <p class="case-body">Major flows such as sign up, setup, and profile creation were created.</p>
-        </div>
-
-        <div class="dp-step">
-          <span class="dp-step-label">Refine &amp; define</span>
-          <p class="case-body">After aligning with internal stakeholders, screens were created, tested, and built into a flow.</p>
-        </div>
-
-        <div class="dp-step">
-          <span class="dp-step-label">Validate</span>
-          <p class="case-body">Finalising designs, adding last touches, creating animations.</p>
-        </div>
-
-        <div class="dp-step">
-          <span class="dp-step-label">Finalise</span>
-          <p class="case-body">Design files cleaned up, ensuring all screens and components are integrated into the design system and ready for development.</p>
-        </div>
-
+    <div class="hairline hairline--paper cols-3 context-grid">
+      <div class="context-card">
+        <div class="context-card__label">Challenge</div>
+        <p>Honour a heritage of craftsmanship while building an experience that feels modern, premium and technically ambitious.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-card__label">My Role</div>
+        <p>Lead product designer across UX, UI, motion and sound — aligning brand, hardware and engineering into one language.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-card__label">Status</div>
+        <p>App in progress · Automotive HMI at concept · Visual language shipped and in use across surfaces.</p>
       </div>
     </div>
   </section>
 
-  <!-- Process artefact image -->
-  <div class="dp-img-band">
-    <div class="dp-container">
-      <div class="case-img">
-        <img src="https://framerusercontent.com/images/Y4ffeAoHWyLx0J1h4hnEfPqnCbY.png" alt="Process artefact" loading="lazy" />
-      </div>
-    </div>
-  </div>
+  <!-- ============ 02 SCOPE — SIX MODALITIES ============ -->
+  <section class="section" aria-labelledby="scope-title">
+    <p class="eyebrow">02 — Scope</p>
+    <h2 class="h2 h2--big" id="scope-title">Six modalities.<br>One language.</h2>
+    <p class="lede">One system extending across platforms and sensory experiences — a cohesive design language that stays recognisably Denon whether you see it, feel it, or hear it.</p>
 
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       UNDERSTAND — App audit
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">User testing</p>
-      <h2 class="case-section-title">Understand</h2>
-      <p class="case-body">
-        App audit, followed by user testing sessions with 8 people to uncover pains, needs, and areas of improvement on the existing app.
-      </p>
+    <div class="hairline cols-3 scope-grid">
+      <article class="scope-card">
+        <div class="scope-card__top"><span class="scope-card__num">01</span></div>
+        <h3 class="h3">Brand identity &amp; principles</h3>
+        <p>Aligned product and brand principles with the design team to set a shared foundation.</p>
+      </article>
+      <article class="scope-card">
+        <div class="scope-card__top"><span class="scope-card__num">02</span></div>
+        <h3 class="h3">Visual language</h3>
+        <p>One dot-grid, type scale and colour system applied consistently across every surface.</p>
+      </article>
+      <article class="scope-card">
+        <div class="scope-card__top"><span class="scope-card__num">03</span></div>
+        <h3 class="h3">Mobile app</h3>
+        <p>Led app design with engineering, hardware and spec teams on software alignment.</p>
+      </article>
+      <article class="scope-card">
+        <div class="scope-card__top"><span class="scope-card__num">04</span></div>
+        <h3 class="h3">Motion</h3>
+        <p>Behaviour and feel enhanced through product animation and app transitions.</p>
+      </article>
+      <article class="scope-card">
+        <div class="scope-card__top"><span class="scope-card__num">05</span></div>
+        <h3 class="h3">Sound &amp; voice</h3>
+        <p>Led the sound and voice-prompt workstream for both product and brand experience.</p>
+      </article>
+      <article class="scope-card">
+        <div class="scope-card__top"><span class="scope-card__num">06</span><span class="pill">CONCEPT</span></div>
+        <h3 class="h3">Automotive HMI</h3>
+        <p>Led concept work extending the system into the in-car interface.</p>
+      </article>
     </div>
   </section>
 
-  <div class="dp-img-band">
-    <div class="dp-container">
-      <div class="case-img">
-        <img src="https://framerusercontent.com/images/dgTVaaANdazvX5UJDi0VHFO9ZQ8.png" alt="App audit artefact" loading="lazy" />
-      </div>
-    </div>
-  </div>
+  <!-- ============ 03 AUDIT & DISCOVERY (dark) ============ -->
+  <section class="section--dark section--audit" aria-labelledby="audit-title">
+    <div class="section-inner">
+      <p class="eyebrow">03 — Audit &amp; discovery</p>
+      <h2 class="h2 h2--big" id="audit-title">From re-skin<br>to redesign.</h2>
+      <p class="lede lede--on-dark">The PerL Pro app carried Nura's bones. My role was to redesign the UX, UI, animations and flows — turning a functional utility into a premium, personalised audio experience worthy of the hardware. But first I had to identify the issues through an audit, then validate my assumptions through user testing.</p>
 
-  <div class="dp-full-img">
-    <img
-      src="https://framerusercontent.com/images/wORmWdyDZ4BJ6BRD8g1VrfrRIrQ.jpg"
-      alt="User testing session"
-      loading="lazy"
-    />
-  </div>
-
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       VIDEOS
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <div class="dp-videos">
-    <div class="dp-container">
-
-      <!-- App flow & interaction recordings — side by side -->
-      <div class="dp-vimeo-row">
-
-        <div class="dp-video-wrap">
-          <iframe
-            src="https://player.vimeo.com/video/1022667167?badge=0&autopause=0&player_id=0&app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            title="Denon PerL Pro — flow overview"
-            loading="lazy"
-          ></iframe>
-        </div>
-
-        <div class="dp-video-wrap">
-          <iframe
-            src="https://player.vimeo.com/video/1022674594?badge=0&autopause=0&autoplay=1&loop=1&player_id=0&app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            title="Denon PerL Pro — animation detail"
-            loading="lazy"
-          ></iframe>
-        </div>
-
-        <div class="dp-video-wrap">
-          <iframe
-            src="https://player.vimeo.com/video/1023277904?badge=0&autopause=0&autoplay=1&loop=1&player_id=0&app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            title="Denon PerL Pro — interaction detail"
-            loading="lazy"
-          ></iframe>
-        </div>
-
+      <div class="rule-row">
+        <span class="rule-row__label">App audit</span>
+        <span class="rule-row__line"></span>
+        <span class="rule-row__count">8 participants · 4 core friction points</span>
       </div>
 
-    </div>
-  </div>
-
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       ANALYSE — findings + wide image strip
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">Key findings</p>
-      <h2 class="case-section-title">Analyse</h2>
-      <ul class="dp-list">
-        <li class="case-body"><strong>Connection and Pairing Difficulties:</strong> A significant number of users struggled with the device pairing process. Switching between Bluetooth settings and the app caused confusion, leading users to be uncertain about their connection status.</li>
-        <li class="case-body"><strong>Progress Feedback During Profile Creation:</strong> The loading indicator during profile setup was perceived as too lengthy and lacked clarity about its progress. Users were left unsure of how long the process would take or what stages it involved.</li>
-        <li class="case-body"><strong>Feature Demo Engagement:</strong> After profile creation, users wanted to test the app with their own music to evaluate the difference, but the provided demo didn't meet their expectations. They found it unhelpful in showcasing the feature's true value.</li>
-        <li class="case-body"><strong>Volume Adjustment Need:</strong> During the initial feature introduction, several users sought the ability to adjust the volume but were unable to do so, which detracted from their overall experience.</li>
+      <!-- Moderated sessions. Click-to-load façade: the Vimeo player is only
+           requested once the visitor asks for it. -->
+      <ul class="sessions">
+        <li>
+          <button class="session" type="button" data-vimeo="1022667167" aria-label="Play session clip 1 — pairing the PerL Pro, 0:26">
+            <img src="../../assets/images/denon-perl/session-01.jpg" width="640" height="640" alt="A participant at a testing table working through the sign-up screen, PerL Pro case and quick-start guide in front of them.">
+            <span class="session__play" aria-hidden="true"></span>
+            <span class="session__meta"><span>Session 01</span><span>0:26</span></span>
+          </button>
+        </li>
+        <li>
+          <button class="session" type="button" data-vimeo="1022674594" aria-label="Play session clip 2 — profile creation, 1:02">
+            <img src="../../assets/images/denon-perl/session-02.jpg" width="640" height="640" alt="A participant wearing one earbud, watching the profile-creation orb on the phone screen.">
+            <span class="session__play" aria-hidden="true"></span>
+            <span class="session__meta"><span>Session 02</span><span>1:02</span></span>
+          </button>
+        </li>
+        <li>
+          <button class="session" type="button" data-vimeo="1023277904" aria-label="Play session clip 3 — unboxing and first setup, 0:40">
+            <img src="../../assets/images/denon-perl/session-03.jpg" width="640" height="640" alt="A participant reading the setup instructions on screen, earbuds and open case on the table.">
+            <span class="session__play" aria-hidden="true"></span>
+            <span class="session__meta"><span>Session 03</span><span>0:40</span></span>
+          </button>
+        </li>
       </ul>
+
+      <div class="hairline hairline--on-dark cols-2 audit-grid">
+        <article class="audit-card">
+          <div class="audit-card__num">01</div>
+          <h3 class="h3 h3--lg">Connection &amp; pairing difficulties</h3>
+          <p>A significant number of users struggled with pairing. Switching between Bluetooth settings and the app caused confusion and uncertainty about connection status.</p>
+        </article>
+        <article class="audit-card">
+          <div class="audit-card__num">02</div>
+          <h3 class="h3 h3--lg">Opaque profile-creation progress</h3>
+          <p>The loading indicator during profile setup felt lengthy and unclear — users couldn't tell how long it would take or what stages it involved.</p>
+        </article>
+        <article class="audit-card">
+          <div class="audit-card__num">03</div>
+          <h3 class="h3 h3--lg">Feature demo fell flat</h3>
+          <p>After profile creation, users wanted to hear the difference with their own music — the provided demo didn't showcase the feature's true value.</p>
+        </article>
+        <article class="audit-card">
+          <div class="audit-card__num">04</div>
+          <h3 class="h3 h3--lg">No volume control at first touch</h3>
+          <p>During the initial feature introduction, several users reached for volume and couldn't adjust it — a small gap that soured the first impression.</p>
+        </article>
+      </div>
+
+      <figure class="figure figure--on-dark">
+        <img src="../../assets/images/denon-perl/research-board.png" width="2904" height="802" alt="Research synthesis board: an Experiments column listing the sign-up, pairing and fit sessions, then Facts, Insights and Opportunities columns of clustered sticky notes.">
+        <figcaption>Sessions were run and recorded, then synthesised on one board — <strong>Experiments</strong> (what we did) → <strong>Facts</strong> (what we found out) → <strong>Insights</strong> (what we learned) → <strong>Opportunities</strong> (how we could improve).</figcaption>
+      </figure>
+
+      <div class="note note--on-dark">
+        <span class="pill pill--accent-outline">VALIDATED</span>
+        <p>Eight moderated sessions on the existing, re-skinned Nura app, cross-checked against public feedback on the app stores. Every finding was pressure-tested before it shaped the redesign — assumptions in, evidence out.</p>
+      </div>
     </div>
   </section>
 
-  <div class="dp-img-band">
-    <div class="dp-container">
-      <div class="case-img">
-        <img src="https://framerusercontent.com/images/DU0XnnfewdPtv8CXMspP0I9YI.png" alt="App screens overview" loading="lazy" />
+  <!-- ============ 04 PROCESS ============ -->
+  <section class="section" aria-labelledby="process-title">
+    <p class="eyebrow">04 — Process</p>
+    <h2 class="h2" id="process-title">Seven steps, from first session to developer handoff.</h2>
+    <p class="lede lede--700">Understand and analyse produced the audit above. Everything after it turned those findings into flows, screens and a design system engineering could build from.</p>
+
+    <div class="hairline hairline--paper cols-4 timeline process-grid">
+      <div class="timeline-step">
+        <div class="timeline-step__num">STEP 01</div>
+        <div class="timeline-step__title">Understand</div>
+        <div class="timeline-step__body">User testing sessions to uncover major and minor pain points in the existing, re-skinned Nura app.</div>
       </div>
+      <div class="timeline-step">
+        <div class="timeline-step__num">STEP 02</div>
+        <div class="timeline-step__title">Analyse</div>
+        <div class="timeline-step__body">Testing results and online feedback analysed, and every major and minor point of improvement listed.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-step__num">STEP 03</div>
+        <div class="timeline-step__title">Identify &amp; prioritise</div>
+        <div class="timeline-step__body">Changes labelled, prioritised and taken into action.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-step__num">STEP 04</div>
+        <div class="timeline-step__title">Initiate</div>
+        <div class="timeline-step__body">Major flows — sign up, setup and profile creation — created.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-step__num">STEP 05</div>
+        <div class="timeline-step__title">Refine &amp; define</div>
+        <div class="timeline-step__body">After aligning with internal stakeholders, screens were created, tested and built into a flow.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-step__num">STEP 06</div>
+        <div class="timeline-step__title">Validate</div>
+        <div class="timeline-step__body">Finalising designs, adding the last touches and creating the animations.</div>
+      </div>
+      <div class="timeline-step timeline-step--wide">
+        <div class="timeline-step__num">STEP 07</div>
+        <div class="timeline-step__title">Finalise &amp; clean up</div>
+        <div class="timeline-step__body">Design files tidied, with screens and components integrated into the design system and ready for development.</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <span class="pill">IN THE ROOM</span>
+      <p>Steps 03 and 04 ran in real time with PM, engineering and infrastructure — building flowcharts together, identifying technical no-go areas early, and exploring what was actually feasible before it reached high fidelity.</p>
+    </div>
+  </section>
+
+  <!-- ============ 05 EVOLUTION ============ -->
+  <section class="section section--evolution" aria-labelledby="evolution-title">
+    <p class="eyebrow">05 — Evolution</p>
+    <h2 class="h2" id="evolution-title">From an inherited utility to a personalised home screen.</h2>
+
+    <!-- before / after -->
+    <div class="compare">
+      <div>
+        <div class="compare__header">
+          <span class="pill pill--solid-ink">BEFORE</span>
+          <span class="compare__caption">Inherited from Nura — VEFA profile &amp; immersion slider</span>
+        </div>
+        <div class="phone">
+          <img src="../../assets/images/denon-perl/img-1.png" width="1350" height="2760" alt="Before — the inherited PerL Pro home screen, with the immersion slider as the primary control.">
+          <div class="marker" style="--top:78%">1</div>
+          <div class="marker" style="--top:36%">2</div>
+        </div>
+        <ul class="legend">
+          <li>
+            <span class="legend__dot">1</span>
+            <p><strong>Immersion slider buried the core value</strong> — the headline personalisation was hidden behind an abstract control.</p>
+          </li>
+          <li>
+            <span class="legend__dot">2</span>
+            <p><strong>No clear connection status</strong> — users couldn't confirm the earbuds were connected at a glance.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="compare__header">
+          <span class="pill pill--solid-accent">AFTER</span>
+          <span class="compare__caption">Redesigned home — status, control &amp; profile up front</span>
+        </div>
+        <div class="phone">
+          <img src="../../assets/images/denon-perl/img-2.png" width="1350" height="2760" alt="After — the redesigned home screen, leading with device status, noise control and the sound profile card.">
+          <div class="marker marker--accent" style="--top:40%">1</div>
+          <div class="marker marker--accent" style="--top:55%">2</div>
+          <div class="marker marker--accent" style="--top:74%">3</div>
+        </div>
+        <ul class="legend legend--after">
+          <li>
+            <span class="legend__dot">1</span>
+            <p><strong>Device status front-and-centre</strong> — live L/R battery removes all doubt about connection.</p>
+          </li>
+          <li>
+            <span class="legend__dot">2</span>
+            <p><strong>One-tap noise control</strong> — Cancellation · Off · Transparency, no digging through menus.</p>
+          </li>
+          <li>
+            <span class="legend__dot">3</span>
+            <p><strong>Sound profile promoted</strong> to a tappable, visual card — the personalisation finally feels premium.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- onboarding & connection -->
+    <div class="compare compare--plain">
+      <div>
+        <div class="compare__header">
+          <span class="pill pill--solid-ink">BEFORE</span>
+          <span class="compare__caption">Onboarding &amp; connection</span>
+        </div>
+        <div class="phone">
+          <img src="../../assets/images/denon-perl/onboarding-before.png" width="1350" height="2760" alt="Old disconnected state — a full-screen 'Denon device disconnected' message with reconnect and connect-new-device buttons.">
+        </div>
+        <p class="compare__note">A dead end dressed as a screen. The only way back was Bluetooth settings — the switching that testing showed left people unsure whether they were connected at all.</p>
+      </div>
+      <div>
+        <div class="compare__header">
+          <span class="pill pill--solid-accent">AFTER</span>
+          <span class="compare__caption">Guided pairing</span>
+        </div>
+        <div class="phone phone--rec">
+          <video class="lazyvid" muted loop playsinline preload="none"
+                 width="1350" height="2760"
+                 poster="../../assets/images/denon-perl/onboarding-after-poster.jpg"
+                 data-src="../../assets/videos/denon-perl/onboarding-after.mp4"
+                 aria-label="Screen recording of the redesigned pairing flow.">
+          </video>
+        </div>
+        <p class="compare__note">Pairing is walked through in the app itself, with the case and button illustrated at each step and connection state shown continuously.</p>
+      </div>
+    </div>
+
+    <!-- profile creation -->
+    <div class="compare compare--plain">
+      <div>
+        <div class="compare__header">
+          <span class="pill pill--solid-ink">FIRST PASS</span>
+          <span class="compare__caption">Profile creation · 0:20</span>
+        </div>
+        <div class="phone phone--rec">
+          <video class="lazyvid" muted loop playsinline preload="none"
+                 width="1350" height="2760"
+                 poster="../../assets/images/denon-perl/profile-before-poster.jpg"
+                 data-src="../../assets/videos/denon-perl/AAt-progress-video.mp4"
+                 aria-label="Screen recording of the first-pass profile-creation screen: an Adaptive Acoustic Technology mark, rotating explanatory copy, and a ring that fills while the stage text changes.">
+          </video>
+        </div>
+        <p class="compare__note">The wait gets acknowledged and explained — the AAT mark, copy rotating through what the measurement is for, and stage text moving from <em>"Running a quick measurement of your hearing…"</em> to <em>"Processing measurement…"</em>. The ring fills, but never says how far along it is.</p>
+      </div>
+      <div>
+        <div class="compare__header">
+          <span class="pill pill--solid-accent">RESOLVED</span>
+          <span class="compare__caption">Profile creation · 0:10</span>
+        </div>
+        <div class="phone phone--rec">
+          <video class="lazyvid" muted loop playsinline preload="none"
+                 width="1350" height="2760"
+                 poster="../../assets/images/denon-perl/profile-after-poster.jpg"
+                 data-src="../../assets/videos/denon-perl/profile-after.mp4"
+                 aria-label="Screen recording of the resolved profile-creation screen, showing a live percentage inside an organic progress ring.">
+          </video>
+        </div>
+        <p class="compare__note">The missing half of finding 02. A live percentage answers <em>how long</em>, the ring takes on the brand's organic form, and the whole sequence is half the length — 0:10 against 0:20.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ 06 THE APP, END TO END ============ -->
+  <section class="section" aria-labelledby="flow-title">
+    <p class="eyebrow">06 — The app, end to end</p>
+    <h2 class="h2" id="flow-title">One coherent flow — from first launch to the wrist.</h2>
+    <p class="lede lede--700">Sign-in, account creation, device selection and the home experience share one visual system — and it carries cleanly onto the watch.</p>
+
+    <div class="flow-card flow-card--muted">
+      <div class="compare__header">
+        <span class="pill pill--solid-ink">BEFORE</span>
+        <span class="compare__caption">Inherited flow — account gate, a server wait, then device selection</span>
+      </div>
+      <img src="../../assets/images/denon-perl/flow-before.png" width="4020" height="1840" alt="Inherited onboarding flow — create an account or log in, a 'Connecting to Denon servers' wait screen, a welcome and device-selection screen, then the old VEFA home screen.">
+    </div>
+
+    <div class="flow-card">
+      <div class="compare__header">
+        <span class="pill pill--solid-accent">AFTER</span>
+        <span class="compare__caption">Redesigned flow — same five beats, one visual system</span>
+      </div>
+      <img src="../../assets/images/denon-perl/img-3.png" width="4096" height="1571" alt="Redesigned Denon app flow — sign in, create account, select device, home and control, and the watch screen.">
+      <div class="flow-captions">
+        <div><div class="flow-captions__num">01</div><div class="flow-captions__label">Sign in</div></div>
+        <div><div class="flow-captions__num">02</div><div class="flow-captions__label">Create account</div></div>
+        <div><div class="flow-captions__num">03</div><div class="flow-captions__label">Select device</div></div>
+        <div><div class="flow-captions__num">04</div><div class="flow-captions__label">Home &amp; control</div></div>
+        <div><div class="flow-captions__num">05</div><div class="flow-captions__label">On the watch</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 VISUAL LANGUAGE ============ -->
+  <section class="section" aria-labelledby="visual-title">
+    <p class="eyebrow">07 — Visual language</p>
+    <h2 class="h2" id="visual-title">One dot-grid, one type scale, one palette.</h2>
+
+    <div class="hairline specimen-grid">
+      <div class="specimen">
+        <div class="specimen__label">Typography</div>
+        <div class="specimen__aa">Aa</div>
+        <div class="specimen__caption specimen__caption--spaced">Archivo · Display &amp; UI — 400 / 700 / 900</div>
+        <div class="specimen__mono">01 / Aa</div>
+        <div class="specimen__caption">Space Mono · labels &amp; data</div>
+      </div>
+
+      <div class="motif">
+        <div class="specimen__label">Signature motif</div>
+        <div class="motif__grid" aria-hidden="true"></div>
+        <p class="motif__caption">The dot-grid recurs across empty states, loading and personalisation — a quiet through-line for the whole system.</p>
+      </div>
+    </div>
+
+    <div class="hairline cols-5 palette">
+      <div class="swatch swatch--ink"><span>Ink</span><span>#0B131A</span></div>
+      <div class="swatch swatch--accent"><span>Accent</span><span>#ED4D33</span></div>
+      <div class="swatch swatch--amber"><span>Amber</span><span>#FFA806</span></div>
+      <div class="swatch swatch--mist"><span>Mist</span><span>#EAEDF1</span></div>
+      <div class="swatch swatch--paper"><span>Paper</span><span>#F4F1EA</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 08 SOUND, VOICE & MOTION ============ -->
+  <section class="section" aria-labelledby="sensory-title">
+    <p class="eyebrow">08 — Sound, voice &amp; motion</p>
+    <h2 class="h2" id="sensory-title">The brand you hear and feel, not just see.</h2>
+
+    <div class="hairline cols-2 sensory-grid">
+      <article class="sensory">
+        <h3 class="h3 h3--lg">Sound &amp; voice</h3>
+        <p>Led the sound and voice-prompt workstream for both the product and brand experience — earcons, confirmations and a spoken guide through setup.</p>
+        <div class="eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <ul class="rows">
+          <li><span class="rows__tag">VO</span><span class="rows__quote">"Get ready to connect."</span></li>
+          <li><span class="rows__tag">VO</span><span class="rows__quote">"Press the button on the case."</span></li>
+          <li><span class="rows__tag">VO</span><span class="rows__quote">"You're all set. Enjoy."</span></li>
+        </ul>
+      </article>
+
+      <article class="sensory">
+        <h3 class="h3 h3--lg">Motion</h3>
+        <p>Behaviour and feel enhanced through product animation and app transitions — the personalisation orb, connection states and screen-to-screen continuity.</p>
+        <div class="pulse" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <ul class="rows rows--spec">
+          <li><span class="rows__name">Profile orb morph</span><span class="rows__value">600ms · ease</span></li>
+          <li><span class="rows__name">Connection pulse</span><span class="rows__value">loop · 1.4s</span></li>
+          <li><span class="rows__name">Sheet transition</span><span class="rows__value">320ms · spring</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 09 AUTOMOTIVE HMI ============ -->
+  <section class="section" aria-labelledby="hmi-title">
+    <div class="eyebrow-row">
+      <span class="eyebrow">09 — Automotive HMI</span>
+      <span class="pill">CONCEPT</span>
+    </div>
+    <h2 class="h2" id="hmi-title">Extending the system into the car.</h2>
+    <p class="lede lede--700">The same language — type, dot-grid and sound — carried onto the in-car display, so the Denon experience stays continuous from ear to dashboard. Shown as a working interface at CES 2025.</p>
+
+    <!-- Entry point (link only) to the sibling Denon Automotive case study. -->
+    <a class="hmi-entry" href="../denon/index.html">
+      <span class="hmi-entry__grid" aria-hidden="true"></span>
+      <span class="hmi-entry__row">
+        <span class="hmi-entry__body">
+          <span class="hmi-entry__label">Separate case study</span>
+          <span class="hmi-entry__title">Denon Automotive</span>
+          <span class="hmi-entry__sub">Vision for the in-car experience</span>
+        </span>
+        <span class="hmi-entry__go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h14M12 6l6 6-6 6"/>
+          </svg>
+        </span>
+      </span>
+      <span class="hmi-entry__meta">
+        <span>In-car UX · Interaction &amp; motion</span>
+        <span>CES 2025</span>
+      </span>
+    </a>
+  </section>
+
+  <!-- ============ 10 POST-LAUNCH RECEPTION (dark) ============ -->
+  <!-- TODO: both quotes are press reviews. Add the publication name, author and
+       date to each <cite> before this page goes public. -->
+  <section class="section--dark section--reception" aria-labelledby="reception-title">
+    <div class="section-inner">
+      <p class="eyebrow">10 — Post-launch reception</p>
+      <h2 class="h2 h2--big" id="reception-title">The same reviewers,<br>after the redesign.</h2>
+      <p class="lede lede--on-dark">The clearest read on whether the audit findings were the right ones: what the press said about the app before the redesign, and what they said about it after.</p>
+
+      <div class="hairline hairline--on-dark cols-2 reception-grid">
+        <figure class="quote">
+          <div class="compare__header">
+            <span class="pill pill--solid-ink pill--outlined">BEFORE</span>
+            <span class="compare__caption compare__caption--on-dark">Review of the inherited app</span>
+          </div>
+          <blockquote>As much as I like the app, it's not a polished experience. The app takes a loooong time to load.</blockquote>
+          <figcaption><cite>Press review — publication TK</cite></figcaption>
+        </figure>
+
+        <figure class="quote quote--after">
+          <div class="compare__header">
+            <span class="pill pill--solid-accent">AFTER</span>
+            <span class="compare__caption compare__caption--on-dark">Review of the redesigned app</span>
+          </div>
+          <blockquote>The app has a clean UI. You can adjust 'immersion', which basically narrows and widens the soundscape… it blew me away.</blockquote>
+          <figcaption><cite>Press review — publication TK</cite></figcaption>
+        </figure>
+      </div>
+
+      <div class="note note--on-dark">
+        <span class="pill pill--accent-outline">OUTCOME</span>
+        <p>Load time and the forced account gate were the two complaints the inherited app drew publicly — both traced directly to findings 01 and 02 in the audit.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ CLOSING (dark) ============ -->
+<footer class="section--dark section--closing" aria-labelledby="closing-title">
+  <div class="section-inner">
+    <p class="eyebrow eyebrow--loose">Where it stands</p>
+    <h2 class="closing-h2" id="closing-title">A functional utility, redrawn as a premium, personalised audio experience.</h2>
+
+    <div class="hairline hairline--on-dark cols-3 status-board">
+      <div class="status">
+        <div class="status__label">MOBILE APP</div>
+        <div class="status__value"><span class="status__dot"></span><span>In progress</span></div>
+      </div>
+      <div class="status">
+        <div class="status__label">AUTOMOTIVE HMI</div>
+        <div class="status__value"><span class="status__dot status__dot--amber"></span><span>Concept</span></div>
+      </div>
+      <div class="status">
+        <div class="status__label">VISUAL LANGUAGE</div>
+        <div class="status__value"><span class="status__dot status__dot--success"></span><span>Shipped</span></div>
+      </div>
+    </div>
+
+    <div class="closing-footer">
+      <span class="wordmark wordmark--lg">DENON</span>
+      <span class="closing-footer__meta">PRODUCT DESIGN CASE STUDY · 2025</span>
     </div>
   </div>
+</footer>
 
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       COLLABORATE — + image
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">Collaboration</p>
-      <h2 class="case-section-title">Identify, prioritise &amp; refine</h2>
-      <p class="case-body">
-        Working in real-time with PM, Dev, and Infrastructure teams to build flowcharts, identify technical no-go areas, and explore feasible options from a technical perspective.
-      </p>
-    </div>
-  </section>
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
-  <div class="dp-img-band">
-    <div class="dp-container">
-      <div class="case-img">
-        <img src="https://framerusercontent.com/images/l78P5ypHoQzUJEk9w97Jk4n8.png" alt="Collaboration artefact" loading="lazy" />
-      </div>
-    </div>
-  </div>
-
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       BEFORE / AFTER — three sub-sections
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">The solution</p>
-      <h2 class="case-section-title">Before / After</h2>
-
-      <!-- Homepage redesign -->
-      <div class="dp-ba-block">
-        <p class="dp-ba-label">Homepage redesign</p>
-        <div class="case-img-grid">
-          <div class="case-img">
-            <img src="https://framerusercontent.com/images/sYHxfpIntF5Smm7gv2gvXhtX4.png" alt="Homepage before" loading="lazy" />
-          </div>
-          <div class="case-img">
-            <img src="https://framerusercontent.com/images/KnkAde8evco7PoZDk9bIrMB8hPM.png" alt="Homepage after" loading="lazy" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Sound profile -->
-      <div class="dp-ba-block">
-        <p class="dp-ba-label">Sound profile measurement</p>
-        <p class="case-body dp-ba-desc">This allows users to personalise their sound according to their hearing profile.</p>
-        <div class="case-img dp-img-single">
-          <img src="https://framerusercontent.com/images/txfNow4vGC8UCQA0oyOFbLyPY.png" alt="Sound profile screen" loading="lazy" />
-        </div>
-      </div>
-
-      <!-- Onboarding -->
-      <div class="dp-ba-block">
-        <p class="dp-ba-label">Onboarding and connection screen</p>
-        <p class="case-body dp-ba-desc">This is to guide users on how to pair their device with their mobile phones.</p>
-        <div class="case-img dp-img-single">
-          <img src="https://framerusercontent.com/images/EjPq6vFu0HsvqabdxUKejUpmMyg.png" alt="Onboarding connection screen" loading="lazy" />
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       POST-LAUNCH REVIEWS
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-section">
-    <div class="dp-container">
-      <p class="case-eyebrow">Impact</p>
-      <h2 class="case-section-title">Post launch reviews</h2>
-      <div class="case-img-grid dp-reviews-grid">
-        <div class="dp-review-item">
-          <p class="dp-review-label">Before redesign</p>
-          <div class="case-img">
-            <img src="https://framerusercontent.com/images/BzmJ6nkQCwtkVhe4x8wqfDap2pM.png" alt="App reviews before redesign" loading="lazy" />
-          </div>
-        </div>
-        <div class="dp-review-item">
-          <p class="dp-review-label">After redesign</p>
-          <div class="case-img">
-            <img src="https://framerusercontent.com/images/dGnZjscnmvRh72Hn6mxuHviN4SY.png" alt="App reviews after redesign" loading="lazy" />
-          </div>
-          <a href="https://www.tomsguide.com/audio/earbuds/denon-perl-pro-review" target="_blank" rel="noopener" class="dp-ext-link">Read Tom's Guide review ↗</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       CLOSING — matches footer dark bg
-       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="dp-closing">
-    <p class="dp-closing-h">thanks for<br><em>scrolling</em></p>
-  </section>
-
-  <script>
-    (function () {
-      var arriving = sessionStorage.getItem('pt-arriving') === '1';
-      var elems = [
-        document.querySelector('.dp-hero-title'),
-        document.querySelector('.dp-hero-sub'),
-      ];
-      var base    = arriving ? 680 : 150;
-      var stagger = [0, 140];
-      elems.forEach(function (el, i) {
-        if (!el) return;
-        setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
+  /* Screen recordings: nothing is fetched until the clip is near the viewport,
+     which keeps the video weight off the initial load. Under reduced motion we
+     never autoplay — the poster stays and the visitor gets controls instead. */
+  var vids = document.querySelectorAll('.lazyvid');
+  function load(v) {
+    if (v.src) return;
+    v.src = v.dataset.src;
+    if (reduce.matches) { v.controls = true; return; }
+    v.play().catch(function () { v.controls = true; });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        load(e.target);
+        io.unobserve(e.target);
       });
-    })();
-  </script>
-  <script src="../../js/transition.js"></script>
+    }, { rootMargin: '400px 0px' });
+    vids.forEach(function (v) { io.observe(v); });
+  } else {
+    vids.forEach(load);
+  }
+
+  /* Session clips stay as stills until asked for, so no third-party player is
+     requested on page load. */
+  document.querySelectorAll('.session').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = 'https://player.vimeo.com/video/' + btn.dataset.vimeo +
+              '?autoplay=1&dnt=1&title=0&byline=0&portrait=0';
+      f.title = btn.getAttribute('aria-label').replace(/^Play /, '');
+      f.allow = 'autoplay; fullscreen; picture-in-picture';
+      f.allowFullscreen = true;
+      f.className = 'session__frame';
+      btn.replaceWith(f);
+    });
+  });
+})();
+</script>
+<script src="../../js/transition.js"></script>
 </body>
 </html>
