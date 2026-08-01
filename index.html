@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css?v=2" />
+    <link rel="stylesheet" href="css/styles.css?v=4" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
@@ -176,6 +176,29 @@
           </a>
         </div>
       </article>
+
+    </section>
+
+    <!-- ── Concept Work ── -->
+    <section class="concept-section">
+
+      <header class="concept-header">
+        <p class="concept-eyebrow hero-anim">Concept work</p>
+        <p class="concept-intro hero-anim">Self-directed explorations, outside of client work.</p>
+      </header>
+
+      <div class="concept-list">
+        <a class="concept-item hero-anim" href="case-studies/arc/index.html" id="arc-read-more" aria-label="Read more about ARC, a speaker concept designed for mobility">
+          <span class="concept-thumb">
+            <img src="assets/images/arc/arc-thumb.jpg" alt="" loading="lazy" />
+          </span>
+          <span class="concept-item-text">
+            <span class="concept-item-title">ARC — a speaker designed for mobility</span>
+            <span class="concept-item-meta">Self-initiated · 2024</span>
+          </span>
+          <img src="assets/icons/arrow_right.svg" alt="" class="concept-arrow" aria-hidden="true" />
+        </a>
+      </div>
 
     </section>
   </main>
@@ -404,7 +427,7 @@
       });
     }, { threshold: 0.25 });
 
-    document.querySelectorAll('.card-text').forEach(ct => cardTextObserver.observe(ct));
+    document.querySelectorAll('.card-text, .concept-header, .concept-list').forEach(ct => cardTextObserver.observe(ct));
 
     // ── PayCO video scale-up reveal (from the bottom) ──
     const paycoVid = document.querySelector('.card-vid-payco');

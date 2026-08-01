@@ -1,0 +1,126 @@
+/* ── ARC speaker concept case study ── */
+
+/* Wider canvas — larger visuals, matching the other cases */
+.case-content { max-width: 1320px; }
+
+.case-hero { max-width: none; }
+
+/* ─────────────────────────────────────────────
+   Case meta — 3-column override
+───────────────────────────────────────────── */
+.case-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ─────────────────────────────────────────────
+   Section blocks
+───────────────────────────────────────────── */
+.arc-block {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.arc-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 780px;
+}
+
+/* ─────────────────────────────────────────────
+   Typography
+───────────────────────────────────────────── */
+.arc-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.arc-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+
+/* ─────────────────────────────────────────────
+   Media
+───────────────────────────────────────────── */
+
+/* Hero animation — full-bleed 16:9, on the render's own light backdrop */
+.arc-media-hero {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.arc-media-hero video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.arc-media-full {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.arc-media-full img,
+.arc-media-full video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Portrait clip beside a landscape still — align on a shared row */
+.arc-media-split {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.arc-media-cell {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e9eaec;
+}
+
+.arc-media-cell img,
+.arc-media-cell video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.arc-caption {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #8a8a8a;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   Responsive
+───────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .case-meta        { grid-template-columns: 1fr; gap: 40px; }
+  .arc-block        { gap: 28px; }
+  .arc-title        { font-size: 28px; }
+  .arc-media-split  { grid-template-columns: 1fr; }
+  .arc-media-cell img,
+  .arc-media-cell video { height: auto; object-fit: contain; }
+}
