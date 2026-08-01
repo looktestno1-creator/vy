@@ -438,6 +438,118 @@ body {
 }
 
 /* ─────────────────────────────────────────────
+   Concept work
+   Sits below the numbered client cards. Reuses .card so the existing
+   parallax/scale and .card-text reveal observers pick it up for free.
+───────────────────────────────────────────── */
+.concept-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 1200px;
+  max-width: 100%;
+  margin-top: 6vh;
+}
+
+.concept-header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.concept-eyebrow {
+  font-weight: 700;
+  font-size: 12px;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.concept-intro {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #a0a0a0;
+}
+
+.concept-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Compact row — deliberately lighter than the client cards above */
+.concept-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.25s ease-out;
+}
+
+.concept-item:hover { background: rgba(0, 0, 0, 0.04); }
+
+.concept-thumb {
+  flex-shrink: 0;
+  width: 96px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e3e5e8;
+}
+
+.concept-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.concept-item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.concept-item-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.35;
+  color: #000;
+}
+
+.concept-item-meta {
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.concept-arrow {
+  flex-shrink: 0;
+  width: 16px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.concept-item:hover .concept-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 767px) {
+  .concept-section    { margin-top: 4vh; gap: 12px; }
+  .concept-item       { gap: 14px; padding: 12px 8px; }
+  .concept-thumb      { width: 72px; height: 52px; }
+  .concept-item-title { font-size: 15px; }
+}
+
+/* ─────────────────────────────────────────────
    Footer
 ───────────────────────────────────────────── */
 .site-footer {
