@@ -132,6 +132,52 @@
 }
 
 /* ─────────────────────────────────────────────
+   Scroll reveals
+   The .fade-in base lives in the page's <style>; these extend it so
+   media settles in with a slight scale rather than only a fade.
+───────────────────────────────────────────── */
+.arc-media-full.fade-in,
+.arc-media-portrait.fade-in,
+.arc-media-split.fade-in {
+  transform: translateY(24px) scale(0.985);
+  transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-media-full.fade-in.is-visible,
+.arc-media-portrait.fade-in.is-visible,
+.arc-media-split.fade-in.is-visible {
+  transform: translateY(0) scale(1);
+}
+
+/* Split cells arrive one after the other rather than as a block */
+.arc-media-split .arc-media-cell {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.arc-media-split.is-visible .arc-media-cell {
+  opacity: 1;
+  transform: none;
+}
+
+.arc-media-split.is-visible .arc-media-cell:nth-child(2) {
+  transition-delay: 140ms;
+}
+
+/* ─────────────────────────────────────────────
+   Parallax
+   Media is drawn slightly larger than its frame (see the SCALE constant
+   in the page script) so it can drift without exposing the container
+   edge. The transform itself is written by that script.
+───────────────────────────────────────────── */
+.arc-parallax {
+  backface-visibility: hidden;
+}
+
+/* ─────────────────────────────────────────────
    Responsive
 ───────────────────────────────────────────── */
 @media (max-width: 767px) {
@@ -141,4 +187,27 @@
   .arc-media-split  { grid-template-columns: 1fr; }
   .arc-media-cell img,
   .arc-media-cell video { height: auto; object-fit: contain; }
+
+  /* Stacked layout — the second cell is no longer beside the first */
+  .arc-media-split.is-visible .arc-media-cell:nth-child(2) { transition-delay: 0ms; }
+}
+
+/* ─────────────────────────────────────────────
+   Reduced motion — keep the content, drop the movement
+───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .arc-media-full.fade-in,
+  .arc-media-portrait.fade-in,
+  .arc-media-split.fade-in {
+    transform: none;
+    transition: opacity 0.3s linear;
+  }
+
+  .arc-media-split .arc-media-cell {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .arc-parallax { transform: none !important; }
 }

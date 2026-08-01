@@ -85,10 +85,10 @@
     <!-- ── Pattern exploration ── -->
     <section class="arc-block">
       <div class="arc-media-full fade-in">
-        <img src="../../assets/images/arc/arc-colourways.jpg" alt="Three ARC speakers floating at an angle — charcoal, blue and bronze — each with a different parametric scale pattern across its textile surface" loading="lazy" />
+        <img class="arc-parallax" src="../../assets/images/arc/arc-colourways.jpg" width="2000" height="1125" alt="Three ARC speakers floating at an angle — charcoal, blue and bronze — each with a different parametric scale pattern across its textile surface" loading="lazy" />
       </div>
       <div class="arc-media-full fade-in">
-        <img src="../../assets/images/arc/arc-pattern-grid.jpg" alt="Eight ARC speakers arranged in an overhead grid on white, in blue, black, teal and brown, showing the range of parametric patterns and densities" loading="lazy" />
+        <img class="arc-parallax" src="../../assets/images/arc/arc-pattern-grid.jpg" width="2000" height="1125" alt="Eight ARC speakers arranged in an overhead grid on white, in blue, black, teal and brown, showing the range of parametric patterns and densities" loading="lazy" />
       </div>
     </section>
 
@@ -105,7 +105,7 @@
         </video>
       </div>
       <div class="arc-media-full fade-in">
-        <img src="../../assets/images/arc/arc-charging-base.jpg" alt="A blue ARC speaker lifting away from its circular charging base, the cable trailing off to the right" loading="lazy" />
+        <img class="arc-parallax" src="../../assets/images/arc/arc-charging-base.jpg" width="2000" height="881" alt="A blue ARC speaker lifting away from its circular charging base, the cable trailing off to the right" loading="lazy" />
       </div>
     </section>
 
@@ -120,12 +120,12 @@
         <div class="arc-media-cell">
           <!-- Below the fold: no autoplay + preload="none" means nothing is
                fetched until it scrolls into view (see the observer below). -->
-          <video class="arc-lazy-video" loop muted playsinline preload="none" poster="../../assets/images/arc/arc-press-play-poster.jpg" aria-label="The ARC speaker's top display in use — play and pause controls and a track readout resolving on the circular screen">
+          <video class="arc-lazy-video arc-parallax" loop muted playsinline preload="none" poster="../../assets/images/arc/arc-press-play-poster.jpg" aria-label="The ARC speaker's top display in use — play and pause controls and a track readout resolving on the circular screen">
             <source src="../../assets/videos/arc/arc-press-play.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="arc-media-cell">
-          <img src="../../assets/images/arc/arc-lineup.jpg" alt="Four ARC speakers receding in a row — pale blue, grey, teal and bronze — against a soft graduated backdrop" loading="lazy" />
+          <img class="arc-parallax" src="../../assets/images/arc/arc-lineup.jpg" width="2000" height="1125" alt="Four ARC speakers receding in a row — pale blue, grey, teal and bronze — against a soft graduated backdrop" loading="lazy" />
         </div>
       </div>
     </section>
@@ -138,12 +138,12 @@
       </div>
       <div class="arc-media-split fade-in">
         <div class="arc-media-cell">
-          <video class="arc-lazy-video" loop muted playsinline preload="none" poster="../../assets/images/arc/arc-charge-snap-poster.jpg" aria-label="The ARC speaker settling onto its charging pad, the top face lighting up green to confirm it is charging">
+          <video class="arc-lazy-video arc-parallax" loop muted playsinline preload="none" poster="../../assets/images/arc/arc-charge-snap-poster.jpg" aria-label="The ARC speaker settling onto its charging pad, the top face lighting up green to confirm it is charging">
             <source src="../../assets/videos/arc/arc-charge-snap.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="arc-media-cell">
-          <video class="arc-lazy-video" loop muted playsinline preload="none" poster="../../assets/images/arc/arc-charge-indicator-poster.jpg" aria-label="Close-up of the charge indicator — a green ring and battery icon glowing on the speaker's woven top" >
+          <video class="arc-lazy-video arc-parallax" loop muted playsinline preload="none" poster="../../assets/images/arc/arc-charge-indicator-poster.jpg" aria-label="Close-up of the charge indicator — a green ring and battery icon glowing on the speaker's woven top" >
             <source src="../../assets/videos/arc/arc-charge-indicator.mp4" type="video/mp4" />
           </video>
         </div>
@@ -202,6 +202,60 @@
           });
         }, { threshold: 0.25 });
         lazyVideos.forEach(function (v) { videoObserver.observe(v); });
+      }
+
+      // ── Parallax on media ──
+      // Each element is drawn at SCALE so it can drift inside its frame
+      // without exposing the container edge; the shift is clamped to the
+      // headroom that scaling actually buys. Off on mobile (the split
+      // stacks there) and when the visitor prefers reduced motion.
+      var parallaxEls = Array.prototype.slice.call(document.querySelectorAll('.arc-parallax'));
+      if (parallaxEls.length) {
+        var SCALE  = 1.08;
+        var FACTOR = 0.06;
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var rafId  = null;
+        var mobile = window.innerWidth <= 767;
+
+        function clearParallax() {
+          parallaxEls.forEach(function (el) { el.style.transform = ''; el._pt = ''; });
+        }
+
+        function updateParallax() {
+          rafId = null;
+          if (mobile || reduceMotion.matches) return;
+          var vh = window.innerHeight;
+          // Batch the reads, then the writes — interleaving them would
+          // force a layout on every element.
+          var shifts = parallaxEls.map(function (el) {
+            var r = el.parentElement.getBoundingClientRect();
+            var max = r.height * (SCALE - 1) / 2;
+            var y = ((r.top + r.height / 2) - vh / 2) * FACTOR;
+            return Math.round(Math.max(-max, Math.min(max, y)) * 10) / 10;
+          });
+          parallaxEls.forEach(function (el, i) {
+            var next = 'translate3d(0,' + shifts[i] + 'px,0) scale(' + SCALE + ')';
+            if (el._pt !== next) { el.style.transform = next; el._pt = next; }
+          });
+        }
+
+        function onScroll() {
+          if (!rafId) rafId = requestAnimationFrame(updateParallax);
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', function () {
+          mobile = window.innerWidth <= 767;
+          if (mobile) clearParallax();
+          onScroll();
+        }, { passive: true });
+        if (reduceMotion.addEventListener) {
+          reduceMotion.addEventListener('change', function () {
+            if (reduceMotion.matches) clearParallax(); else onScroll();
+          });
+        }
+
+        updateParallax();
       }
     })();
   </script>
