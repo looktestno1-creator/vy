@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yogurt Maker — Full Case Study</title>
+  <meta name="description" content="The step-by-step case study behind the Beko Gourmet Yogurt Maker — reading back the research, revising the flows, and designing the HomeWhiz app experience." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yvefa.com/case-studies/ym/case-study.html" />
+  <meta property="og:title" content="Yogurt Maker — Full Case Study" />
+  <meta property="og:description" content="Reading back the research, revising the flows, and designing the HomeWhiz app experience." />
+  <meta property="og:image" content="https://yvefa.com/assets/images/ym/hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://yvefa.com/assets/images/ym/hero.jpg" />
+  <link rel="canonical" href="https://yvefa.com/case-studies/ym/case-study.html" />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/ym.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="./index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z"/></svg>
+      Back
+    </a>
+  </nav>
+
+  <main class="case-content">
+
+    <!-- ── Hero ── -->
+    <header class="case-hero">
+      <p class="case-eyebrow hero-anim">Case study · Beko Gourmet Yogurt Maker</p>
+      <h1 class="case-hero-title hero-anim">Yogurt Maker</h1>
+      <p class="case-hero-sub hero-anim">Rebuilding the flows around the user needs rather than the appliance, and designing the app experience.</p>
+    </header>
+
+    <div class="ym-hero-shot hero-anim">
+      <img width="1920" height="1920" src="../../assets/images/ym/device-hero.jpg" alt="The Arçelik Gourmet Yogurt Maker on a plinth against a textured concrete wall, its control panel showing the Yogurt, Probiotic and Kefir programmes, the Sweet, Normal and Sour taste settings, and the Insert Sensor, Add Milk and Add Starter steps" fetchpriority="high" />
+    </div>
+
+    <!-- ── Project plan ── -->
+    <section class="ym-text-block ym-text-block--wide fade-in">
+      <p class="ym-label">Project plan</p>
+      <h2 class="ym-title">From concept test to final flows</h2>
+      <p class="case-body">The programme ran in nine numbered stages — opening with external research and a benchmark, moving through ideation and the physical panel UI, and closing with the connected app and a final round of flows for the next prototype.</p>
+    </section>
+
+    <ol class="ym-timeline fade-in">
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">01</span>
+        <p class="ym-tl-title">Concept Test Research (External) + Benchmark</p>
+        <ul class="ym-tl-points">
+          <li>Verifying the project idea.</li>
+          <li>Getting more customer insight (Turkey only).</li>
+          <li>Research on present user habits and overall yogurt making processes.</li>
+          <li>Exploring similar products on the market.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">02</span>
+        <p class="ym-tl-title">Ideation Workshop (Internal)</p>
+        <ul class="ym-tl-points">
+          <li>Ideation session against pre-defined personas, supported by insights from the Concept Test Research report.</li>
+          <li>Evaluating primary features and defining the final inventory list.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">+</span>
+        <p class="ym-tl-title">Yogurt Consumption Habits Research</p>
+        <ul class="ym-tl-points">
+          <li>More information on yogurt consumption — this time across six countries.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">03</span>
+        <p class="ym-tl-title">Designing initial UI drafts &amp; alternatives for the physical product</p>
+        <ul class="ym-tl-points">
+          <li>Creating various alternatives for the given UI panel dimensions.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">04</span>
+        <p class="ym-tl-title">Finalizing first round of UI</p>
+        <ul class="ym-tl-points">
+          <li>Supporting the UX Research team with the data required for the first prototype.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">05</span>
+        <p class="ym-tl-title">Supporting user testing sessions (10 women, 45 min. each)</p>
+        <ul class="ym-tl-points">
+          <li>Defining and validating scenarios for the testing sessions with the UX Research team.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">06</span>
+        <p class="ym-tl-title">Evaluating outcomes</p>
+        <ul class="ym-tl-points">
+          <li>Evaluating the results of the user testing sessions and defining the future action plan with the PM, R&amp;D and UX Research teams.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">07</span>
+        <p class="ym-tl-title">Refinements</p>
+        <ul class="ym-tl-points">
+          <li>Re-evaluating the UI and preparing the necessary technical documentation for the next prototype.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">08</span>
+        <p class="ym-tl-title">HomeWhiz App</p>
+        <ul class="ym-tl-points">
+          <li>Defining connectivity flows and features according to the previously defined product feature set.</li>
+        </ul>
+      </li>
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">09</span>
+        <p class="ym-tl-title">Finalising</p>
+        <ul class="ym-tl-points">
+          <li>Finalizing product and app flows for the next prototype and its user testing.</li>
+        </ul>
+      </li>
+    </ol>
+
+    <!-- ── Step 01 ── -->
+    <section class="ym-step fade-in">
+      <div class="ym-step-head">
+        <p class="ym-step-num">Step 01</p>
+        <p class="ym-step-sub">Consolidating the research, the flows and the earlier panel alternatives.</p>
+      </div>
+    </section>
+
+    <ol class="ym-timeline ym-timeline--board fade-in">
+
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">01</span>
+        <p class="ym-tl-title">Analyzing data</p>
+        <p class="ym-tl-note">Research reports, benchmark reports, consumer habit reports, the user journey workshop output and the personas that came out of it.</p>
+        <div class="ym-shots">
+          <figure class="ym-shot">
+            <img width="420" height="217" src="../../assets/images/ym/step-01/research-01.jpg" alt="Survey chart ranking how important each dairy product is to respondents, with traditional yogurt highest" loading="lazy" />
+            <figcaption>Consumption habits survey</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="245" src="../../assets/images/ym/step-01/research-02.jpg" alt="Comparison grid of dairy products consumed in the household by product and by country" loading="lazy" />
+            <figcaption>Consumption by product, by country</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="193" src="../../assets/images/ym/step-01/research-03.jpg" alt="Benchmark table of competing yogurt makers with prices and capacities, alongside photographs of each product" loading="lazy" />
+            <figcaption>Competitor benchmark</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="233" src="../../assets/images/ym/step-01/research-04.jpg" alt="Photographs of the user journey workshop, with participants at tables and a whiteboard of grouped notes" loading="lazy" />
+            <figcaption>User journey workshop</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="302" height="420" src="../../assets/images/ym/step-01/research-05.jpg" alt="Persona card for a 49-year-old homemaker who ferments three kilos of yogurt a week from raw milk and judges temperature by experience" loading="lazy" />
+            <figcaption>Personas</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="198" src="../../assets/images/ym/step-01/research-06.jpg" alt="Journey map across five stages from sourcing milk through preparation, fermenting and resting to eating, with pain points at each stage" loading="lazy" />
+            <figcaption>Journey map, with pain points</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">02</span>
+        <p class="ym-tl-title">Flows</p>
+        <p class="ym-tl-note">Mapping the flows that already existed, for both the device and the yogurt making process itself.</p>
+        <div class="ym-shots">
+          <figure class="ym-shot">
+            <img width="420" height="145" src="../../assets/images/ym/step-01/flows-01.jpg" alt="Device algorithm flow diagram branching through milk heating, starter addition, taste and probiotic settings to completion" loading="lazy" />
+            <figcaption>Device algorithm</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="157" src="../../assets/images/ym/step-01/flows-02.jpg" alt="Illustrated probe step sequences comparing the everyday milk route with the raw milk route" loading="lazy" />
+            <figcaption>Probe sequences</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="360" src="../../assets/images/ym/step-01/flows-03.jpg" alt="Large colour-coded flow board covering the whole making process with annotations and comment markers" loading="lazy" />
+            <figcaption>Full process board</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">03</span>
+        <p class="ym-tl-title">Past alternatives, and the decision making behind them</p>
+        <p class="ym-tl-note">The earlier panel designs — and, more usefully, the reasoning that produced them. The alternatives on their own only show what was chosen; knowing why narrowed down which decisions were still worth reopening.</p>
+        <div class="ym-shots">
+          <figure class="ym-shot">
+            <img width="420" height="232" src="../../assets/images/ym/step-01/alternatives-01.jpg" alt="Board of earlier device panel alternatives showing dial and button layouts, closed-device appearance, and a usage sequence" loading="lazy" />
+            <figcaption>Panel alternatives &amp; layout</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="398" height="420" src="../../assets/images/ym/step-01/alternatives-02.jpg" alt="Device panel states in sequence — off, on, adjusting settings, two running states with remaining time, and finished" loading="lazy" />
+            <figcaption>Panel states, off to finished</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="ym-tl-item ym-tl-item--result">
+        <p class="ym-tl-title">Final UI for the very first prototype</p>
+      </li>
+
+    </ol>
+
+    <!-- ── Testing ── -->
+    <section class="ym-text-block ym-text-block--wide fade-in">
+      <p class="ym-label">First User Testing</p>
+      <h2 class="ym-title">User testing sessions</h2>
+      <p class="case-body">First round of testing went in front of ten participants, 45 minutes each. Their words are more useful than any summary of them — "add starter" read as a button rather than an instruction, people didn't realise they then had to press play to begin fermenting, and the cooling stage before and after fermentation wasn't understood at all.</p>
+      <p class="case-body">Everything in Step 02 is answering this.</p>
+    </section>
+
+    <div class="ym-embed fade-in" style="aspect-ratio: 3600 / 1475;">
+      <iframe src="https://xd.adobe.com/embed/39c1c3a2-e899-40ea-9723-f574ecbcbe01-6c92/?fullscreen"
+              title="User feedback from the testing sessions"
+              loading="lazy" allowfullscreen
+              sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+    </div>
+
+    <!-- ── Step 02 ── -->
+    <section class="ym-step fade-in">
+      <div class="ym-step-head">
+        <p class="ym-step-num">Step 02</p>
+        <p class="ym-step-sub">Revising flows.</p>
+      </div>
+    </section>
+
+    <section class="ym-text-block ym-text-block--wide fade-in">
+      <p class="case-body">The first round of flows described device algorithms and device UI panels — accurate, but framed entirely from the appliance's point of view. Making yogurt isn't a thing that happens on a panel. It happens over hours, across a person, a machine and a phone.</p>
+      <p class="case-body">So I widened the frame: a single flow showing the user, the device and the app interacting together, including the waiting, the ambient light states, the buzzer, and the moments where the app has to speak up because the person has walked away.</p>
+    </section>
+
+    <ol class="ym-timeline ym-timeline--board fade-in">
+
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">01</span>
+        <p class="ym-tl-title"> First flows: device algorithms &amp; device UI panels</p>
+        <p class="ym-tl-note">Complete and correct — but written entirely in the appliance's terms.</p>
+        <div class="ym-shots">
+          <figure class="ym-shot">
+            <img width="420" height="223" src="../../assets/images/ym/step-02/algorithm-flow.jpg" alt="Colour-coded device algorithm flow branching through heating, starter, taste and duration, annotated with comment markers" loading="lazy" />
+            <figcaption>Device algorithm flow</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="103" src="../../assets/images/ym/step-02/device-ui-panels.jpg" alt="Grid of device UI panel states grouped by programme, each annotated with its behaviour" loading="lazy" />
+            <figcaption>Device UI panels, state by state</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="ym-tl-item">
+        <span class="ym-tl-num">02</span>
+        <p class="ym-tl-title">Adopting a more holistic approach</p>
+        <p class="ym-tl-note">A flow showing user + device + app interaction from a wider perspective.</p>
+        <div class="ym-shots">
+          <figure class="ym-shot">
+            <img width="420" height="218" src="../../assets/images/ym/step-02/holistic-left.jpg" alt="Swimlane storyboard with a User row and a Yoghurt row, tracking what the person does against what the device shows at each moment" loading="lazy" />
+            <figcaption>User against device, moment by moment</figcaption>
+          </figure>
+          <figure class="ym-shot">
+            <img width="420" height="299" src="../../assets/images/ym/step-02/holistic-right.jpg" alt="Detailed swimlane covering user, interface, ambient light and hardware rows, with algorithm notes attached to the sensor detection branch" loading="lazy" />
+            <figcaption>Interface, ambient light and hardware lanes</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="ym-tl-item ym-tl-item--result">
+        <p class="ym-tl-title">Refined Final Flow</p>
+      </li>
+
+    </ol>
+
+    <div class="ym-media-scroll fade-in">
+      <img width="2048" height="586" src="../../assets/images/ym/v02-final-flow.jpg" alt="The final flow — a wide swimlane board with User, Product UI, Ambilight and HomeWhiz rows running across the full making process" loading="lazy" />
+    </div>
+    <p class="ym-caption fade-in">Final flow — user, product UI, ambient light and HomeWhiz as parallel lanes.</p>
+
+    <div class="ym-media-full fade-in">
+      <img width="2048" height="1092" src="../../assets/images/ym/device-ui-scenarios.jpg" alt="Connectivity scenario board mapping user actions, algorithm notes, device UI, buzzer, time-out, ambient light and HomeWhiz behaviour across each stage" loading="lazy" />
+      <p class="ym-caption">Wi-Fi connectivity scenarios, mapped stage by stage across every channel the product speaks through.</p>
+    </div>
+
+    <!-- ── Step 03 ── -->
+    <section class="ym-step fade-in">
+      <div class="ym-step-head">
+        <p class="ym-step-num">Step 03</p>
+        <p class="ym-step-sub">Designing the app: HomeWhiz.</p>
+      </div>
+    </section>
+
+    <section class="ym-text-block ym-text-block--wide fade-in">
+      <p class="case-body">With the flows settled, the app work started from an inventory list and a set of requirements — connectivity, welcome and first use, what the panel shows before a program is sent, what it shows while running and once finished, graphs and history, user input, and replenishables.</p>
+      <p class="case-body">From there I defined the app anatomy so it sat correctly inside the wider HomeWhiz experience rather than as a one-off screen set: a <strong>Control Panel</strong> for setting a program up, a <strong>Program Started</strong> state for following it, and an <strong>Assisted Guide</strong> for the parts where the person has to do something physical.</p>
+    </section>
+
+    <div class="ym-media-full fade-in">
+      <img width="2048" height="1905" src="../../assets/images/ym/step-03-homewhiz.jpg" alt="Step 03 board — the HomeWhiz inventory list and requirements, and the app anatomy wireframes for Control Panel, Program Started and Assisted Guide" loading="lazy" />
+      <p class="ym-caption">The final UI for HomeWhiz and the device was set to be tested after the components for the second prototype arrived.</p>
+    </div>
+
+    <section class="ym-text-block ym-text-block--wide fade-in">
+      <p class="ym-label">Prototype</p>
+      <h2 class="ym-title">The device and the app, together</h2>
+      <p class="case-body">The two halves only make sense side by side — the panel on the appliance and the phone in your hand showing the same process from different angles.</p>
+    </section>
+
+    <div class="ym-embed fade-in" style="aspect-ratio: 3601 / 1543;">
+      <iframe src="https://xd.adobe.com/embed/90f75826-8b0e-4693-ad52-c9d9300f0d5c-c5a4/?fullscreen"
+              title="Interactive prototype — the device panel and the HomeWhiz app together"
+              loading="lazy" allowfullscreen
+              sandbox="allow-same-origin allow-scripts allow-pointer-lock allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+    </div>
+
+    <div class="ym-media-full fade-in">
+      <img width="2048" height="1024" src="../../assets/images/ym/app-ui-trio.jpg" alt="Three finished HomeWhiz screens — keeping cold, program setup with taste and container selectors and recipes, and fermenting multiple containers with a keep-cold toggle" loading="lazy" />
+    </div>
+
+    <!-- ── What's next ── -->
+    <section class="ym-step fade-in">
+      <div class="ym-step-head">
+        <p class="ym-step-num">What's next</p>
+        <p class="ym-step-sub">Assisted Guide.</p>
+      </div>
+    </section>
+
+    <section class="ym-text-block ym-text-block--wide fade-in">
+      <h2 class="ym-title">Step by step guidance for yogurt making</h2>
+      <p class="case-body">To help people experience yogurt making as playful and easy rather than fussy — insert the sensor, add the milk, and the app confirms each step as the device detects it, instead of asking anyone to guess.</p>
+    </section>
+
+    <div class="ym-media-full fade-in">
+      <img width="1845" height="2048" src="../../assets/images/ym/assisted-guide.jpg" alt="Assisted Guide screens — a four-step progress indicator walking through Insert Sensor and Add Milk, each confirming once detected" loading="lazy" />
+    </div>
+
+    <!-- ── Back to overview ── -->
+    <section class="ym-dark fade-in">
+      <p class="ym-label">Recognition</p>
+      <h2 class="ym-title">iF Design Award 2022</h2>
+      <p class="case-body">The Gourmet Yogurt Maker went on to receive an iF Design Award in 2022.</p>
+      <a class="ym-cta" href="./index.html">
+        Back to the project overview
+        <span class="ym-cta-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></svg>
+        </span>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-cta">
+        <h2 class="footer-heading">
+          <span class="footer-h-row">Let's&nbsp;<span class="footer-cycle-wrap"><span class="footer-cycle-track"><span>discover</span><span>work</span><span>create</span><span>discover</span></span></span></span>
+          <span class="footer-h-row">together</span>
+        </h2>
+        <a class="footer-btn" href="mailto:hi@yvefa.com">
+          Get In Touch
+          <span class="footer-btn-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-contact">
+          <p class="footer-label">Contact</p>
+          <a href="mailto:hi@yvefa.com" class="footer-email">hi@yvefa.com</a>
+        </div>
+        <div class="footer-socials">
+          <a class="footer-social-btn" href="https://www.behance.net/yvefa" target="_blank" rel="noopener" aria-label="Behance">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.82,121.39A42,42,0,0,0,86,52H32A12,12,0,0,0,20,64V192a12,12,0,0,0,12,12H90a46,46,0,0,0,27.82-82.61ZM44,76H86a18,18,0,0,1,0,36H44ZM90,180H44V136H90a22,22,0,0,1,0,44ZM156,76a12,12,0,0,1,12-12h64a12,12,0,0,1,0,24H168A12,12,0,0,1,156,76Zm44,24a52,52,0,0,0,0,104,51.45,51.45,0,0,0,22.7-5.21,12,12,0,1,0-10.49-21.58A27.73,27.73,0,0,1,200,180a28.05,28.05,0,0,1-25.3-16H240a12,12,0,0,0,12-12A52.06,52.06,0,0,0,200,100Zm-25.3,40a28,28,0,0,1,50.6,0Z"/></svg>
+          </a>
+          <a class="footer-social-btn" href="https://linkedin.com/in/yvefa/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,20H40A20,20,0,0,0,20,40V216a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V40A20,20,0,0,0,216,20Zm-4,192H44V44H212ZM112,176V124a12,12,0,0,1,21.43-7.41A40,40,0,0,1,192,152v24a12,12,0,0,1-24,0V152a16,16,0,0,0-32,0v24a12,12,0,0,1-24,0ZM96,124v52a12,12,0,0,1-24,0V124a12,12,0,0,1,24,0ZM68,80A16,16,0,1,1,84,96,16,16,0,0,1,68,80Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-copyright">
+        <p>Vefa Yilmaz © 2026</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // ── Hero entrance ──
+      var arriving = sessionStorage.getItem('pt-arriving') === '1';
+      var elems = [
+        document.querySelector('.case-eyebrow'),
+        document.querySelector('.case-hero-title'),
+        document.querySelector('.case-hero-sub'),
+        document.querySelector('.ym-hero-shot'),
+      ];
+      var base = arriving ? 680 : 150;
+      var stagger = [0, 140, 260, 380];
+      elems.forEach(function (el, i) {
+        if (!el) return;
+        setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
+      });
+
+      // ── Fade-in on scroll ──
+      var fadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.fade-in').forEach(function (el) { fadeObserver.observe(el); });
+
+      // ── Footer word cycle ──
+      var footerTrack = document.querySelector('.footer-cycle-track');
+      if (footerTrack) {
+        var footerItems = footerTrack.querySelectorAll('span');
+        var footerIdx = 0;
+        setInterval(function () {
+          footerIdx++;
+          var itemH = footerItems[0].offsetHeight;
+          footerTrack.style.transition = 'transform 0.65s ease-out';
+          footerTrack.style.transform = 'translateY(-' + footerIdx * itemH + 'px)';
+          if (footerIdx === footerItems.length - 1) {
+            setTimeout(function () {
+              footerTrack.style.transition = 'none';
+              footerTrack.style.transform = 'translateY(0)';
+              footerIdx = 0;
+            }, 650);
+          }
+        }, 2200);
+      }
+    })();
+  </script>
+  <script src="../../js/transition.js"></script>
+</body>
+</html>

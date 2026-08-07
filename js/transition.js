@@ -75,8 +75,16 @@
     if (back) {
       e.preventDefault();
       // Use stored origin if set (normal flow); fall back to the link's href
-      // (handles direct navigation where pt-prev-origin was never written)
-      const dest = sessionStorage.getItem('pt-prev-origin') || back.getAttribute('href');
+      // (handles direct navigation where pt-prev-origin was never written).
+      // Ignore a stored origin pointing at the page we're already on: going
+      // index → case study → back leaves it holding this page, so a second
+      // back would navigate here again and look like a dead button.
+      const stored = sessionStorage.getItem('pt-prev-origin');
+      const samePage = stored &&
+        stored.split('#')[0] === window.location.href.split('#')[0];
+      const dest = (stored && !samePage) ? stored : back.getAttribute('href');
+      // Consume it, so each stored origin is only ever used once.
+      sessionStorage.removeItem('pt-prev-origin');
       navigateTo(dest);
       return;
     }
