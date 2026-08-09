@@ -1,0 +1,22 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="294" height="294" viewBox="0 0 294 294" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Ellipse 1" filter="url(#filter0_d_0_4)">
+<path d="M262.905 108.167C264.278 107.826 265.672 108.662 265.985 110.042C272.126 137.146 268.833 165.565 256.606 190.579C244.003 216.36 222.715 236.874 196.484 248.514C170.253 260.154 140.759 262.174 113.185 254.22C85.6125 246.266 61.7258 228.847 45.7249 205.024C29.7239 181.202 22.6328 152.501 25.6982 123.968C28.7637 95.4351 41.7893 68.8957 62.4854 49.0158C83.1815 29.1359 110.223 17.1879 138.856 15.2722C166.637 13.4137 194.19 21.114 216.958 37.0502C218.117 37.8619 218.364 39.468 217.528 40.6104V40.6104C216.693 41.7527 215.09 41.9987 213.93 41.1881C192.136 25.9632 165.776 18.6087 139.199 20.3867C111.768 22.2219 85.8628 33.6678 66.0363 52.7125C46.2098 71.7572 33.7314 97.1815 30.7948 124.516C27.8582 151.85 34.6514 179.345 49.98 202.166C65.3087 224.988 88.1917 241.675 114.606 249.295C141.021 256.915 169.276 254.98 194.405 243.829C219.533 232.678 239.927 213.026 252 188.327C263.698 164.397 266.86 137.213 261.009 111.28C260.698 109.899 261.531 108.509 262.905 108.167V108.167Z" fill="url(#paint0_linear_0_4)" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_d_0_4" x="7.3589e-08" y="3.35684e-07" width="294" height="294" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="5" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_0_4"/>
+<feOffset dy="10"/>
+<feGaussianBlur stdDeviation="10"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.411765 0 0 0 0 0.427451 0 0 0 0 0.529412 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_4"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_4" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_0_4" x1="147" y1="15.0001" x2="147" y2="259" gradientUnits="userSpaceOnUse">
+<stop stop-color="#696D87" stop-opacity="0.847059"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
