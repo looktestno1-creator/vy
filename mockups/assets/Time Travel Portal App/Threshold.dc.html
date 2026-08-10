@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0d13;font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:#8fd3e8}a:hover{color:#c8ecf5}
+@keyframes thr-spin{to{transform:rotate(360deg)}}
+@keyframes thr-spinr{to{transform:rotate(-360deg)}}
+@keyframes thr-breathe{0%,100%{opacity:.35}50%{opacity:.85}}
+@keyframes thr-flicker{0%,100%{opacity:.5}43%{opacity:.75}47%{opacity:.3}}
+@keyframes thr-shimmer{0%{background-position:0 0}100%{background-position:0 220px}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1200px 700px at 50% 0%,#121a26 0%,#080b11 60%,#05070b 100%);display:flex;flex-direction:column;align-items:center;gap:34px;padding:44px 24px 72px;box-sizing:border-box">
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:7px">
+    <div style="font:300 13px/1 'JetBrains Mono',monospace;letter-spacing:.42em;color:#5d7688;text-transform:uppercase">Threshold</div>
+    <div style="font:300 italic 19px/1.3 'Cormorant Garamond',serif;color:#8fa8b8">an instrument for standing in another year</div>
+  </div>
+
+  <div style="display:flex;align-items:flex-start;gap:34px;flex-wrap:wrap;justify-content:center">
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+      <dc-import name="ThresholdScreen" style="position:absolute;inset:0" portal-treatment="{{ portalTreatment }}" hud-layout="{{ hudLayout }}" dial-metaphor="{{ dialMetaphor }}" hint-size="100%,100%"></dc-import>
+    </x-import>
+
+    <div style="max-width:290px;display:flex;flex-direction:column;gap:11px;font:300 11px/1.65 'JetBrains Mono',monospace;color:#65808f;padding-top:8px">
+      <div style="letter-spacing:.24em;color:#8fd3e8;font-size:8.5px">THE CROSSING, IN FIVE HOLDS</div>
+      <div style="text-wrap:pretty">Hold <span style="color:#a9c6d4">SEEK ANCHOR</span> until heading, tilt and the magnetometer anomaly agree — the anchor latches. Choose an era, then set the hour, season and the exact place the aperture opens. Keep the covenant, hold to open, and the crossing writes itself into the log.</div>
+      <div style="text-wrap:pretty;color:#4f6675">Portal treatment, instrument layout and the era dial are switchable in Tweaks. The camera feed is a placeholder.</div>
+    </div>
+  </div>
+
+  <div style="width:100%;max-width:1420px;height:1px;background:linear-gradient(90deg,transparent,rgba(143,211,232,.18),transparent)"></div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+    <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.6)">THE BOARD · EVERY SCREEN</div>
+    <div style="font:300 italic 17px/1.3 'Cormorant Garamond',serif;color:#8fa8b8">splash · biometric · passphrase · seek · era · time &amp; place · covenant · opening · arrival · log</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:30px 26px;justify-content:center;max-width:1500px">
+    <sc-for list="{{ board }}" as="b" hint-placeholder-count="8">
+      <div style="display:flex;flex-direction:column;gap:11px;width:221px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font:400 9px/1 'JetBrains Mono',monospace;color:rgba(143,211,232,.45)">{{ b.num }}</div>
+          <div style="font:300 15px/1 'Cormorant Garamond',serif;color:#cfe2ec">{{ b.title }}</div>
+        </div>
+        <div style="width:221px;height:481px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;width:402px;height:874px;transform:scale(.55);transform-origin:top left;pointer-events:none">
+            <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+              <dc-import name="ThresholdScreen" style="position:absolute;inset:0" freeze="{{ b.freeze }}" era-idx="{{ b.eraIdx }}" portal-treatment="{{ portalTreatment }}" hud-layout="{{ hudLayout }}" dial-metaphor="{{ dialMetaphor }}" hint-size="100%,100%"></dc-import>
+            </x-import>
+          </div>
+        </div>
+        <div style="font:300 9.5px/1.55 'JetBrains Mono',monospace;color:rgba(143,211,232,.42);text-wrap:pretty">{{ b.note }}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;portalTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;aperture&quot;,&quot;veil&quot;,&quot;fracture&quot;],&quot;default&quot;:&quot;aperture&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variations&quot;},&quot;hudLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;perimeter&quot;,&quot;console&quot;,&quot;minimal&quot;],&quot;default&quot;:&quot;perimeter&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variations&quot;},&quot;dialMetaphor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;strata&quot;,&quot;orrery&quot;,&quot;ledger&quot;],&quot;default&quot;:&quot;strata&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variations&quot;}}">
+const BOARD = [
+  { num: "01", freeze: "splash", title: "Splash", note: "The mark breathes while the instrument calibrates its magnetometer, light and ground record." },
+  { num: "02", freeze: "auth", title: "Biometric", note: "Hold your thumb to the glass. The ring reads ridgeline; a sweep line runs while held." },
+  { num: "03", freeze: "pass", title: "Passphrase", note: "Fallback: the year of your first crossing, four figures." },
+  { num: "04", freeze: "scan", title: "Seeking anchor", note: "Sweep the room. The arch is a dashed reticle; the rails fill as the anomaly firms up." },
+  { num: "05", freeze: "anchor", title: "Anchor held", note: "Latched at 4.81 µT. Reticle dims, the aperture ghosts in, primary becomes a tap." },
+  { num: "06", freeze: "dial", title: "Choose an era", note: "Step one. Each era is described by what stood on this exact spot." },
+  { num: "07", freeze: "coords", title: "Time and place", note: "Step two. Hour of arrival, season, and which anchor the aperture opens on." },
+  { num: "08", freeze: "warn", title: "Covenant", note: "Hold-to-accept. Three rules, rotating by era; the crossing line is restated." },
+  { num: "09", freeze: "open", title: "Opening", note: "The aperture scales up over 2.2s while the device is held steady." },
+  { num: "10", freeze: "arrival", title: "Arrival", note: "Feed warms and flickers. Look through, not across." },
+  { num: "11", freeze: "log", title: "Log of crossings", note: "Kept and pulled-early thresholds, with hold duration." },
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    return {
+      portalTreatment: p.portalTreatment ?? "aperture",
+      hudLayout: p.hudLayout ?? "perimeter",
+      dialMetaphor: p.dialMetaphor ?? "strata",
+      board: BOARD.map(b => ({ ...b, eraIdx: b.freeze === "arrival" || b.freeze === "open" ? 1 : 3 })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

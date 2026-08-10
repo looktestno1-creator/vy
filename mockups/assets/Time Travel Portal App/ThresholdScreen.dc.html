@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="position:absolute;inset:0;background:#05070b;overflow:hidden;color:#dce9f0;font-family:'JetBrains Mono',ui-monospace,monospace">
+
+  <div style="position:absolute;inset:0;background:linear-gradient(178deg,#0b1622 0%,#0a1119 46%,#070c13 62%,#05080d 100%)"></div>
+  <div style="position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(101deg,rgba(143,211,232,.045) 0 1px,transparent 1px 7px)"></div>
+  <div style="position:absolute;left:0;right:0;top:56%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,211,232,.22),transparent)"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 40%,transparent 40%,rgba(0,0,0,.72) 100%)"></div>
+  <div style="position:absolute;left:16px;bottom:120px;font:300 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.28em;color:rgba(143,211,232,.34)">CAMERA FEED · REAR WIDE · 0.5×</div>
+
+  <sc-if value="{{ isArrival }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(200,160,90,.16),rgba(60,40,20,.3)),repeating-linear-gradient(88deg,rgba(255,231,186,.05) 0 1px,transparent 1px 5px)"></div>
+    <div style="position:absolute;inset:0;animation:thr-flicker 4.5s ease-in-out infinite;background:radial-gradient(70% 50% at 50% 45%,rgba(255,224,170,.14),transparent 70%)"></div>
+  </sc-if>
+
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+    <div style="position:relative;width:216px;height:322px;opacity:{{ portalOpacity }};transform:scale({{ portalScale }})">
+      <div style="position:absolute;inset:0;border:1px solid rgba(143,211,232,.55);border-radius:108px 108px 14px 14px"></div>
+      <div style="position:absolute;inset:14px;border:1px solid rgba(143,211,232,.2);border-radius:94px 94px 10px 10px"></div>
+      <sc-if value="{{ portalAperture }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:24px;border-radius:84px 84px 8px 8px;overflow:hidden;background:radial-gradient(80% 60% at 50% 55%,rgba(143,211,232,.22),rgba(10,26,38,.55) 70%)">
+          <div style="position:absolute;inset:-40%;animation:thr-spin 46s linear infinite;background:conic-gradient(from 0deg,transparent 0deg,rgba(143,211,232,.22) 40deg,transparent 90deg,transparent 180deg,rgba(143,211,232,.14) 230deg,transparent 300deg)"></div>
+          <div style="position:absolute;inset:20%;border:1px solid rgba(143,211,232,.2);border-radius:50%;animation:thr-spinr 28s linear infinite"></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ portalVeil }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:24px;border-radius:84px 84px 8px 8px;overflow:hidden;background:linear-gradient(180deg,rgba(143,211,232,.3),rgba(20,44,60,.5))">
+          <div style="position:absolute;inset:-20% -20% -60%;animation:thr-shimmer 5.5s linear infinite;background:repeating-linear-gradient(6deg,rgba(255,255,255,.13) 0 2px,transparent 2px 14px)"></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(60% 45% at 50% 60%,rgba(255,255,255,.2),transparent 75%)"></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ portalFracture }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:24px;border-radius:84px 84px 8px 8px;overflow:hidden;background:rgba(9,22,32,.6)">
+          <div style="position:absolute;inset:0;background:linear-gradient(122deg,transparent 39%,rgba(143,211,232,.5) 40%,transparent 41%),linear-gradient(64deg,transparent 55%,rgba(143,211,232,.34) 56%,transparent 57%),linear-gradient(-18deg,transparent 28%,rgba(143,211,232,.28) 29%,transparent 30%)"></div>
+          <div style="position:absolute;inset:0;animation:thr-breathe 3.4s ease-in-out infinite;background:conic-gradient(from 210deg at 50% 55%,rgba(143,211,232,.26),transparent 60deg,rgba(143,211,232,.2) 140deg,transparent 220deg,rgba(143,211,232,.3) 320deg)"></div>
+        </div>
+      </sc-if>
+      <div style="position:absolute;inset:0;border-radius:108px 108px 14px 14px;box-shadow:0 0 60px 8px rgba(143,211,232,.18),inset 0 0 40px rgba(143,211,232,.14)"></div>
+    </div>
+  </div>
+
+  <sc-if value="{{ isScan }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+      <div style="position:relative;width:216px;height:322px;opacity:{{ reticleOpacity }}">
+        <div style="position:absolute;inset:0;border:1px dashed rgba(143,211,232,.4);border-radius:108px 108px 14px 14px"></div>
+        <div style="position:absolute;left:-1px;top:0;width:2px;height:{{ scanPct }}%;background:linear-gradient(180deg,transparent,#8fd3e8);border-radius:2px"></div>
+        <div style="position:absolute;right:-1px;bottom:0;width:2px;height:{{ scanPct }}%;background:linear-gradient(0deg,transparent,#8fd3e8);border-radius:2px"></div>
+        <div style="position:absolute;left:50%;top:50%;width:26px;height:1px;background:rgba(143,211,232,.6);transform:translate(-50%,-50%)"></div>
+        <div style="position:absolute;left:50%;top:50%;width:1px;height:26px;background:rgba(143,211,232,.6);transform:translate(-50%,-50%)"></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="position:absolute;top:70px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 26px;box-sizing:border-box;text-align:center">
+    <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.66);text-transform:uppercase">{{ eyebrow }}</div>
+    <div style="font:300 30px/1.12 'Cormorant Garamond',serif;color:#e6f2f7;text-wrap:pretty">{{ headline }}</div>
+    <div style="font:300 11px/1.5 'JetBrains Mono',monospace;color:rgba(190,216,229,.56);max-width:270px;text-wrap:pretty">{{ subline }}</div>
+  </div>
+
+  <sc-if value="{{ hudPerimeter }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:212px 14px 214px;pointer-events:none;display:grid;grid-template-columns:1fr 1fr;align-content:space-between;gap:8px">
+      <sc-for list="{{ readouts }}" as="r" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:2px;align-items:{{ r.align }}">
+          <div style="font:300 7.5px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:rgba(143,211,232,.4)">{{ r.label }}</div>
+          <div style="font:400 12.5px/1 'JetBrains Mono',monospace;color:{{ r.color }}">{{ r.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hudConsole }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:14px;right:14px;bottom:196px;padding:11px 13px;border:1px solid rgba(143,211,232,.16);border-radius:4px;background:rgba(6,14,21,.72);display:grid;grid-template-columns:repeat(3,1fr);gap:11px 8px">
+      <sc-for list="{{ readouts }}" as="r" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font:300 7px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:rgba(143,211,232,.4)">{{ r.label }}</div>
+          <div style="font:400 12px/1 'JetBrains Mono',monospace;color:{{ r.color }}">{{ r.value }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hudMinimal }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;bottom:198px;display:flex;justify-content:center;gap:16px">
+      <sc-for list="{{ readoutsShort }}" as="r" hint-placeholder-count="3">
+        <div style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:{{ r.color }}">{{ r.value }}</div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDial }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,11,.62) 0%,rgba(5,7,11,.9) 34%,rgba(5,7,11,.96) 100%)"></div>
+    <div style="position:absolute;left:0;right:0;top:56px;bottom:0;display:flex;flex-direction:column">
+      <div style="padding:0 26px;text-align:center;display:flex;flex-direction:column;gap:5px">
+        <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.66)">STEP ONE · CHOOSE AN ERA</div>
+        <div style="font:300 29px/1.1 'Cormorant Garamond',serif;color:#e6f2f7">{{ eraName }}</div>
+        <div style="font:400 11px/1 'JetBrains Mono',monospace;color:rgba(190,216,229,.5)">{{ eraMeta }}</div>
+      </div>
+
+      <sc-if value="{{ dialStrata }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;overflow:auto;padding:22px 20px 200px;display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ eras }}" as="e" hint-placeholder-count="7">
+            <div onClick="{{ e.select }}" style="cursor:pointer;position:relative;padding:13px 14px;border:1px solid {{ e.border }};background:{{ e.bg }};display:flex;align-items:baseline;justify-content:space-between;gap:12px" style-hover="border-color:rgba(143,211,232,.6)">
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="font:300 19px/1 'Cormorant Garamond',serif;color:{{ e.fg }}">{{ e.name }}</div>
+                <div style="font:300 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:rgba(143,211,232,.44)">{{ e.here }}</div>
+              </div>
+              <div style="font:400 11px/1 'JetBrains Mono',monospace;color:{{ e.riskColor }};white-space:nowrap">{{ e.risk }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dialOrrery }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;position:relative">
+          <div style="position:absolute;left:50%;top:44%;width:250px;height:250px;margin:-125px 0 0 -125px;border:1px solid rgba(143,211,232,.16);border-radius:50%"></div>
+          <div style="position:absolute;left:50%;top:44%;width:170px;height:170px;margin:-85px 0 0 -85px;border:1px dashed rgba(143,211,232,.12);border-radius:50%"></div>
+          <sc-for list="{{ eras }}" as="e" hint-placeholder-count="7">
+            <div onClick="{{ e.select }}" style="position:absolute;left:50%;top:44%;transform:{{ e.tf }};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;width:96px;margin-left:-48px;margin-top:-16px">
+              <div style="width:{{ e.dot }}px;height:{{ e.dot }}px;border-radius:50%;background:{{ e.fg }};box-shadow:0 0 10px {{ e.glow }}"></div>
+              <div style="font:300 12px/1 'Cormorant Garamond',serif;color:{{ e.fg }};text-align:center">{{ e.name }}</div>
+            </div>
+          </sc-for>
+          <div style="position:absolute;left:50%;top:44%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#8fd3e8;box-shadow:0 0 16px 4px rgba(143,211,232,.5)"></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dialLedger }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;overflow:auto;padding:22px 22px 200px">
+          <sc-for list="{{ eras }}" as="e" hint-placeholder-count="7">
+            <div onClick="{{ e.select }}" style="cursor:pointer;display:grid;grid-template-columns:74px 1fr auto;gap:12px;align-items:baseline;padding:11px 4px;border-bottom:1px solid rgba(143,211,232,.1);opacity:{{ e.op }}">
+              <div style="font:400 12px/1 'JetBrains Mono',monospace;color:{{ e.fg }}">{{ e.stamp }}</div>
+              <div style="font:300 17px/1.1 'Cormorant Garamond',serif;color:{{ e.fg }}">{{ e.name }}</div>
+              <div style="font:400 10px/1 'JetBrains Mono',monospace;color:{{ e.riskColor }}">{{ e.risk }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isCoords }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,11,.66) 0%,rgba(5,7,11,.93) 30%,rgba(5,7,11,.97) 100%)"></div>
+    <div style="position:absolute;left:0;right:0;top:56px;bottom:0;display:flex;flex-direction:column">
+      <div style="padding:0 26px;text-align:center;display:flex;flex-direction:column;gap:5px">
+        <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.66)">STEP TWO · TIME AND PLACE</div>
+        <div style="font:300 29px/1.1 'Cormorant Garamond',serif;color:#e6f2f7">{{ crossingTitle }}</div>
+        <div style="font:400 11px/1 'JetBrains Mono',monospace;color:rgba(190,216,229,.5)">{{ crossingMeta }}</div>
+      </div>
+
+      <div style="flex:1;overflow:auto;padding:20px 20px 196px;display:flex;flex-direction:column;gap:22px">
+
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:300 8px/1 'JetBrains Mono',monospace;letter-spacing:.26em;color:rgba(143,211,232,.5)">HOUR OF ARRIVAL</div>
+            <div style="font:400 10px/1 'JetBrains Mono',monospace;color:#9fdcef">{{ hourLabel }}</div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:2px;height:56px">
+            <sc-for list="{{ hours }}" as="h" hint-placeholder-count="12">
+              <div onClick="{{ h.select }}" style="flex:1;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px">
+                <div style="width:100%;height:{{ h.h }}px;background:{{ h.bar }}"></div>
+                <div style="font:300 7px/1 'JetBrains Mono',monospace;color:{{ h.tick }}">{{ h.tickLabel }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font:300 9.5px/1.5 'JetBrains Mono',monospace;color:rgba(190,216,229,.45)">{{ hourNote }}</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font:300 8px/1 'JetBrains Mono',monospace;letter-spacing:.26em;color:rgba(143,211,232,.5)">SEASON</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+            <sc-for list="{{ seasons }}" as="s" hint-placeholder-count="4">
+              <div onClick="{{ s.select }}" style="cursor:pointer;padding:10px 4px;text-align:center;border:1px solid {{ s.border }};background:{{ s.bg }};font:300 13px/1 'Cormorant Garamond',serif;color:{{ s.fg }}" style-hover="border-color:rgba(143,211,232,.55)">{{ s.name }}</div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:300 8px/1 'JetBrains Mono',monospace;letter-spacing:.26em;color:rgba(143,211,232,.5)">WHERE IT OPENS</div>
+            <div style="font:300 8px/1 'JetBrains Mono',monospace;color:rgba(143,211,232,.35)">DRIFT ≤ 3 M</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <sc-for list="{{ places }}" as="pl" hint-placeholder-count="3">
+              <div onClick="{{ pl.select }}" style="cursor:pointer;display:grid;grid-template-columns:16px 1fr auto;gap:11px;align-items:center;padding:12px 13px;border:1px solid {{ pl.border }};background:{{ pl.bg }}" style-hover="border-color:rgba(143,211,232,.5)">
+                <div style="width:8px;height:8px;border-radius:50%;border:1px solid {{ pl.dotBorder }};background:{{ pl.dot }}"></div>
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <div style="font:300 16px/1 'Cormorant Garamond',serif;color:{{ pl.fg }}">{{ pl.name }}</div>
+                  <div style="font:300 8px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:rgba(143,211,232,.42)">{{ pl.detail }}</div>
+                </div>
+                <div style="font:400 10px/1 'JetBrains Mono',monospace;color:rgba(190,216,229,.5)">{{ pl.dist }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding-top:4px;border-top:1px solid rgba(143,211,232,.12)">
+          <div style="font:300 8px/1 'JetBrains Mono',monospace;letter-spacing:.26em;color:rgba(143,211,232,.5);padding-top:12px">HOLD PREDICTED</div>
+          <div style="font:400 11px/1 'JetBrains Mono',monospace;color:{{ holdColor }};padding-top:12px">{{ holdLabel }}</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isWarn }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:rgba(4,6,10,.9);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;padding:56px 34px 200px;box-sizing:border-box;text-align:center">
+      <div style="width:44px;height:44px;border:1px solid rgba(232,190,143,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:thr-breathe 3.2s ease-in-out infinite">
+        <div style="width:2px;height:16px;background:#e8be8f"></div>
+      </div>
+      <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(232,190,143,.8)">COVENANT OF PASSAGE</div>
+      <div style="font:300 italic 25px/1.28 'Cormorant Garamond',serif;color:#f0e6da;text-wrap:pretty">You may look. You may not lift, warn, or be recognised.</div>
+      <div style="font:300 11px/1.7 'JetBrains Mono',monospace;color:rgba(200,190,178,.55);text-wrap:pretty">{{ warnDetail }}</div>
+      <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:rgba(143,211,232,.45)">{{ crossingMeta }}</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isLog }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:rgba(5,7,11,.95);display:flex;flex-direction:column">
+      <div style="padding:64px 24px 14px;display:flex;flex-direction:column;gap:5px">
+        <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.6)">LOG OF CROSSINGS</div>
+        <div style="font:300 27px/1.1 'Cormorant Garamond',serif;color:#e6f2f7">{{ jumpCount }} thresholds kept</div>
+      </div>
+      <div style="flex:1;overflow:auto;padding:8px 24px 190px;display:flex;flex-direction:column;gap:2px">
+        <sc-for list="{{ jumps }}" as="j" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;padding:13px 0;border-bottom:1px solid rgba(143,211,232,.1)">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="font:300 18px/1 'Cormorant Garamond',serif;color:#dce9f0">{{ j.name }}</div>
+              <div style="font:300 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:rgba(143,211,232,.42)">{{ j.where }}</div>
+            </div>
+            <div style="text-align:right;display:flex;flex-direction:column;gap:4px">
+              <div style="font:400 10.5px/1 'JetBrains Mono',monospace;color:rgba(190,216,229,.62)">{{ j.dur }}</div>
+              <div style="font:400 8.5px/1 'JetBrains Mono',monospace;color:{{ j.seal }}">{{ j.status }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isSplash }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 42%,#0d1a26 0%,#070c13 55%,#04060a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:0 40px;box-sizing:border-box">
+      <div style="position:relative;width:104px;height:152px">
+        <div style="position:absolute;inset:0;border:1px solid rgba(143,211,232,.5);border-radius:52px 52px 6px 6px"></div>
+        <div style="position:absolute;inset:11px;border:1px solid rgba(143,211,232,.22);border-radius:42px 42px 4px 4px"></div>
+        <div style="position:absolute;inset:22px;border-radius:34px 34px 3px 3px;background:radial-gradient(70% 60% at 50% 60%,rgba(143,211,232,.28),transparent 72%);animation:thr-breathe 4.2s ease-in-out infinite"></div>
+        <div style="position:absolute;left:50%;top:64%;width:1px;height:40px;background:linear-gradient(180deg,rgba(143,211,232,.5),transparent)"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div style="font:300 15px/1 'JetBrains Mono',monospace;letter-spacing:.56em;color:#cfe6f0;padding-left:.56em">THRESHOLD</div>
+        <div style="font:300 italic 17px/1.3 'Cormorant Garamond',serif;color:rgba(190,216,229,.62);text-align:center">an instrument for standing in another year</div>
+      </div>
+      <div style="position:absolute;left:44px;right:44px;bottom:92px;display:flex;flex-direction:column;gap:9px">
+        <div style="height:1px;background:rgba(143,211,232,.14);position:relative">
+          <div style="position:absolute;left:0;top:0;height:1px;width:{{ splashPct }}%;background:#8fd3e8"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font:300 8px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:rgba(143,211,232,.45)">
+          <div>{{ splashStep }}</div>
+          <div>{{ splashPctLabel }}</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isAuth }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,#080d15,#04060a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;padding:80px 34px 210px;box-sizing:border-box;text-align:center">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:7px">
+        <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.6)">THE INSTRUMENT KNOWS ITS KEEPER</div>
+        <div style="font:300 27px/1.15 'Cormorant Garamond',serif;color:#e6f2f7;text-wrap:pretty">{{ authHeadline }}</div>
+      </div>
+
+      <div onPointerDown="{{ authDown }}" onPointerUp="{{ authUp }}" onPointerLeave="{{ authUp }}" style="position:relative;width:148px;height:148px;cursor:pointer;touch-action:none;user-select:none">
+        <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from -90deg,#8fd3e8 {{ authDeg }}deg,rgba(143,211,232,.12) 0)"></div>
+        <div style="position:absolute;inset:3px;border-radius:50%;background:#070c13"></div>
+        <div style="position:absolute;inset:20px;border-radius:50%;border:1px solid rgba(143,211,232,.18);overflow:hidden">
+          <div style="position:absolute;inset:-30%;background:repeating-radial-gradient(circle at 50% 58%,transparent 0 5px,rgba(143,211,232,{{ ridgeAlpha }}) 5px 6px);animation:thr-breathe 3.6s ease-in-out infinite"></div>
+        </div>
+        <div style="position:absolute;left:0;right:0;top:{{ sweepTop }}%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,211,232,.75),transparent)"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="font:400 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:{{ authColor }}">{{ authStatus }}</div>
+        <div style="font:300 10.5px/1.6 'JetBrains Mono',monospace;color:rgba(190,216,229,.45);max-width:250px;text-wrap:pretty">{{ authNote }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPass }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,#070c13,#04060a);display:flex;flex-direction:column;align-items:center;padding:96px 30px 200px;box-sizing:border-box;text-align:center;gap:22px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:7px">
+        <div style="font:300 9px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:rgba(143,211,232,.6)">PASSPHRASE</div>
+        <div style="font:300 25px/1.18 'Cormorant Garamond',serif;color:#e6f2f7;text-wrap:pretty">The year of your first crossing.</div>
+      </div>
+      <div style="display:flex;gap:12px">
+        <sc-for list="{{ passSlots }}" as="d" hint-placeholder-count="4">
+          <div style="width:38px;height:48px;border-bottom:1px solid {{ d.border }};display:flex;align-items:center;justify-content:center;font:300 28px/1 'Cormorant Garamond',serif;color:#dce9f0">{{ d.char }}</div>
+        </sc-for>
+      </div>
+      <div style="font:300 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:{{ passColor }}">{{ passStatus }}</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:100%;max-width:264px">
+        <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12">
+          <div onClick="{{ k.press }}" style="height:54px;border:1px solid rgba(143,211,232,.16);display:flex;align-items:center;justify-content:center;cursor:pointer;font:300 22px/1 'Cormorant Garamond',serif;color:{{ k.fg }};background:{{ k.bg }}" style-hover="border-color:rgba(143,211,232,.5)">{{ k.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showAuthBar }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:16px 20px 40px;display:flex;flex-direction:column;gap:10px">
+      <div onClick="{{ toggleAuthMode }}" style="height:44px;border:1px solid rgba(143,211,232,.22);border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer;font:400 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:rgba(143,211,232,.75)" style-hover="border-color:rgba(143,211,232,.55)">{{ authAltLabel }}</div>
+      <div style="font:300 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:rgba(143,211,232,.3);text-align:center">KEEPER · A. VOSS · 4 CROSSINGS KEPT</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showActionBar }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:16px 20px 40px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg,transparent,rgba(4,6,10,.86) 32%)">
+    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(143,211,232,.22),transparent)"></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div onClick="{{ toggleLog }}" style="width:46px;height:46px;flex:none;border:1px solid rgba(143,211,232,.24);border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer;font:300 8px/1.25 'JetBrains Mono',monospace;letter-spacing:.14em;color:rgba(143,211,232,.66);text-align:center" style-hover="border-color:rgba(143,211,232,.6)">{{ logBtn }}</div>
+      <div onPointerDown="{{ primaryDown }}" onPointerUp="{{ primaryUp }}" onPointerLeave="{{ primaryUp }}" onClick="{{ primaryTap }}" style="flex:1;position:relative;height:46px;border:1px solid rgba(143,211,232,.5);border-radius:3px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(143,211,232,.07);user-select:none;touch-action:none">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:{{ primaryPct }}%;background:rgba(143,211,232,.24)"></div>
+        <div style="position:relative;font:400 10px/1 'JetBrains Mono',monospace;letter-spacing:.26em;color:#cfeaf4">{{ primaryLabel }}</div>
+      </div>
+    </div>
+    <div style="font:300 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:rgba(143,211,232,.34);text-align:center">{{ hint }}</div>
+  </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:402,&quot;height&quot;:874},&quot;freeze&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;eraIdx&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;tsType&quot;:&quot;number&quot;},&quot;portalTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;aperture&quot;,&quot;veil&quot;,&quot;fracture&quot;],&quot;default&quot;:&quot;aperture&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hudLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;perimeter&quot;,&quot;console&quot;,&quot;minimal&quot;],&quot;default&quot;:&quot;perimeter&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dialMetaphor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;strata&quot;,&quot;orrery&quot;,&quot;ledger&quot;],&quot;default&quot;:&quot;strata&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const ERAS = [
+  { name: "The Drowned Quay", stamp: "1341", here: "THIS CORNER WAS TIDEWATER", risk: "STABLE 0.94", ok: true },
+  { name: "Year of Ash", stamp: "1666", here: "SMOKE AT 40 FATHOMS", risk: "STABLE 0.88", ok: true },
+  { name: "The Long Frost", stamp: "1709", here: "RIVER SET SOLID", risk: "STABLE 0.91", ok: true },
+  { name: "Gaslight Season", stamp: "1887", here: "A STREET BENEATH THIS ONE", risk: "STABLE 0.83", ok: true },
+  { name: "The Quiet Blackout", stamp: "1941", here: "NO LIGHT PERMITTED", risk: "UNSTABLE 0.61", ok: false },
+  { name: "Concrete Summer", stamp: "1974", here: "SCAFFOLD AND HAZE", risk: "STABLE 0.86", ok: true },
+  { name: "The Glass Decade", stamp: "2049", here: "UNWRITTEN", risk: "FORBIDDEN", ok: false },
+];
+const HOURS = [
+  { h: 2, label: "02:00 · dead of night", note: "Fewest eyes. The threshold holds longest when no one is awake to notice it." },
+  { h: 4, label: "04:00 · before light", note: "Cold air, steady field. The most forgiving hour to arrive in." },
+  { h: 6, label: "06:00 · first light", note: "Trade carts and shutters. Sound carries further than you expect." },
+  { h: 8, label: "08:00 · morning", note: "Streets fill. Keep the aperture low and behind you." },
+  { h: 10, label: "10:00 · high morning", note: "Full daylight. Recognition risk rises sharply." },
+  { h: 12, label: "12:00 · noon", note: "Shadowless. You will cast one that does not belong." },
+  { h: 14, label: "14:00 · afternoon", note: "Heat distortion thins the seam. Expect drift." },
+  { h: 16, label: "16:00 · low sun", note: "Long shadows read as ordinary. A good hour to watch from." },
+  { h: 18, label: "18:00 · dusk", note: "Lamps lit, faces turned down. The kindest hour for a stranger." },
+  { h: 20, label: "20:00 · evening", note: "Doors close. The field settles as the ground cools." },
+  { h: 22, label: "22:00 · late", note: "Watchmen and dogs. Short holds only." },
+  { h: 0, label: "00:00 · turning", note: "The day changes underneath you. Hold times become unpredictable." },
+];
+const SEASONS = [
+  { name: "Frost", note: "hard ground, thin field" },
+  { name: "Thaw", note: "wet ground, long hold" },
+  { name: "High Sun", note: "dry ground, best hold" },
+  { name: "Fall", note: "loose ground, some drift" },
+];
+const PLACES = [
+  { name: "Where you stand", detail: "LIVE ANCHOR · 4.81 µT", dist: "0 M" },
+  { name: "The old dock stair", detail: "SAVED ANCHOR · 3 CROSSINGS", dist: "62 M" },
+  { name: "Drop a pin", detail: "PICK ON MAP", dist: "—" },
+];
+const WARNINGS = [
+  "You will arrive standing exactly where you stand. Do not step through walls that exist there and not here.",
+  "Anything you carry across returns with you or does not return at all.",
+  "If a person meets your eyes for longer than three seconds, the threshold closes."
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const f = props.freeze;
+    this.state = {
+      screen: f === "anchor" ? "scan" : (f || "splash"),
+      holding: false,
+      splashP: f === "splash" ? 0.58 : 0,
+      authP: f === "auth" ? 0.42 : 0,
+      pass: f === "pass" ? "18" : "",
+      passErr: false,
+      scanP: f === "anchor" || f === "dial" || f === "coords" ? 1 : (f === "scan" ? 0.42 : (f === "warn" ? 0.55 : 0)),
+      portalP: f === "open" ? 0.55 : (f === "arrival" ? 1 : 0),
+      eraIdx: props.eraIdx ?? 3, hourIdx: 1, seasonIdx: 2, placeIdx: 0,
+      warnIdx: 0, t: 0,
+      jumps: [
+        { name: "Gaslight Season", where: "51.5074° N · 8 MIN AGO", dur: "4M 12S", status: "SEALED", ok: true },
+        { name: "The Long Frost", where: "51.5074° N · YESTERDAY", dur: "1M 48S", status: "SEALED", ok: true },
+        { name: "Year of Ash", where: "51.5081° N · 3 DAYS", dur: "0M 39S", status: "PULLED EARLY", ok: false },
+      ],
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.freeze) return;
+    this.last = performance.now();
+    const loop = (now) => {
+      const dt = Math.min(60, now - this.last); this.last = now;
+      this.setState((s) => {
+        let { scanP, portalP, screen, jumps, splashP, authP } = s;
+        if (screen === "splash") {
+          splashP = Math.min(1, splashP + dt / 2600);
+          if (splashP >= 1) screen = "auth";
+        }
+        if (screen === "auth") {
+          authP = s.holding ? Math.min(1, authP + dt / 1500) : Math.max(0, authP - dt / 700);
+          if (authP >= 1) { screen = "scan"; }
+        }
+        if (screen === "scan") scanP = s.holding ? Math.min(1, scanP + dt / 1700) : (scanP >= 1 ? 1 : Math.max(0, scanP - dt / 1200));
+        if (screen === "warn") scanP = s.holding ? Math.min(1, scanP + dt / 1500) : Math.max(0, scanP - dt / 900);
+        if (screen === "open") {
+          portalP = Math.min(1, portalP + dt / 2200);
+          if (portalP >= 1) {
+            const e = ERAS[s.eraIdx];
+            screen = "arrival";
+            jumps = [{ name: e.name, where: "51.5074° N · NOW", dur: "0M 00S", status: "OPEN", ok: true }, ...jumps];
+          }
+        }
+        if (screen === "arrival") portalP = 1;
+        return { scanP, portalP, screen, jumps, splashP, authP, t: s.t + dt };
+      });
+      this.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+
+  sensors() {
+    const t = this.state.t / 1000, anchored = this.state.scanP >= 1;
+    const w = (a, f, p) => a * Math.sin(t * f + p);
+    return {
+      heading: (41.2 + w(2.6, .7, 0)).toFixed(1) + "°",
+      tilt: (3.1 + w(1.4, 1.1, 2)).toFixed(1) + "°",
+      lat: (51.50740 + w(.00004, .5, 1)).toFixed(5) + " N",
+      lon: (0.12780 + w(.00004, .43, 3)).toFixed(5) + " W",
+      mag: (anchored ? 4.81 + w(.06, 2.2, 0) : 0.86 + w(.22, 1.6, 0)).toFixed(2) + " µT",
+      lux: Math.round(11 + w(4, .9, 5)) + " lx",
+    };
+  }
+
+  go = (screen) => this.setState({ screen, scanP: screen === "scan" ? 0 : this.state.scanP, holding: false });
+
+  renderVals() {
+    const s = this.state, p = this.props;
+    const era = ERAS[s.eraIdx], hour = HOURS[s.hourIdx], season = SEASONS[s.seasonIdx], place = PLACES[s.placeIdx];
+    const anchored = s.scanP >= 1;
+    const screen = s.screen;
+    const isSplash = screen === "splash", isAuth = screen === "auth", isPass = screen === "pass";
+    const isScan = screen === "scan", isDial = screen === "dial", isCoords = screen === "coords",
+          isWarn = screen === "warn", isOpen = screen === "open", isArrival = screen === "arrival", isLog = screen === "log";
+    const sv = this.sensors();
+    const cyan = "#9fdcef", dim = "rgba(190,216,229,.7)";
+    const hh = (n) => (n < 10 ? "0" + n : "" + n);
+
+    const readouts = [
+      { label: "HEADING", value: sv.heading, color: cyan, align: "flex-start" },
+      { label: "TILT", value: sv.tilt, color: dim, align: "flex-end" },
+      { label: "LATITUDE", value: sv.lat, color: dim, align: "flex-start" },
+      { label: "LONGITUDE", value: sv.lon, color: dim, align: "flex-end" },
+      { label: "MAG ANOMALY", value: sv.mag, color: anchored ? "#e8be8f" : cyan, align: "flex-start" },
+      { label: "AMBIENT", value: sv.lux, color: dim, align: "flex-end" },
+    ];
+
+    const eras = ERAS.map((e, i) => {
+      const sel = i === s.eraIdx;
+      const ang = (i / ERAS.length) * Math.PI * 2 - Math.PI / 2;
+      return { ...e, select: () => this.setState({ eraIdx: i }),
+        fg: sel ? "#e6f2f7" : e.ok ? "rgba(190,216,229,.66)" : "rgba(232,190,143,.6)",
+        bg: sel ? "rgba(143,211,232,.09)" : "transparent",
+        border: sel ? "rgba(143,211,232,.55)" : "rgba(143,211,232,.14)",
+        riskColor: e.ok ? "rgba(143,211,232,.55)" : "#e8be8f",
+        op: sel ? 1 : .62, dot: sel ? 9 : 5, glow: sel ? "rgba(143,211,232,.8)" : "transparent",
+        tf: `translate(${(Math.cos(ang) * 112).toFixed(1)}px, ${(Math.sin(ang) * 112).toFixed(1)}px)` };
+    });
+
+    const hours = HOURS.map((h, i) => {
+      const sel = i === s.hourIdx;
+      const day = Math.max(0, Math.cos(((h.h - 13) / 24) * Math.PI * 2));
+      return { select: () => this.setState({ hourIdx: i }),
+        h: (10 + day * 34).toFixed(0),
+        bar: sel ? "#8fd3e8" : (day > .5 ? "rgba(143,211,232,.3)" : "rgba(143,211,232,.15)"),
+        tick: sel ? "#9fdcef" : "rgba(143,211,232,.32)",
+        tickLabel: hh(h.h) };
+    });
+
+    const seasons = SEASONS.map((x, i) => {
+      const sel = i === s.seasonIdx;
+      return { ...x, select: () => this.setState({ seasonIdx: i }),
+        fg: sel ? "#e6f2f7" : "rgba(190,216,229,.55)",
+        bg: sel ? "rgba(143,211,232,.1)" : "transparent",
+        border: sel ? "rgba(143,211,232,.55)" : "rgba(143,211,232,.14)" };
+    });
+
+    const places = PLACES.map((x, i) => {
+      const sel = i === s.placeIdx;
+      return { ...x, select: () => this.setState({ placeIdx: i }),
+        fg: sel ? "#e6f2f7" : "rgba(190,216,229,.6)",
+        bg: sel ? "rgba(143,211,232,.08)" : "transparent",
+        border: sel ? "rgba(143,211,232,.5)" : "rgba(143,211,232,.14)",
+        dot: sel ? "#8fd3e8" : "transparent",
+        dotBorder: sel ? "#8fd3e8" : "rgba(143,211,232,.35)" };
+    });
+
+    const holdMin = (2.4 + (s.seasonIdx === 2 ? 1.6 : s.seasonIdx === 0 ? -0.8 : 0.4) + (s.hourIdx <= 2 ? 1.2 : s.hourIdx >= 9 ? -0.9 : 0)).toFixed(1);
+    const crossingMeta = era.stamp + " · " + hh(hour.h) + ":00 · " + season.name.toUpperCase() + " · " + place.name.toUpperCase();
+
+    let eyebrow = "SEEKING ANCHOR", headline = "Hold still. The ground remembers.",
+        subline = "Sweep the space until the anomaly agrees with your heading.",
+        primaryLabel = "HOLD TO SEEK ANCHOR", hint = "PRESS AND HOLD", primaryPct = s.scanP * 100;
+
+    if (isScan && anchored) {
+      eyebrow = "ANCHOR HELD"; headline = "A threshold will stand here.";
+      subline = "Magnetic anomaly 4.8 µT · depth of record 812 years.";
+      primaryLabel = "CHOOSE DESTINATION"; hint = "TAP TO CONTINUE"; primaryPct = 100;
+    }
+    if (isDial) { eyebrow = ""; headline = ""; subline = ""; primaryLabel = "SET TIME AND PLACE"; hint = "TAP AN ERA TO SELECT"; primaryPct = 0; }
+    if (isCoords) { eyebrow = ""; headline = ""; subline = ""; primaryLabel = "REVIEW THE COVENANT"; hint = "PREDICTED HOLD " + holdMin + " MIN"; primaryPct = 0; }
+    if (isWarn) { eyebrow = ""; headline = ""; subline = ""; primaryLabel = "HOLD TO ACCEPT"; hint = "PRESS AND HOLD TO OPEN " + era.stamp; primaryPct = s.scanP * 100; }
+    if (isOpen) {
+      eyebrow = "OPENING"; headline = era.name; subline = "Hold the device steady. Do not step through yet.";
+      primaryLabel = "STAND BY"; hint = "ALIGNING " + era.stamp + " · " + hh(hour.h) + ":00"; primaryPct = s.portalP * 100;
+    }
+    if (isArrival) {
+      eyebrow = era.stamp + " · " + hh(hour.h) + ":00 · OPEN"; headline = era.name;
+      subline = era.here.toLowerCase() + ". look through, not across.";
+      primaryLabel = "CLOSE THE THRESHOLD"; hint = "THE COVENANT HOLDS"; primaryPct = 100;
+    }
+    if (isLog) { eyebrow = ""; headline = ""; subline = ""; primaryLabel = "RETURN TO VIEWFINDER"; hint = "3 KEPT · 1 PULLED EARLY"; primaryPct = 0; }
+
+    const hud = p.hudLayout ?? "perimeter";
+    const dial = p.dialMetaphor ?? "strata";
+    const treat = p.portalTreatment ?? "aperture";
+    const bare = isDial || isCoords || isLog || isSplash || isAuth || isPass;
+    const sp = s.splashP, ap = s.authP;
+    const keyDefs = ["1","2","3","4","5","6","7","8","9","CLR","0","←"];
+    const keys = keyDefs.map(k => ({
+      label: k,
+      fg: k === "CLR" || k === "←" ? "rgba(143,211,232,.5)" : "#dce9f0",
+      bg: "transparent",
+      press: () => this.setState((st) => {
+        let pass = st.pass;
+        if (k === "CLR") pass = "";
+        else if (k === "←") pass = pass.slice(0, -1);
+        else if (pass.length < 4) pass = pass + k;
+        if (pass.length === 4) { setTimeout(() => this.setState({ screen: "scan", pass: "" }), 420); }
+        return { pass, passErr: false };
+      }),
+    }));
+    const passSlots = [0,1,2,3].map(i => ({
+      char: s.pass[i] || "",
+      border: i === s.pass.length ? "#8fd3e8" : "rgba(143,211,232,.25)",
+    }));
+
+    return {
+      isSplash, isAuth, isPass,
+      isScan, isDial, isCoords, isWarn, isOpen, isArrival, isLog,
+      showActionBar: !isSplash && !isAuth && !isPass,
+      showAuthBar: isAuth || isPass,
+      splashPct: (sp * 100).toFixed(1),
+      splashPctLabel: Math.round(sp * 100) + "%",
+      splashStep: sp < .38 ? "CALIBRATING MAGNETOMETER" : sp < .72 ? "READING AMBIENT LIGHT" : "LOCATING GROUND RECORD",
+      authHeadline: ap >= 1 ? "Recognised." : "Hold your thumb to the glass.",
+      authDeg: (ap * 360).toFixed(1),
+      ridgeAlpha: (0.14 + ap * 0.34).toFixed(2),
+      sweepTop: s.holding ? (14 + ((s.t / 14) % 72)).toFixed(1) : "50",
+      authStatus: ap >= 1 ? "KEEPER RECOGNISED" : s.holding ? "READING RIDGELINE · " + Math.round(ap * 100) + "%" : "AWAITING RIDGELINE",
+      authColor: ap >= 1 ? "#9fdcef" : s.holding ? "#9fdcef" : "rgba(143,211,232,.5)",
+      authNote: "The instrument opens for one pair of hands. A second keeper must be entered at the observatory.",
+      authAltLabel: isPass ? "USE RIDGELINE INSTEAD" : "USE PASSPHRASE INSTEAD",
+      toggleAuthMode: () => this.setState({ screen: isPass ? "auth" : "pass", authP: 0, pass: "", holding: false }),
+      authDown: () => this.setState({ holding: true }),
+      authUp: () => this.setState({ holding: false }),
+      keys, passSlots,
+      passStatus: s.pass.length === 4 ? "ACCEPTED" : "FOUR FIGURES · " + s.pass.length + " OF 4",
+      passColor: s.pass.length === 4 ? "#9fdcef" : "rgba(143,211,232,.45)",
+      eyebrow, headline, subline, primaryLabel, hint,
+      primaryPct: primaryPct.toFixed(1),
+      readouts, readoutsShort: readouts.slice(0, 3),
+      hudPerimeter: !bare && hud === "perimeter",
+      hudConsole: !bare && hud === "console",
+      hudMinimal: !bare && hud === "minimal",
+      dialStrata: dial === "strata", dialOrrery: dial === "orrery", dialLedger: dial === "ledger",
+      portalAperture: treat === "aperture", portalVeil: treat === "veil", portalFracture: treat === "fracture",
+      portalOpacity: (isOpen || isArrival) ? (0.25 + s.portalP * 0.75).toFixed(2) : (isScan ? (s.scanP * 0.5).toFixed(2) : "0"),
+      portalScale: (0.72 + s.portalP * 0.28).toFixed(3),
+      reticleOpacity: anchored ? "0.25" : "0.9",
+      scanPct: (s.scanP * 100).toFixed(1),
+      eras, eraName: era.name, eraMeta: era.stamp + " · " + era.risk,
+      hours, seasons, places,
+      hourLabel: hour.label, hourNote: hour.note,
+      crossingTitle: era.name, crossingMeta,
+      holdLabel: holdMin + " MIN BEFORE THE SEAM THINS",
+      holdColor: parseFloat(holdMin) > 3 ? "#9fdcef" : "#e8be8f",
+      warnDetail: WARNINGS[s.warnIdx % WARNINGS.length],
+      jumps: s.jumps.map(j => ({ ...j, seal: j.ok ? "rgba(143,211,232,.6)" : "#e8be8f" })),
+      jumpCount: s.jumps.length,
+      logBtn: isLog ? "BACK" : "LOG",
+      toggleLog: () => this.go(isLog ? "scan" : "log"),
+      primaryDown: () => { if ((isScan && !anchored) || isWarn) this.setState({ holding: true }); },
+      primaryUp: () => {
+        if (isWarn && s.scanP >= 1) { this.setState({ holding: false, screen: "open", scanP: 0, portalP: 0 }); return; }
+        this.setState({ holding: false });
+      },
+      primaryTap: () => {
+        if (isScan && anchored) this.setState({ screen: "dial" });
+        else if (isDial) this.setState({ screen: "coords" });
+        else if (isCoords) this.setState({ screen: "warn", scanP: 0, holding: false, warnIdx: s.eraIdx % WARNINGS.length });
+        else if (isArrival) this.setState({ screen: "scan", scanP: 0, portalP: 0, holding: false });
+        else if (isLog) this.go("scan");
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -128,10 +128,19 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent}
 .bio .pad .ringimg{position:absolute;top:-15.01px;left:-25.01px;width:294.02px;height:294px;
   transition:opacity .3s}
-.bio .print{position:absolute;inset:0;overflow:visible}
-.bio .print path{transition:fill .28s ease}
-.bio .printveil{position:absolute;left:29.5px;top:26px;width:185px;height:192px;border-radius:325px;
-  pointer-events:none;background:linear-gradient(180deg,rgba(105,109,135,.05) 32%,rgba(0,0,0,.72) 90%)}
+/* Ridgeline pad, ported from the biometric screen of the Time Travel Portal design.
+   Geometry scaled from that 148px pad to this 244px one (×1.6486): inset 20→33,
+   ridge pitch 5/6→8.24/9.89. Its teal is swapped for Threshold's green. */
+.bio .ridge{position:absolute;inset:33px;border-radius:50%;overflow:hidden;
+  border:1px solid rgba(140,255,63,.18);pointer-events:none}
+.bio .ridge .field{position:absolute;inset:-30%;
+  background:repeating-radial-gradient(circle at 50% 58%,transparent 0 8.24px,
+    rgba(140,255,63,var(--ridge,.14)) 8.24px 9.89px);
+  animation:thr-breathe 3.6s ease-in-out infinite}
+.bio .ridge .sweep{position:absolute;left:0;right:0;top:50%;height:1px;transition:opacity .3s;
+  background:linear-gradient(90deg,transparent,rgba(140,255,63,.75),transparent)}
+.bio .pad.done .ridge .sweep{opacity:0}
+@keyframes thr-breathe{0%,100%{opacity:.35}50%{opacity:.85}}
 .bio .prog{position:absolute;inset:0;transform:rotate(-90deg);pointer-events:none}
 .bio .prog circle{fill:none;stroke:#8cff3f;stroke-width:3;stroke-linecap:round;
   stroke-dasharray:748;stroke-dashoffset:748;transition:stroke-dashoffset .08s linear;
@@ -512,13 +521,15 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
             <div class="wordmark">Threshold</div>
             <div class="pad hot" id="fingerpad">
               <img class="ringimg" src="assets/ring.svg" alt="">
-              <svg class="print" id="printSvg" viewBox="0 0 244 244" aria-hidden="true"></svg>
-              <div class="printveil"></div>
+              <div class="ridge" aria-hidden="true">
+                <div class="field" id="ridgeField"></div>
+                <div class="sweep" id="ridgeSweep"></div>
+              </div>
               <svg class="prog" viewBox="0 0 244 244"><circle cx="122" cy="122" r="119"></circle></svg>
             </div>
             <div class="hint" id="biohint">Hold your thumb to sign-in.</div>
             <div class="or"><span class="rule"></span><span>or</span><span class="rule"></span></div>
-            <div class="cta btn-primary hot" data-act="goto:home">Use Facial Recognition</div>
+            <div class="cta btn-primary hot" data-act="goto:home">Use Iris Scan</div>
           </div>
         </section>
 
@@ -923,80 +934,38 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   function stopSplash() { try { video.pause(); } catch (e) {} }
   video.addEventListener('ended', function () { if (current === 'splash') go('bio'); });
 
-  /* ═══════════════ 2. animated fingerprint ═══════════════ */
-  /* The Figma art is a flat PNG of tapered bars packed into a circle.
-     Redrawn here as SVG so each bar can breathe at rest and light up under the thumb. */
-  var printSvg = $('#printSvg');
-  var CX = 122, CY = 122, R = 92, STEP = 8.2, HALFW = 5.4;
-  var bars = [];
+  /* ═══════════════ 2. ridgeline reader ═══════════════ */
+  /* Concentric ridges under glass: the field breathes on a CSS loop on its own, and
+     while a thumb is held a sweep line travels down it and the ridges brighten.
+     Only two values are driven from JS — the ridge alpha and the sweep position. */
+  var ridgeField = $('#ridgeField'), ridgeSweep = $('#ridgeSweep');
+  var RIDGE_BASE = 0.14, RIDGE_GAIN = 0.34;   // alpha at rest → alpha at a full read
+  var SWEEP_TOP = 14, SWEEP_RUN = 72;         // the band, in %, the line travels within
 
-  (function buildPrint() {
-    var frag = document.createDocumentFragment();
-    var i = 0;
-    for (var x = -R + 5; x <= R - 5; x += STEP) {
-      var chord = Math.sqrt(Math.max(0, R * R - x * x));
-      if (chord < 10) { i++; continue; }
-      // deterministic pseudo-random so the print is stable between reloads
-      var r1 = Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
-      var r2 = Math.abs(Math.sin(i * 78.233) * 12345.6789) % 1;
-      var len = chord * (0.38 + r1 * 0.56);
-      var off = (r2 - 0.5) * (chord - len) * 1.7;
-      var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('fill', '#fff');
-      frag.appendChild(path);
-      bars.push({ el: path, x: x, chord: chord, len: len, off: off, phase: r1 * 6.283, spd: 0.7 + r2 * 0.8 });
-      i++;
-    }
-    printSvg.appendChild(frag);
-  })();
-
-  function barPath(b, len, off) {
-    var x = CX + b.x, top = CY + off - len, bot = CY + off + len;
-    var mid = CY + off, w = HALFW;
-    return 'M' + x + ' ' + top +
-           'Q' + (x + w) + ' ' + mid + ' ' + x + ' ' + bot +
-           'Q' + (x - w) + ' ' + mid + ' ' + x + ' ' + top + 'Z';
+  function paintRidge(p, holding, t) {
+    ridgeField.style.setProperty('--ridge', (RIDGE_BASE + p * RIDGE_GAIN).toFixed(3));
+    ridgeSweep.style.top = holding ? (SWEEP_TOP + ((t / 14) % SWEEP_RUN)).toFixed(1) + '%' : '50%';
   }
-
-  var printT = 0, printRAF = null, scan = 0, printMode = 'idle';
-  function printFrame(ts) {
-    printT = ts / 1000;
-    for (var i = 0; i < bars.length; i++) {
-      var b = bars[i];
-      var breathe = 1 + Math.sin(printT * b.spd + b.phase) * 0.07;
-      var len = b.len * breathe;
-      // during a hold, a front sweeps left→right: bars behind it swell and go green
-      var frontX = -R + scan * (2 * R + 30);
-      var d = frontX - b.x;
-      var lit = d > 0;
-      var boost = lit ? 1 + Math.max(0, 1 - d / 26) * 0.35 : 1;
-      len = Math.min(b.chord * 0.98, len * boost);
-      b.el.setAttribute('d', barPath(b, len, b.off));
-      var want = (printMode !== 'idle' && lit) ? '#8cff3f' : '#fff';
-      if (b.el.getAttribute('fill') !== want) b.el.setAttribute('fill', want);
-    }
-    printRAF = requestAnimationFrame(printFrame);
-  }
-  printRAF = requestAnimationFrame(printFrame);
 
   var pad = $('#fingerpad'), ring = $('.prog circle', pad), bioHint = $('#biohint');
   var CIRC = 748, HOLD = 1500, holdStart = 0, holdRAF = null, unlocked = false;
 
   function resetFinger() {
     cancelAnimationFrame(holdRAF); holdRAF = null; unlocked = false;
-    printMode = 'idle'; scan = 0;
     pad.classList.remove('done');
     ring.style.strokeDashoffset = CIRC;
+    paintRidge(0, false, 0);
     bioHint.textContent = 'Hold your thumb to sign-in.';
     bioHint.classList.remove('ok');
   }
   function tickHold() {
-    var p = Math.min(1, (performance.now() - holdStart) / HOLD);
-    scan = p;
+    var held = performance.now() - holdStart;
+    var p = Math.min(1, held / HOLD);
     ring.style.strokeDashoffset = CIRC * (1 - p);
+    paintRidge(p, p < 1, held);
     bioHint.textContent = p < 1 ? 'Reading…' : 'Welcome back.';
     if (p < 1) { holdRAF = requestAnimationFrame(tickHold); return; }
-    holdRAF = null; unlocked = true; printMode = 'done';
+    holdRAF = null; unlocked = true;
     pad.classList.add('done');
     bioHint.classList.add('ok');
     setTimeout(function () { go('home'); }, 520);
@@ -1005,7 +974,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     e.preventDefault();
     if (holdRAF || unlocked) return;
     try { pad.setPointerCapture(e.pointerId); } catch (err) {}
-    printMode = 'hold'; holdStart = performance.now();
+    holdStart = performance.now();
     holdRAF = requestAnimationFrame(tickHold);
   });
   ['pointerup', 'pointercancel'].forEach(function (ev) {
