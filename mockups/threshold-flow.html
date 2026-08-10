@@ -160,26 +160,41 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 .home .top .pair{display:flex;gap:8px;padding:0 24px}
 .home .field{flex:1;height:80px;padding:16px;border-radius:8px;background:rgba(105,109,135,.4);
   display:flex;flex-direction:column;gap:8px;overflow:hidden;font-family:var(--font-ui);font-size:16px;
-  color:#fff;transition:background .25s,box-shadow .25s}
+  color:#fff}
 .home .field .sub{opacity:.5;transition:opacity .25s,color .25s;white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis}
-.home .field.filled{background:rgba(168,180,249,.32);box-shadow:inset 0 0 0 1px #5e6ed4}
-.home .field.filled .sub{opacity:1;color:#cfd6ff}
 .home .loc{margin:0 24px;height:80px;padding:8px 24px;border-radius:8px;background:rgba(105,109,135,.4);
   display:flex;align-items:center;justify-content:space-between;gap:12px;
-  font-family:var(--font-ui);font-size:16px;color:#fff;transition:background .25s,box-shadow .25s}
-.home .loc.filled{background:rgba(168,180,249,.32);box-shadow:inset 0 0 0 1px #5e6ed4}
+  font-family:var(--font-ui);font-size:16px;color:#fff}
 .home .loc .col{display:flex;flex-direction:column;gap:8px;min-width:0}
 .home .loc .sub{opacity:.5;transition:opacity .25s,color .25s;white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis}
-.home .loc.filled .sub{opacity:1;color:#cfd6ff}
+/* A filled field keeps its resting box exactly as-is — the value carries the state.
+   Tinting the container would borrow the lavender of a selected "Pick & Go" chip
+   and make a picked date read as just another toggled chip. So instead the caption
+   steps back and the value steps forward. */
+.home .field.filled > span:first-child,
+.home .loc.filled .col > span:first-child{opacity:.5;font-size:13px}
+.home .field.filled .sub,
+.home .loc.filled .sub{opacity:1;color:#fff;font-family:var(--font-display);
+  font-size:20px;font-weight:700;letter-spacing:-.01em}
+.home .field > span:first-child,
+.home .loc .col > span:first-child{transition:opacity .25s,font-size .2s}
 .home .loc u{text-decoration:underline;text-underline-offset:2px;white-space:nowrap;flex:none}
+/* the "Maybe Cordoba?" nudge is a prompt for an empty field; once a place is chosen
+   it's stale, and it was taking ~40% of the row from the value we want to lead with.
+   Hiding it is what lets even "Constantinople, Byzantium" fit without an ellipsis. */
+.home .loc.filled u{display:none}
 .home .gorow{padding:0 24px}
 .home .gobtn{height:56px;border-radius:400px;background:rgba(105,109,135,.4);border:1px solid #696d87;
   display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-size:16px;
-  color:#fff;transition:opacity .25s,background .2s}
+  color:#fff;transition:opacity .25s,background .2s,color .2s}
 .home .gobtn[aria-disabled="true"]{opacity:.4;pointer-events:none}
-.home .gobtn:not([aria-disabled="true"]){background:rgba(168,180,249,.4);border-color:#5e6ed4}
+/* the armed CTA takes the confirm green already used for the selected calendar day
+   and the unlock ring — a chip is a filter, this is the action, and they shouldn't
+   share a colour */
+.home .gobtn:not([aria-disabled="true"]){background:#8cff3f;border-color:#8cff3f;
+  color:#0b0b0b;font-weight:700;box-shadow:0 6px 22px -8px rgba(140,255,63,.65)}
 .home .sec{padding:16px 24px;display:flex;flex-direction:column;gap:8px}
 .home .sec.featured{margin-top:8px}
 .home .sec.events{margin-top:7px}
@@ -261,6 +276,18 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 .detail .bars i.mark{width:5px;height:39px;margin-top:-19.5px;transform:translateX(-1.13px);
   box-shadow:0 0 10px rgba(140,255,63,.6)}
 .detail .bars.warn i.mark{box-shadow:0 0 10px rgba(255,59,59,.6)}
+/* the band no longer follows the marker, so the marker can sit outside it — when it
+   does it reads as a plain white playhead instead of borrowing the band's colour */
+.detail .bars i.mark:not(.lit){background:#fff;box-shadow:0 0 10px rgba(255,255,255,.4)}
+
+/* what the lit band actually means, spelled out under the track */
+.detail .wincap{display:flex;align-items:center;gap:9px;font-size:13px;line-height:1.3}
+.detail .wincap i{width:8px;height:8px;border-radius:50%;flex:none;background:#8cff3f;
+  box-shadow:0 0 8px rgba(140,255,63,.7)}
+.detail .wincap.bad i{background:#ff3b3b;box-shadow:0 0 8px rgba(255,59,59,.7)}
+.detail .wincap b{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.detail .wincap span{margin-left:auto;flex:none;opacity:.55;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
 
 .detail .hourwrap{padding:8px 24px}
 .detail .hourcard{background:#212121;border-radius:12.55px;padding:16px;display:flex;
@@ -279,7 +306,9 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 .detail .chips .c.sun{background:linear-gradient(132.19deg,rgba(243,190,0,.4) 17.09%,rgba(255,255,255,.4) 46.51%)}
 .detail .chips .c.day{background:linear-gradient(90deg,rgba(232,169,255,.4) 0%,rgba(255,255,255,.4) 100%)}
 .detail .warnwrap{padding:8px 24px}
-.detail .warn{width:347px;height:48px;display:flex;align-items:center;gap:8px;padding:0 8px;
+/* scoped to .warnwrap on purpose: as a bare `.detail .warn` this also matched the
+   tick strip (which carries `bars warn`) and turned it into a red 48px banner box */
+.detail .warnwrap .warn{width:347px;height:48px;display:flex;align-items:center;gap:8px;padding:0 8px;
   background:rgba(235,0,0,.4);border:1px solid #ff6a6a;border-radius:12.55px;font-size:16px;
   animation:pulsewarn 2.2s ease-in-out infinite}
 @keyframes pulsewarn{0%,100%{box-shadow:0 0 0 0 rgba(255,106,106,0)}50%{box-shadow:0 0 18px 0 rgba(255,106,106,.45)}}
@@ -332,8 +361,10 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 .sheetLayer .panel{position:absolute;left:0;right:0;bottom:0;top:0;transform:translateY(101%);
   transition:transform .4s cubic-bezier(.32,.72,0,1);
   background:#0e0e10;border-radius:28px 28px 0 0;border-top:1px solid rgba(255,255,255,.14);
-  padding:52px 26px 34px;display:flex;flex-direction:column;
+  padding:46px 26px 30px;display:flex;flex-direction:column;
+  overflow-y:auto;scrollbar-width:none;
   font-family:var(--font-display);color:#fff}
+.sheetLayer .panel::-webkit-scrollbar{display:none}
 .sheetLayer.open{pointer-events:auto}
 .sheetLayer.open .scrim{opacity:1}
 .sheetLayer.open .panel{transform:none}
@@ -344,21 +375,23 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 /* Set date / Set location sit at the bottom of the tall sheet */
 .sheetLayer .setbtn{margin-top:auto}
 
-.yearrow{display:flex;align-items:center;gap:10px;margin-bottom:24px}
-.yearrow button{font-family:var(--font-ui);font-size:13px;color:#fff;background:rgba(105,109,135,.3);
-  border:1px solid rgba(255,255,255,.12);border-radius:11px;height:46px;flex:1;cursor:pointer;
-  transition:background .15s}
-.yearrow button:hover{background:rgba(168,180,249,.35)}
-.yearbox{flex:0 0 132px;display:flex;align-items:baseline;justify-content:center;gap:7px}
-.yearin{width:82px;background:none;border:0;border-bottom:1.5px solid rgba(255,255,255,.18);
-  color:#fff;font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing:.02em;
-  text-align:center;padding:0 0 3px;outline:none;transition:border-color .18s;
-  -moz-appearance:textfield}
+/* the year leads the sheet; the steppers sit underneath it */
+.yeardisp{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:14px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent}
+.yearin{width:168px;background:none;border:0;border-bottom:1.5px solid rgba(255,255,255,.18);
+  color:#fff;font-family:var(--font-display);font-size:48px;font-weight:700;letter-spacing:.02em;
+  line-height:1.06;text-align:center;padding:0 0 5px;outline:none;caret-color:#8cff3f;
+  cursor:pointer;transition:border-color .18s;-moz-appearance:textfield}
 .yearin:focus{border-bottom-color:#8cff3f}
-.era{flex:none;background:none;border:0;color:#fff;opacity:.5;cursor:pointer;
-  font-family:var(--font-ui);font-size:12px;letter-spacing:.09em;padding:4px 2px;
-  border-bottom:1px dotted rgba(255,255,255,.35)}
-.era:hover{opacity:1}
+.yeardisp .eratag{flex:none;font-family:var(--font-ui);font-size:13px;letter-spacing:.09em;opacity:.45}
+
+.yearrow{display:flex;align-items:center;gap:5px;margin-bottom:22px}
+.yearrow button{font-family:var(--font-ui);font-size:12px;color:#fff;background:rgba(105,109,135,.3);
+  border:1px solid rgba(255,255,255,.12);border-radius:10px;height:44px;flex:1;min-width:0;padding:0;
+  cursor:pointer;transition:background .15s}
+.yearrow button:hover{background:rgba(168,180,249,.35)}
+.yearrow button.era{flex:1.15;font-size:11.5px;letter-spacing:.07em;font-weight:700;
+  background:rgba(105,109,135,.18);border-color:rgba(255,255,255,.24)}
 
 .months{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:24px}
 .months button{font-family:var(--font-display);font-size:12.5px;color:#fff;background:#1a1a1e;
@@ -401,6 +434,28 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   padding:3px 8px;border-radius:20px;border:1px solid rgba(140,255,63,.5);color:#8cff3f}
 .places .tag.pending{border-color:rgba(255,255,255,.24);color:rgba(255,255,255,.45)}
 .places .none{font-size:13px;opacity:.45;padding:14px 2px}
+
+/* ── on-screen number pad for the year field ──
+   The real field carries inputmode="none", so the OS keyboard stays down on a
+   phone and this pad — which the prototype can actually show — comes up instead. */
+.keypad{position:absolute;left:0;right:0;bottom:0;z-index:35;transform:translateY(102%);
+  transition:transform .3s cubic-bezier(.32,.72,0,1);
+  background:rgba(26,26,30,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-top:1px solid rgba(255,255,255,.12);padding:0 5px 30px;
+  font-family:var(--font-ui);color:#fff;pointer-events:none}
+.keypad.up{transform:none;pointer-events:auto}
+.keypad .kbar{display:flex;align-items:center;justify-content:space-between;height:44px;
+  padding:0 12px;border-bottom:1px solid rgba(255,255,255,.09);font-size:12.5px}
+.keypad .kbar span{opacity:.45;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.keypad .kbar button{background:none;border:0;color:#8cff3f;font:inherit;font-size:15px;
+  font-weight:700;padding:8px 4px;cursor:pointer}
+.keypad .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:9px 4px 0}
+.keypad .keys button{height:46px;border:0;border-radius:6px;background:rgba(255,255,255,.15);
+  color:#fff;font-family:var(--font-display);font-size:24px;cursor:pointer;
+  box-shadow:0 1px 0 rgba(0,0,0,.55);transition:background .08s}
+.keypad .keys button:active{background:rgba(255,255,255,.36)}
+.keypad .keys button.blank{background:none;box-shadow:none;pointer-events:none}
+.keypad .keys button.del{background:rgba(255,255,255,.05);box-shadow:none;font-size:19px}
 </style>
 </head>
 <body>
@@ -429,7 +484,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     <p class="hintline">
       <b>Splash</b> plays out, or tap to skip.<br>
       <b>Unlock</b> press &amp; hold the print.<br>
-      <b>Home</b> set Departing, Arriving and Location, then tap <b>Go</b>.<br>
+      <b>Home</b> set Departing and Location, then tap <b>Go</b>.<br>
       <b>Detail</b> drag the time bar to move through the day; the chevrons walk the trip and day 2 is the warning state.
     </p>
   </nav>
@@ -485,9 +540,6 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
               <div class="pair">
                 <div class="field hot" id="f-dep" data-act="pick:dep">
                   <span>Departing</span><span class="sub">Tap to select</span>
-                </div>
-                <div class="field hot" id="f-arr" data-act="pick:arr">
-                  <span>Arriving</span><span class="sub">Tap to select</span>
                 </div>
               </div>
               <div class="loc hot" id="f-loc" data-act="pick:loc">
@@ -576,6 +628,9 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
                        role="slider" aria-label="Time of day" aria-valuemin="0" aria-valuemax="1439">
                     <div class="bars" id="dtBars"></div>
                   </div>
+                  <div class="wincap" id="dtWinCap">
+                    <i></i><b id="dtWinLabel"></b><span id="dtWinRange"></span>
+                  </div>
                   <div class="row"><span>00:00</span><span>23:00</span></div>
                 </div>
               </div>
@@ -592,7 +647,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
                 </div>
               </div>
               <div class="warnwrap" id="dtWarn" hidden>
-                <div class="warn"><img src="assets/ic-emergency.svg" width="24" height="24" alt="">Natural disaster warning</div>
+                <div class="warn"><img src="assets/ic-emergency.svg" width="24" height="24" alt=""><span id="dtWarnText">Natural disaster warning</span></div>
               </div>
               <div class="arwrap">
                 <div class="ar hot" id="dtAr" data-act="ar">
@@ -627,17 +682,19 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
             <h3 id="dsTitle">Departing</h3>
             <div class="sub" id="dsSub">Pick the day you step through.</div>
           </div>
+          <div class="yeardisp" id="dsYearBox">
+            <input id="dsYear" class="yearin" type="text" inputmode="none" pattern="[0-9]*"
+                   enterkeyhint="done" maxlength="4"
+                   value="1200" aria-label="Year" autocomplete="off" spellcheck="false">
+            <span class="eratag" id="dsEraTag">CE</span>
+          </div>
           <div class="yearrow">
             <button data-yr="-100" type="button">−100</button>
+            <button data-yr="-10" type="button">−10</button>
             <button data-yr="-1" type="button">−1</button>
-            <div class="yearbox">
-              <!-- inputmode + numeric pattern is what raises the OS number pad on iOS/Android -->
-              <input id="dsYear" class="yearin" type="text" inputmode="numeric" pattern="[0-9]*"
-                     enterkeyhint="done" maxlength="4"
-                     value="1200" aria-label="Year" autocomplete="off" spellcheck="false">
-              <button id="dsEra" class="era" type="button" title="Switch era">CE</button>
-            </div>
+            <button id="dsEra" class="era" type="button" title="Switch era">CE</button>
             <button data-yr="1" type="button">+1</button>
+            <button data-yr="10" type="button">+10</button>
             <button data-yr="100" type="button">+100</button>
           </div>
           <div class="months" id="dsMonths"></div>
@@ -660,6 +717,25 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
                  enterkeyhint="search">
           <div class="places" id="lsList"></div>
           <button class="setbtn" id="lsSet" disabled>Set location</button>
+        </div>
+      </div>
+
+      <!-- number pad raised by tapping the year -->
+      <div class="keypad" id="keypad" aria-hidden="true">
+        <div class="kbar"><span>Year</span><button type="button" id="kpDone">Done</button></div>
+        <div class="keys" id="kpKeys">
+          <button type="button" data-k="1">1</button>
+          <button type="button" data-k="2">2</button>
+          <button type="button" data-k="3">3</button>
+          <button type="button" data-k="4">4</button>
+          <button type="button" data-k="5">5</button>
+          <button type="button" data-k="6">6</button>
+          <button type="button" data-k="7">7</button>
+          <button type="button" data-k="8">8</button>
+          <button type="button" data-k="9">9</button>
+          <button type="button" class="blank" tabindex="-1" aria-hidden="true"></button>
+          <button type="button" data-k="0">0</button>
+          <button type="button" class="del" data-k="del" aria-label="Delete">⌫</button>
         </div>
       </div>
 
@@ -723,7 +799,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   var MONTHS_S = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
   /* ═══════════════ trip state ═══════════════ */
-  var trip = { loc: null, dep: null, arr: null, day: 0, min: 566 };   // 566 = 09:26
+  var trip = { loc: null, dep: null, day: 0, min: 566 };   // 566 = 09:26
 
   /* what the hour feels like on the ground. Córdoba, high summer, 1200 CE. */
   var HOURS = [
@@ -771,11 +847,13 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   function fmtShort(d) { return d.d + ' ' + MONTHS_S[d.m] + ' ' + fmtYear(d.y); }
   // rough Hijri year, tuned to match the Figma header: 596 AH for 1200 CE
   function hijri(y) { return Math.max(1, Math.floor((y - 622) * 33 / 32)); }
+  // there's no Arriving field any more — how long you stay is a property of the
+  // destination, so the trip runs `len` days from whatever Departing you pick
   function tripLength() {
-    if (!trip.dep || !trip.arr) return 1;
-    return Math.max(1, toDays(trip.arr) - toDays(trip.dep) + 1);
+    var place = PLACES[trip.loc || 'cordoba'];
+    return Math.max(1, place.trip.len || 1);
   }
-  function ready() { return !!(trip.loc && trip.dep && trip.arr); }
+  function ready() { return !!(trip.loc && trip.dep); }
 
   /* ═══════════════ router ═══════════════ */
   var ORDER = ['splash', 'bio', 'home', 'detail'];
@@ -937,11 +1015,11 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   });
 
   /* ═══════════════ 3. home — the three fields ═══════════════ */
-  var FIELDS = { dep: '#f-dep', arr: '#f-arr', loc: '#f-loc' };
+  var FIELDS = { dep: '#f-dep', loc: '#f-loc' };
   function syncGo() { $('#homeGo').setAttribute('aria-disabled', String(!ready())); }
 
   function resetTrip() {
-    trip.loc = trip.dep = trip.arr = null; trip.day = 0; trip.min = 566;
+    trip.loc = trip.dep = null; trip.day = 0; trip.min = 566;
     Object.keys(FIELDS).forEach(function (k) {
       var el = $(FIELDS[k]);
       el.classList.remove('filled');
@@ -958,27 +1036,28 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   function afterPick() {
     syncGo();
     if (ready()) { toast('Ready — tap Go'); return; }
-    var left = ['dep', 'arr', 'loc'].filter(function (k) { return !trip[k]; }).length;
+    var left = ['dep', 'loc'].filter(function (k) { return !trip[k]; }).length;
     toast(left === 1 ? 'One more to go' : left + ' more to select');
   }
   function setTripPreset(key) {
     var p = PLACES[key], t = p.trip;
     trip.loc = key;
     trip.dep = { y: t.y, m: t.m, d: t.d };
-    trip.arr = addDays(trip.dep, t.len - 1);
     trip.day = 0;
     paintField('loc', p.name + ', ' + p.region);
     paintField('dep', fmtShort(trip.dep));
-    paintField('arr', fmtShort(trip.arr));
     syncGo();
   }
 
   /* ═══════════════ date picker sheet ═══════════════ */
   var dateSheet = $('#dateSheet'), locSheet = $('#locSheet');
-  var dsTarget = 'dep', dsDraft = { y: 1200, m: 7, d: 9 };
+  var dsDraft = { y: 1200, m: 7, d: 9 };
 
   function openSheet(el) { closeSheets(); el.classList.add('open'); }
-  function closeSheets() { dateSheet.classList.remove('open'); locSheet.classList.remove('open'); }
+  function closeSheets() {
+    closeKeypad();
+    dateSheet.classList.remove('open'); locSheet.classList.remove('open');
+  }
   $$('[data-close]').forEach(function (el) { el.addEventListener('click', closeSheets); });
 
   (function buildMonths() {
@@ -995,7 +1074,8 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     });
   })();
 
-  var yearIn = $('#dsYear'), eraBtn = $('#dsEra');
+  var yearIn = $('#dsYear'), eraBtn = $('#dsEra'), eraTag = $('#dsEraTag');
+  var keypad = $('#keypad'), kpFresh = false;
 
   function setYear(y) {
     if (y === 0) y = 1;                                   // there is no year zero
@@ -1004,7 +1084,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     renderPicker();
   }
 
-  $$('#dateSheet .yearrow > button').forEach(function (b) {
+  $$('#dateSheet .yearrow > button[data-yr]').forEach(function (b) {
     b.addEventListener('click', function () {
       var step = Number(b.dataset.yr);
       var y = dsDraft.y + step;
@@ -1012,21 +1092,60 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     });
   });
 
-  // typing straight into the year
-  yearIn.addEventListener('input', function () {
+  // typing straight into the year — shared by the hardware keyboard and the pad
+  function applyYearText() {
     var digits = yearIn.value.replace(/\D/g, '').slice(0, 4);
     if (digits !== yearIn.value) yearIn.value = digits;
     var n = parseInt(digits, 10);
     if (!digits || isNaN(n) || n < 1) return;             // wait for a usable number
     setYear(dsDraft.y < 0 ? -(n - 1) : n);
-  });
-  yearIn.addEventListener('focus', function () { yearIn.select(); });
-  yearIn.addEventListener('blur', function () { renderPicker(); });
+  }
+  yearIn.addEventListener('input', applyYearText);
+  yearIn.addEventListener('focus', function () { yearIn.select(); openKeypad(); });
+  yearIn.addEventListener('blur', function () { closeKeypad(); renderPicker(); });
   yearIn.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { yearIn.blur(); return; }
     if (e.key === 'ArrowUp') { e.preventDefault(); setYear(dsDraft.y + 1); yearIn.select(); }
     if (e.key === 'ArrowDown') { e.preventDefault(); setYear(dsDraft.y - 1 || -1); yearIn.select(); }
   });
+  // the whole 1200 / CE block is the tap target. Raising the pad here rather than
+  // leaning on the focus event matters: if the field is still focused from an
+  // earlier visit, focus() is a no-op and no focus event ever fires.
+  $('#dsYearBox').addEventListener('click', function () {
+    yearIn.focus();
+    yearIn.select();
+    openKeypad();
+  });
+
+  function openKeypad() {
+    kpFresh = true;                                       // first digit replaces the year
+    keypad.classList.add('up');
+    keypad.setAttribute('aria-hidden', 'false');
+  }
+  function closeKeypad() {
+    keypad.classList.remove('up');
+    keypad.setAttribute('aria-hidden', 'true');
+  }
+  // acting on pointerdown (and swallowing it) keeps focus — and the caret — on the
+  // field, which a plain click on a <button> would steal
+  keypad.addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    var b = e.target.closest('button');
+    if (!b) return;
+    // closeKeypad as well as blur: blur() is a no-op if focus already went elsewhere
+    if (b.id === 'kpDone') { yearIn.blur(); closeKeypad(); renderPicker(); return; }
+    var k = b.dataset.k;
+    if (!k) return;
+    if (k === 'del') { yearIn.value = yearIn.value.slice(0, -1); kpFresh = false; }
+    else {
+      if (kpFresh) { yearIn.value = ''; kpFresh = false; }
+      if (yearIn.value.length >= 4) return;
+      if (yearIn.value === '' && k === '0') return;       // no leading zero
+      yearIn.value += k;
+    }
+    applyYearText();
+  });
+
   eraBtn.addEventListener('click', function () {
     // 1200 CE ⇄ 1200 BCE, keeping the number the user sees
     var shown = absYear(dsDraft.y);
@@ -1035,14 +1154,13 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 
   function renderPicker() {
     if (document.activeElement !== yearIn) yearIn.value = absYear(dsDraft.y);
-    eraBtn.textContent = dsDraft.y > 0 ? 'CE' : 'BCE';
+    eraBtn.textContent = eraTag.textContent = dsDraft.y > 0 ? 'CE' : 'BCE';
     $$('#dsMonths button').forEach(function (b) {
       b.setAttribute('aria-pressed', String(Number(b.dataset.m) === dsDraft.m));
     });
 
     var wrap = $('#dsDays'); wrap.innerHTML = '';
     var lead = firstWeekday(dsDraft.y, dsDraft.m), total = daysInMonth(dsDraft.y, dsDraft.m);
-    var floor = (dsTarget === 'arr' && trip.dep) ? toDays(trip.dep) : -Infinity;
 
     // 42 cells, always — six fixed rows keep the sheet a constant height
     for (var i = 0; i < 42; i++) {
@@ -1056,7 +1174,6 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
       b.type = 'button';
       b.textContent = d;
       b.dataset.d = d;
-      if (toDays({ y: dsDraft.y, m: dsDraft.m, d: d }) < floor) b.disabled = true;
       b.setAttribute('aria-pressed', String(d === dsDraft.d));
       b.addEventListener('click', function (e) {
         dsDraft.d = Number(e.currentTarget.dataset.d);
@@ -1064,30 +1181,18 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
       });
       wrap.appendChild(b);
     }
-    $('#dsSet').disabled = toDays(dsDraft) < floor;
   }
 
-  function openDate(which) {
-    dsTarget = which;
-    $('#dsTitle').textContent = which === 'dep' ? 'Departing' : 'Arriving';
-    $('#dsSub').textContent = which === 'dep'
-      ? 'Pick the day you step through.'
-      : 'Pick the day you come back.';
-    var seed = trip[which] || (which === 'arr' && trip.dep ? addDays(trip.dep, 6) : null) || { y: 1200, m: 7, d: 9 };
+  function openDate() {
+    var seed = trip.dep || { y: 1200, m: 7, d: 9 };
     dsDraft = { y: seed.y, m: seed.m, d: seed.d };
     renderPicker();
     openSheet(dateSheet);
   }
 
   $('#dsSet').addEventListener('click', function () {
-    var picked = { y: dsDraft.y, m: dsDraft.m, d: dsDraft.d };
-    trip[dsTarget] = picked;
-    paintField(dsTarget, fmtShort(picked));
-    // keep the range sane in both directions
-    if (dsTarget === 'dep' && trip.arr && toDays(trip.arr) < toDays(picked)) {
-      trip.arr = addDays(picked, 6);
-      paintField('arr', fmtShort(trip.arr));
-    }
+    trip.dep = { y: dsDraft.y, m: dsDraft.m, d: dsDraft.d };
+    paintField('dep', fmtShort(trip.dep));
     closeSheets();
     afterPick();
   });
@@ -1182,11 +1287,21 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 
   function markIndex(min) { return Math.round((min / 1439) * 47); }
 
+  /* The lit band is an advisory window, not a progress fill. It says which hours are
+     worth stepping through — green — or which hours the day's hazard covers — red.
+     It's a property of the day, so it stays put while the marker scrubs across it. */
+  var WINDOW = {
+    safe: { from: 6 * 60,  to: 11 * 60, label: 'Best window to arrive' },
+    risk: { from: 12 * 60, to: 19 * 60, label: 'Hazard window — avoid' }
+  };
+
   function paintBars(min, warn) {
     var m = markIndex(min);
+    var win = warn ? WINDOW.risk : WINDOW.safe;
+    var from = markIndex(win.from), to = markIndex(win.to);
     barsEl.classList.toggle('warn', warn);
     for (var i = 0; i < 48; i++) {
-      var cls = (i >= m - 8 && i <= m + 5) ? 'lit' : '';
+      var cls = (i >= from && i <= to) ? 'lit' : '';
       if (i === m) cls += ' mark';
       var next = cls.trim();
       if (tickEls[i].className !== next) tickEls[i].className = next;
@@ -1197,8 +1312,18 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     trip.min = Math.max(0, Math.min(1439, Math.round(min)));
     var place = PLACES[trip.loc || 'cordoba'];
     var band = hourBand(trip.min, place.dossier);
+    var win = warn ? WINDOW.risk : WINDOW.safe;
 
     paintBars(trip.min, warn);
+    $('#dtWinCap').classList.toggle('bad', warn);
+    $('#dtWinLabel').textContent = win.label;
+    $('#dtWinRange').textContent = fmtClock(win.from) + '–' + fmtClock(win.to);
+    // "Natural disaster warning" plus the range overflows the fixed-height pill onto
+    // two lines; the hazard hours earn their place on the alert more than "Natural" does
+    if (warn) {
+      $('#dtWarnText').textContent =
+        'Disaster warning · ' + fmtClock(win.from) + '–' + fmtClock(win.to);
+    }
     $('#dtTime').textContent = fmtClock(trip.min);
     trackEl.setAttribute('aria-valuenow', trip.min);
     trackEl.setAttribute('aria-valuetext', fmtClock(trip.min));
@@ -1240,8 +1365,8 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   function renderDetail() {
     var place = PLACES[trip.loc || 'cordoba'];
     var dep = trip.dep || { y: place.trip.y, m: place.trip.m, d: place.trip.d };
-    var arr = trip.arr || addDays(dep, place.trip.len - 1);
-    var len = Math.max(1, toDays(arr) - toDays(dep) + 1);
+    var len = tripLength();
+    var arr = addDays(dep, len - 1);          // the stay runs on from Departing
     trip.day = Math.max(0, Math.min(trip.day, len - 1));
     var day = addDays(dep, trip.day);
     // day 2 of any trip is the designed "warning" state
