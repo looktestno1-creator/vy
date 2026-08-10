@@ -305,13 +305,18 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   font-weight:700;font-size:16px}
 .detail .hourcard .hh span:last-child{font-size:14px;opacity:.5;font-variant-numeric:tabular-nums}
 .detail .hourcard p{font-size:14px;line-height:1.35;opacity:.88}
-.detail .chips{padding:8px 24px;display:flex}
+/* full-bleed scroller: the 24px inset moves inside .wrap so the chips still line up
+   with the cards above but can scroll all the way to both screen edges */
+.detail .chips{padding:8px 0;display:flex}
 /* the display rules above would otherwise beat the hidden attribute */
 .detail [hidden]:not(.bg){display:none !important}
-.detail .chips .wrap{display:flex;gap:8px;height:40px;width:347px;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.detail .chips .wrap{display:flex;gap:8px;height:40px;width:100%;padding:0 24px;overflow-x:auto;
+  scrollbar-width:none;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.detail .chips .wrap::-webkit-scrollbar{display:none}
+/* flex:none so a long chip scrolls out of view instead of being squeezed */
 .detail .chips .c{display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:12.55px;
-  font-size:14px;white-space:nowrap}
+  font-size:14px;white-space:nowrap;flex:none}
+.detail .chips .c img{flex:none}
 .detail .chips .c.sun{background:linear-gradient(132.19deg,rgba(243,190,0,.4) 17.09%,rgba(255,255,255,.4) 46.51%)}
 .detail .chips .c.day{background:linear-gradient(90deg,rgba(232,169,255,.4) 0%,rgba(255,255,255,.4) 100%)}
 .detail .warnwrap{padding:8px 24px}
@@ -335,12 +340,18 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
 .detail .ar .lbl span{font-size:14px}
 .detail .block{display:flex;flex-direction:column;gap:8px;padding:16px 24px}
 .detail .block .strip{display:flex;gap:16px;align-items:flex-start}
-.detail .tcard{width:227px;flex:none;background:#212121;border-radius:12.55px;padding:16px;
-  display:flex;flex-direction:column;gap:16px;overflow:hidden}
+.detail .tcard{position:relative;width:227px;flex:none;background:#212121;border-radius:12.55px;
+  padding:16px;display:flex;flex-direction:column;gap:16px;overflow:hidden}
 .detail .tcard h4{font-weight:700;font-size:16px}
 .detail .tcard p{font-size:14px;line-height:1.22;height:196px;overflow:hidden}
 .detail .tcard.empty{width:354px;height:auto}
 .detail .tcard.empty p{height:auto;opacity:.6}
+/* The copy is clipped at 196px, so fade the cut and say there's more behind the tap.
+   A real element, not ::after — the card is also .hot, whose own ::after is the
+   hotspot highlight, and its opacity:0 would render this invisible. */
+.detail .tcard .more{position:absolute;left:0;right:0;bottom:0;
+  padding:34px 16px 13px;font-size:12px;font-weight:700;color:#cfd6ff;pointer-events:none;
+  background:linear-gradient(180deg,rgba(33,33,33,0) 0%,#212121 58%)}
 .detail .icard{width:227px;flex:none;border-radius:12.55px;overflow:hidden;line-height:0}
 .detail .icard img{width:227px;height:238.6px;object-fit:cover;display:block}
 .detail .gowrap{padding:0 24px}
@@ -424,6 +435,11 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   color:#fff;font-family:var(--font-ui);font-size:16px;cursor:pointer;transition:background .15s}
 .setbtn:hover:not(:disabled){background:rgba(168,180,249,.55)}
 .setbtn:disabled{opacity:.3;cursor:default}
+
+/* fills the tall sheet and scrolls internally so Close stays put at the bottom */
+.tsbody{overflow-y:auto;scrollbar-width:none;flex:1;min-height:0;margin-bottom:24px;
+  font-size:14.5px;line-height:1.62;color:rgba(255,255,255,.86)}
+.tsbody::-webkit-scrollbar{display:none}
 
 .search{width:100%;height:52px;border-radius:13px;background:#1a1a1e;border:1px solid rgba(255,255,255,.12);
   color:#fff;font-family:var(--font-display);font-size:14px;padding:0 16px;margin-bottom:16px;outline:none}
@@ -750,6 +766,20 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
         </div>
       </div>
 
+      <!-- full text of a Context / What to remember card -->
+      <div class="sheetLayer" id="textSheet">
+        <div class="scrim" data-close="text"></div>
+        <div class="panel">
+          <div class="grabber"></div>
+          <div class="head">
+            <h3 id="tsTitle"></h3>
+            <div class="sub" id="tsSub"></div>
+          </div>
+          <div class="tsbody" id="tsBody"></div>
+          <button class="setbtn" id="tsClose">Close</button>
+        </div>
+      </div>
+
       <div class="arview" id="arview">
         <b id="arTitle">AR view</b>
         <p id="arBody">Not designed yet — this is where the camera passthrough would open.</p>
@@ -1022,12 +1052,28 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   var dateSheet = $('#dateSheet'), locSheet = $('#locSheet');
   var dsDraft = { y: 1200, m: 7, d: 9 };
 
+  var textSheet = $('#textSheet');
+
   function openSheet(el) { closeSheets(); el.classList.add('open'); }
   function closeSheets() {
     closeKeypad();
     dateSheet.classList.remove('open'); locSheet.classList.remove('open');
+    textSheet.classList.remove('open');
   }
   $$('[data-close]').forEach(function (el) { el.addEventListener('click', closeSheets); });
+  $('#tsClose').addEventListener('click', closeSheets);
+
+  // the card already holds the full copy — it's only clipped visually — so the sheet
+  // reads straight off the tapped card rather than keeping a second copy of the text
+  function openCard(card) {
+    var place = PLACES[trip.loc || 'cordoba'];
+    var dep = trip.dep || { y: place.trip.y, m: place.trip.m, d: place.trip.d };
+    $('#tsTitle').textContent = $('h4', card).textContent;
+    $('#tsSub').textContent = place.name + ' · ' + fmtDate(dep);
+    $('#tsBody').innerHTML = $('p', card).innerHTML;
+    $('#tsBody').scrollTop = 0;
+    openSheet(textSheet);
+  }
 
   (function buildMonths() {
     var wrap = $('#dsMonths');
@@ -1234,13 +1280,14 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
         'Threshold writes these from primary sources — you\'ll get a notification when it lands.</p></div>';
     }
     return list.map(function (c) {
-      return '<div class="tcard"><h4>' + c[0] + '</h4><p>' + c[1] + '</p></div>';
+      return '<div class="tcard hot" data-act="card"><h4>' + c[0] + '</h4><p>' + c[1] + '</p>' +
+        '<span class="more">Read more</span></div>';
     }).join('') + '<div class="icard"><img src="assets/context-img.png" alt=""></div>';
   }
 
   /* ── the day timeline, draggable ──
      48 ticks across 00:00–23:59. The marker is the selected time; the lit band is the
-     ±window around it, sized to match the Figma (8 ticks behind, 5 ahead). */
+     day's advisory window and does not follow the marker (see WINDOW below). */
   var barsEl = $('#dtBars'), trackEl = $('#dtTrack'), tickEls = [];
   (function buildTicks() {
     var frag = document.createDocumentFragment();
@@ -1435,6 +1482,8 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     } else if (act === 'scrub') {
       /* the drag is handled on the track itself; this just keeps the tap from
          being read as a miss and flashing every hotspot */
+    } else if (act === 'card') {
+      openCard(t);
     } else if (act === 'ar') openAR();
   });
 
