@@ -361,6 +361,64 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   transition:width .05s linear}
 .detail .go span{position:relative;z-index:1}
 
+/* ── 5. Portal forming ── */
+.forming{position:relative;width:402px;height:874px;background:#000;overflow:hidden;
+  font-family:var(--font-display);color:#fff;display:flex;flex-direction:column;align-items:center}
+.forming .wordmark{margin-top:60px;font-size:22.727px}
+.forming .aperture{position:relative;margin-top:104px;width:220px;height:220px;flex:none}
+/* three rings on staggered delays read as the aperture widening, over and over */
+.forming .aperture .ring{position:absolute;inset:0;border-radius:50%;opacity:0;
+  border:1px solid rgba(168,180,249,.55);animation:portalpulse 3s ease-out infinite}
+.forming .aperture .ring:nth-child(2){animation-delay:1s}
+.forming .aperture .ring:nth-child(3){animation-delay:2s}
+@keyframes portalpulse{0%{transform:scale(.16);opacity:0}
+  14%{opacity:.9}100%{transform:scale(1);opacity:0}}
+.forming .aperture .core{position:absolute;inset:62px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(198,208,255,.9),rgba(94,110,212,.4) 54%,transparent 72%);
+  animation:corebreathe 2.4s ease-in-out infinite}
+@keyframes corebreathe{0%,100%{transform:scale(.9);opacity:.65}50%{transform:scale(1.07);opacity:1}}
+.forming .arc{position:absolute;inset:0;transform:rotate(-90deg)}
+.forming .arc circle{fill:none;stroke:#8cff3f;stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:666;stroke-dashoffset:666;filter:drop-shadow(0 0 6px rgba(140,255,63,.65))}
+.forming .readout{margin-top:auto;margin-bottom:78px;width:354px;display:flex;
+  flex-direction:column;gap:13px}
+.forming .dest{font-size:20px;font-weight:700;text-align:center;line-height:1.3}
+.forming .statusrow{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.forming .stage{color:#cfd6ff}
+.forming .pct{opacity:.5;font-variant-numeric:tabular-nums}
+.forming .track{height:2px;background:rgba(255,255,255,.14);border-radius:2px;overflow:hidden}
+.forming .track i{display:block;height:100%;width:0;background:#8cff3f;
+  box-shadow:0 0 10px rgba(140,255,63,.7);transition:width .18s linear}
+
+/* ── 6. Portal created ── */
+.portal{position:relative;width:402px;height:874px;background:#000;overflow:hidden;
+  font-family:var(--font-display);color:#fff}
+.portal video{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:402px;height:874px;object-fit:cover;display:block}
+/* blend:color keeps the video's motion and luminance but drives its hue to the
+   indigo the rest of the app is built on; the screen layer puts the light back */
+.portal .tint{position:absolute;inset:0;background:rgb(28,40,119);mix-blend-mode:color;
+  opacity:.92;pointer-events:none}
+.portal .glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(58% 42% at 50% 46%,rgba(120,150,255,.3),transparent 70%)}
+.portal .veil{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,4,16,.74) 0%,rgba(2,4,16,0) 27%,
+    rgba(2,4,16,0) 55%,rgba(2,4,16,.88) 100%)}
+.portal .pcopy{position:absolute;left:24px;right:24px;top:92px;display:flex;
+  flex-direction:column;align-items:center;gap:10px;text-align:center}
+.portal .eyebrow{font-family:var(--font-ui);font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:#8cff3f}
+.portal .ptitle{font-size:24px;font-weight:700;line-height:1.25}
+.portal .psub{font-size:14px;opacity:.7}
+.portal .pfoot{position:absolute;left:24px;right:24px;bottom:54px;display:flex;
+  flex-direction:column;align-items:center;gap:10px}
+.portal .phint{font-size:13.5px;opacity:.75}
+/* stepping through is the point of this screen, so the way out stays quiet — the
+   same underlined-text affordance the app already uses for secondary actions */
+.portal .pclose{font-family:var(--font-ui);font-size:13px;color:rgba(255,255,255,.5);
+  padding:8px 14px;text-decoration:underline;text-underline-offset:3px;
+  text-decoration-color:rgba(255,255,255,.3)}
+
 /* ── AR overlay ── */
 .arview{position:absolute;inset:0;z-index:34;background:rgba(0,0,0,.6);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -506,11 +564,14 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     <button data-go="home"><span class="dot"></span>Home tab</button>
     <button data-go="detail" data-day="0"><span class="dot"></span>Event detail / happy</button>
     <button data-go="detail" data-day="1"><span class="dot"></span>Event detail / sad</button>
+    <button data-go="forming"><span class="dot"></span>Portal forming</button>
+    <button data-go="portal"><span class="dot"></span>Portal created</button>
     <p class="hintline">
       <b>Splash</b> plays out, or tap to skip.<br>
       <b>Unlock</b> press &amp; hold the print.<br>
       <b>Home</b> set Departing and Location, then tap <b>Go</b>.<br>
-      <b>Detail</b> drag the time bar to move through the day; the chevrons walk the trip and day 2 is the warning state.
+      <b>Detail</b> drag the time bar to move through the day; the chevrons walk the trip and day 2 is the warning state.<br>
+      <b>Portal</b> press &amp; hold <b>Go</b> at the foot of the detail to open one.
     </p>
   </nav>
 
@@ -694,6 +755,45 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
               <div class="gowrap">
                 <div class="go btn-primary hot" data-hold="go"><div class="fill"></div><span>Press &amp; hold to Go</span></div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════ 5. Portal forming ══════════ -->
+        <section class="view" id="v-forming">
+          <div class="forming">
+            <div class="wordmark">Threshold</div>
+            <div class="aperture">
+              <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+              <div class="core"></div>
+              <svg class="arc" viewBox="0 0 220 220"><circle cx="110" cy="110" r="106"></circle></svg>
+            </div>
+            <div class="readout">
+              <div class="dest" id="fmDest"></div>
+              <div class="statusrow">
+                <span class="stage" id="fmStage">Anchoring to the date</span>
+                <span class="pct" id="fmPct">0%</span>
+              </div>
+              <div class="track"><i id="fmFill"></i></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════ 6. Portal created ══════════ -->
+        <section class="view" id="v-portal">
+          <div class="portal">
+            <video id="portalVideo" src="assets/Portal.mp4" muted playsinline loop preload="auto"></video>
+            <div class="tint"></div>
+            <div class="glow"></div>
+            <div class="veil"></div>
+            <div class="pcopy">
+              <div class="eyebrow">Threshold open</div>
+              <div class="ptitle" id="ptTitle"></div>
+              <div class="psub" id="ptSub"></div>
+            </div>
+            <div class="pfoot">
+              <div class="phint">Step through when you're ready.</div>
+              <div class="pclose hot" data-act="goto:detail">Close the portal</div>
             </div>
           </div>
         </section>
@@ -897,7 +997,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
   function ready() { return !!(trip.loc && trip.dep); }
 
   /* ═══════════════ router ═══════════════ */
-  var ORDER = ['splash', 'bio', 'home', 'detail'];
+  var ORDER = ['splash', 'bio', 'home', 'detail', 'forming', 'portal'];
   var views = {}, history = [], current = null;
   ORDER.forEach(function (k) { views[k] = $('#v-' + k); });
 
@@ -918,7 +1018,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     var from = current ? views[current] : null, next = views[to];
     if (!next) return;
 
-    closeAR(); closeSheets(); stopSplash();
+    closeAR(); closeSheets(); stopSplash(); stopForming(); stopPortal();
     var backwards = !!opts.back;
 
     setState(next, backwards ? 'off-left' : 'off-right');
@@ -954,6 +1054,8 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     // coming back to Home from the detail hands you an empty form, so the flow replays
     if (key === 'home' && backwards) resetTrip();
     if (key === 'detail') renderDetail();
+    if (key === 'forming') runForming();
+    if (key === 'portal') playPortal();
   }
 
   /* ═══════════════ 1. splash video ═══════════════ */
@@ -1423,6 +1525,64 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
     renderDetail();
   }
 
+  /* ═══════════════ 5 & 6. portal forming → portal created ═══════════════ */
+  function currentDay() {
+    var place = PLACES[trip.loc || 'cordoba'];
+    var dep = trip.dep || { y: place.trip.y, m: place.trip.m, d: place.trip.d };
+    return { place: place, day: addDays(dep, trip.day) };
+  }
+
+  // the aperture opens over FORM_MS, narrating what it's doing as it goes
+  var FORM_STAGES = [
+    [0,    'Anchoring to the date'],
+    [0.26, 'Resolving coordinates'],
+    [0.54, 'Stabilising the aperture'],
+    [0.84, 'Opening the threshold']
+  ];
+  var FORM_MS = 4200, ARC = 666;          // 666 = 2πr for the r=106 arc
+  var formArc = $('.forming .arc circle'), formFill = $('#fmFill');
+  var formRAF = null, formStart = 0, formTimer = null;
+
+  function stopForming() {
+    cancelAnimationFrame(formRAF); formRAF = null;
+    clearTimeout(formTimer); formTimer = null;
+  }
+  function runForming() {
+    var c = currentDay();
+    $('#fmDest').textContent = c.place.name + ' · ' + fmtDate(c.day);
+    stopForming();
+    formArc.style.strokeDashoffset = ARC;
+    formFill.style.width = '0';
+    $('#fmPct').textContent = '0%';
+    $('#fmStage').textContent = FORM_STAGES[0][1];
+    formStart = performance.now();
+    formRAF = requestAnimationFrame(formTick);
+  }
+  function formTick() {
+    var p = Math.min(1, (performance.now() - formStart) / FORM_MS);
+    formArc.style.strokeDashoffset = ARC * (1 - p);
+    formFill.style.width = (p * 100) + '%';
+    $('#fmPct').textContent = Math.round(p * 100) + '%';
+    var s = FORM_STAGES[0];
+    for (var i = 0; i < FORM_STAGES.length; i++) if (p >= FORM_STAGES[i][0]) s = FORM_STAGES[i];
+    if ($('#fmStage').textContent !== s[1]) $('#fmStage').textContent = s[1];
+    if (p < 1) { formRAF = requestAnimationFrame(formTick); return; }
+    formRAF = null;
+    formTimer = setTimeout(function () { if (current === 'forming') go('portal'); }, 480);
+  }
+
+  var portalVideo = $('#portalVideo');
+  function playPortal() {
+    var c = currentDay();
+    $('#ptTitle').textContent = c.place.name;
+    $('#ptSub').textContent = fmtDate(c.day) + ' · ' + c.place.coord;
+    try {
+      portalVideo.currentTime = 0;
+      var pr = portalVideo.play(); if (pr && pr.catch) pr.catch(function () {});
+    } catch (e) {}
+  }
+  function stopPortal() { try { portalVideo.pause(); } catch (e) {} }
+
   /* ═══════════════ press & hold to Go ═══════════════ */
   (function () {
     var btn = $('[data-hold="go"]'), fillEl = $('.fill', btn), raf = null, start = 0;
@@ -1434,7 +1594,7 @@ main{flex:1;display:flex;gap:40px;align-items:center;justify-content:center;padd
       raf = null;
       setTimeout(function () {
         stop();
-        toast('End of the flow — no screen after “Go” in the Figma file yet.');
+        go('forming');
       }, 260);
     }
     btn.addEventListener('pointerdown', function (e) {
