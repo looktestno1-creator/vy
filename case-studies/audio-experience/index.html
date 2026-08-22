@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio experience — Vefa Yilmaz</title>
+  <meta name="description" content="Redesigning the Denon PerL Pro app — UX, UI, animations and flows for a premium personalised audio experience." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yvefa.com/case-studies/audio-experience/" />
+  <meta property="og:title" content="Audio experience — Vefa Yilmaz" />
+  <meta property="og:description" content="Redesigning the Denon PerL Pro app — UX, UI, animations and flows for a premium personalised audio experience." />
+  <meta property="og:image" content="https://yvefa.com/assets/images/audio-experience/img-2.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://yvefa.com/assets/images/audio-experience/img-2.png" />
+  <link rel="canonical" href="https://yvefa.com/case-studies/audio-experience/" />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="shortcut icon" href="../../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Space Grotesk + Manrope are the portfolio's pair; Archivo and Space Mono
+       are loaded only for the type specimen in section 07, which shows the
+       Denon system's own faces. -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;600;700&family=Archivo:wght@700&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/case-study-shared.css" />
+  <link rel="stylesheet" href="../../css/cases/audio-experience.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+  <script>if(sessionStorage.getItem('pt-arriving')==='1'){var _c=document.createElement('div');_c.id='page-curtain';_c.style.cssText='position:fixed;inset:0;background:#111;z-index:9000;transform:translateY(0);pointer-events:all;';document.documentElement.appendChild(_c);}</script>
+</head>
+<body>
+
+  <!-- ── Password Gate — same pattern and tokens as the Denon in-car study.
+       Client work stays behind it. ── -->
+  <div id="pw-gate" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 32px; padding: 24px;
+  ">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);">Audio experience</span>
+      <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin: 0;">Case study access</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px;">
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="
+          width: 100%; padding: 14px 18px;
+          font-family: 'Manrope', sans-serif; font-size: 15px;
+          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+          border-radius: 10px; color: #fff; outline: none;
+        "
+        onkeydown="if(event.key==='Enter')checkPassword()"
+      />
+      <p id="pw-error" style="font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f; display: none; margin: 0;">Incorrect password. Try again.</p>
+      <button onclick="checkPassword()" style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #fff; color: #000; border: none; border-radius: 10px;
+        cursor: pointer;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Continue
+      </button>
+      <button
+        onclick="history.length > 1 ? history.back() : (sessionStorage.setItem('pt-arriving', '1'), window.location.href='../../index.html');"
+      style="
+        width: 100%; padding: 14px;
+        font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+        background: #000000; color: #ababab; border: none; border-radius: 10px;
+        cursor: pointer;
+      " onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        Back to previous
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const HASH = '352a1ee1a4c8ec1b47d89e69cac923d27366a08ee26a4287f4da05efb0cf068a';
+      if (sessionStorage.getItem('audio-experience-case-auth') === '1') {
+        document.getElementById('pw-gate').style.display = 'none';
+      }
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      window.checkPassword = async function() {
+        const val = document.getElementById('pw-input').value;
+        const err = document.getElementById('pw-error');
+        const hash = await sha256(val);
+        if (hash === HASH) {
+          sessionStorage.setItem('audio-experience-case-auth', '1');
+          document.getElementById('pw-gate').style.display = 'none';
+          gtag('event', 'case_study_unlock', { case_study: 'audio-experience' });
+        } else {
+          gtag('event', 'case_study_unlock_failed', { case_study: 'audio-experience' });
+          err.style.display = 'block';
+          document.getElementById('pw-input').value = '';
+          document.getElementById('pw-input').focus();
+        }
+      };
+    })();
+  </script>
+
+  <nav class="case-nav">
+    <a class="case-nav-back" href="../../index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z"/></svg>
+      Back
+    </a>
+    <span class="case-nav-brand">Audio experience</span>
+  </nav>
+
+  <main class="case-content">
+
+    <!-- ── Hero ── -->
+    <header class="case-hero">
+      <p class="case-eyebrow hero-anim">Multi-touchpoint audio system</p>
+      <h1 class="case-hero-title hero-anim">One system, multiple touchpoints</h1>
+      <p class="case-hero-sub hero-anim">One design language spanning visual, motion, sound and voice — carrying a 115-year-old audio brand from a functional utility into a premium, personalised experience worthy of the hardware.</p>
+      <section class="case-meta hero-anim">
+        <div>
+          <p class="case-meta-label">Role</p>
+          <ul class="case-scope-list">
+            <li>Lead Product Designer</li>
+            <li>UX &amp; UI</li>
+            <li>Motion</li>
+            <li>Sound &amp; voice</li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-meta-label">Scope</p>
+          <p class="case-body">Redesigning the PerL Pro app off inherited Nura foundations, and building one design language across app, motion, sound and an in-car concept. Worked with Product Design, Engineering, Hardware and Audio.</p>
+        </div>
+        <div>
+          <p class="case-meta-label">Timeline</p>
+          <p class="case-body">2024 — 2025</p>
+        </div>
+      </section>
+    </header>
+
+    <!-- ── 01 Context ── -->
+    <section class="ae-section">
+      <div class="ae-text-block ae-text-block--wide fade-in">
+        <p class="ae-label">01 — Context</p>
+        <h2 class="ae-title">A 115-year-old brand with legacy in craftsmanship and audio — born in Japan, now extending into headphones.</h2>
+        <p class="case-body">The experience had to reflect that history and legacy, yet feel forward-looking and unafraid of technology. My job was to hold both at once.</p>
+        <p class="case-body">After Denon acquired Nura, the PerL Pro app needed to move off inherited foundations and onto the requirements of the Denon brand identity and app experience.</p>
+      </div>
+
+      <div class="ae-grid ae-grid--3 fade-in">
+        <div class="ae-card">
+          <p class="ae-label">Challenge</p>
+          <p>Honour a heritage of craftsmanship while building an experience that feels modern, premium and technically ambitious.</p>
+        </div>
+        <div class="ae-card">
+          <p class="ae-label">My role</p>
+          <p>Lead product designer across UX, UI, motion and sound — aligning brand, hardware and engineering into one language.</p>
+        </div>
+        <div class="ae-card">
+          <p class="ae-label">Status</p>
+          <p>App in progress · Automotive HMI at concept · Visual language shipped and in use across surfaces.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 02 Scope — six modalities ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <p class="ae-label">02 — Scope</p>
+        <h2 class="ae-title">Six modalities. One language.</h2>
+        <p class="case-body">One system extending across platforms and sensory experiences — a cohesive design language that stays recognisably Denon whether you see it, feel it, or hear it.</p>
+      </div>
+
+      <div class="ae-grid ae-grid--3 fade-in">
+        <article class="ae-card">
+          <div class="ae-card-head"><span class="ae-card-num">01</span></div>
+          <h3 class="ae-card-title">Brand identity &amp; principles</h3>
+          <p>Aligned product and brand principles with the design team to set a shared foundation.</p>
+        </article>
+        <article class="ae-card">
+          <div class="ae-card-head"><span class="ae-card-num">02</span></div>
+          <h3 class="ae-card-title">Visual language</h3>
+          <p>One dot-grid, type scale and colour system applied consistently across every surface.</p>
+        </article>
+        <article class="ae-card">
+          <div class="ae-card-head"><span class="ae-card-num">03</span></div>
+          <h3 class="ae-card-title">Mobile app</h3>
+          <p>Led app design with engineering, hardware and spec teams on software alignment.</p>
+        </article>
+        <article class="ae-card">
+          <div class="ae-card-head"><span class="ae-card-num">04</span></div>
+          <h3 class="ae-card-title">Motion</h3>
+          <p>Behaviour and feel enhanced through product animation and app transitions.</p>
+        </article>
+        <article class="ae-card">
+          <div class="ae-card-head"><span class="ae-card-num">05</span></div>
+          <h3 class="ae-card-title">Sound &amp; voice</h3>
+          <p>Led the sound and voice-prompt workstream for both product and brand experience.</p>
+        </article>
+        <article class="ae-card">
+          <div class="ae-card-head"><span class="ae-card-num">06</span><span class="ae-tag">Concept</span></div>
+          <h3 class="ae-card-title">Automotive HMI</h3>
+          <p>Led concept work extending the system into the in-car interface.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── 03 Audit &amp; discovery (dark) ── -->
+    <section class="ae-dark fade-in">
+      <div class="ae-text-block">
+        <p class="ae-label">03 — Audit &amp; discovery</p>
+        <h2 class="ae-title">From re-skin to redesign.</h2>
+        <p class="case-body">The PerL Pro app carried Nura's bones. My role was to redesign the UX, UI, animations and flows — turning a functional utility into a premium, personalised audio experience worthy of the hardware. But first I had to identify the issues through an audit, then validate my assumptions through user testing.</p>
+      </div>
+
+      <div class="ae-rule-row">
+        <span>App audit</span>
+        <i></i>
+        <span>8 participants · 4 core friction points</span>
+      </div>
+
+      <!-- Moderated sessions. Click-to-load façade: the Vimeo player is only
+           requested once the visitor asks for it. -->
+      <ul class="ae-sessions">
+        <li>
+          <button class="ae-session" type="button" data-vimeo="1022667167" aria-label="Play session clip 1 — pairing the PerL Pro, 0:26">
+            <img src="../../assets/images/audio-experience/session-01.jpg" width="640" height="640" alt="A participant at a testing table working through the sign-up screen, PerL Pro case and quick-start guide in front of them." loading="lazy">
+            <span class="ae-session-play" aria-hidden="true"></span>
+            <span class="ae-session-meta"><span>Session 01</span><span>0:26</span></span>
+          </button>
+        </li>
+        <li>
+          <button class="ae-session" type="button" data-vimeo="1022674594" aria-label="Play session clip 2 — profile creation, 1:02">
+            <img src="../../assets/images/audio-experience/session-02.jpg" width="640" height="640" alt="A participant wearing one earbud, watching the profile-creation orb on the phone screen." loading="lazy">
+            <span class="ae-session-play" aria-hidden="true"></span>
+            <span class="ae-session-meta"><span>Session 02</span><span>1:02</span></span>
+          </button>
+        </li>
+        <li>
+          <button class="ae-session" type="button" data-vimeo="1023277904" aria-label="Play session clip 3 — unboxing and first setup, 0:40">
+            <img src="../../assets/images/audio-experience/session-03.jpg" width="640" height="640" alt="A participant reading the setup instructions on screen, earbuds and open case on the table." loading="lazy">
+            <span class="ae-session-play" aria-hidden="true"></span>
+            <span class="ae-session-meta"><span>Session 03</span><span>0:40</span></span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="ae-grid ae-grid--2">
+        <article class="ae-card">
+          <span class="ae-card-num">01</span>
+          <h3 class="ae-card-title">Connection &amp; pairing difficulties</h3>
+          <p>A significant number of users struggled with pairing. Switching between Bluetooth settings and the app caused confusion and uncertainty about connection status.</p>
+        </article>
+        <article class="ae-card">
+          <span class="ae-card-num">02</span>
+          <h3 class="ae-card-title">Opaque profile-creation progress</h3>
+          <p>The loading indicator during profile setup felt lengthy and unclear — users couldn't tell how long it would take or what stages it involved.</p>
+        </article>
+        <article class="ae-card">
+          <span class="ae-card-num">03</span>
+          <h3 class="ae-card-title">Feature demo fell flat</h3>
+          <p>After profile creation, users wanted to hear the difference with their own music — the provided demo didn't showcase the feature's true value.</p>
+        </article>
+        <article class="ae-card">
+          <span class="ae-card-num">04</span>
+          <h3 class="ae-card-title">No volume control at first touch</h3>
+          <p>During the initial feature introduction, several users reached for volume and couldn't adjust it — a small gap that soured the first impression.</p>
+        </article>
+      </div>
+
+      <figure class="ae-figure">
+        <img src="../../assets/images/audio-experience/research-board.png" width="2904" height="802" alt="Research synthesis board: an Experiments column listing the sign-up, pairing and fit sessions, then Facts, Insights and Opportunities columns of clustered sticky notes." loading="lazy">
+        <figcaption>Sessions were run and recorded, then synthesised on one board — <strong>Experiments</strong> (what we did) → <strong>Facts</strong> (what we found out) → <strong>Insights</strong> (what we learned) → <strong>Opportunities</strong> (how we could improve).</figcaption>
+      </figure>
+
+      <div class="ae-note">
+        <span class="ae-tag">Validated</span>
+        <p>Eight moderated sessions on the existing, re-skinned Nura app, cross-checked against public feedback on the app stores. Every finding was pressure-tested before it shaped the redesign — assumptions in, evidence out.</p>
+      </div>
+    </section>
+
+    <!-- ── 04 Process ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <p class="ae-label">04 — Process</p>
+        <h2 class="ae-title">Seven steps, from first session to developer handoff.</h2>
+        <p class="case-body">Understand and analyse produced the audit above. Everything after it turned those findings into flows, screens and a design system engineering could build from.</p>
+      </div>
+
+      <div class="ae-steps fade-in">
+        <div class="ae-step">
+          <span class="ae-step-num">Step 01</span>
+          <span class="ae-step-title">Understand</span>
+          <p class="ae-step-body">User testing sessions to uncover major and minor pain points in the existing, re-skinned Nura app.</p>
+        </div>
+        <div class="ae-step">
+          <span class="ae-step-num">Step 02</span>
+          <span class="ae-step-title">Analyse</span>
+          <p class="ae-step-body">Testing results and online feedback analysed, and every major and minor point of improvement listed.</p>
+        </div>
+        <div class="ae-step">
+          <span class="ae-step-num">Step 03</span>
+          <span class="ae-step-title">Identify &amp; prioritise</span>
+          <p class="ae-step-body">Changes labelled, prioritised and taken into action.</p>
+        </div>
+        <div class="ae-step">
+          <span class="ae-step-num">Step 04</span>
+          <span class="ae-step-title">Initiate</span>
+          <p class="ae-step-body">Major flows — sign up, setup and profile creation — created.</p>
+        </div>
+        <div class="ae-step">
+          <span class="ae-step-num">Step 05</span>
+          <span class="ae-step-title">Refine &amp; define</span>
+          <p class="ae-step-body">After aligning with internal stakeholders, screens were created, tested and built into a flow.</p>
+        </div>
+        <div class="ae-step">
+          <span class="ae-step-num">Step 06</span>
+          <span class="ae-step-title">Validate</span>
+          <p class="ae-step-body">Finalising designs, adding the last touches and creating the animations.</p>
+        </div>
+        <div class="ae-step ae-step--wide">
+          <span class="ae-step-num">Step 07</span>
+          <span class="ae-step-title">Finalise &amp; clean up</span>
+          <p class="ae-step-body">Design files tidied, with screens and components integrated into the design system and ready for development.</p>
+        </div>
+      </div>
+
+      <div class="ae-note fade-in">
+        <span class="ae-tag">In the room</span>
+        <p>Steps 03 and 04 ran in real time with PM, engineering and infrastructure — building flowcharts together, identifying technical no-go areas early, and exploring what was actually feasible before it reached high fidelity.</p>
+      </div>
+    </section>
+
+    <!-- ── 05 Evolution ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <p class="ae-label">05 — Evolution</p>
+        <h2 class="ae-title">From an inherited utility to a personalised home screen.</h2>
+      </div>
+
+      <!-- before / after -->
+      <div class="ae-compare fade-in">
+        <div>
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--ink">Before</span>
+            <span class="ae-compare-caption">Inherited from Nura — VEFA profile &amp; immersion slider</span>
+          </div>
+          <div class="ae-phone">
+            <img src="../../assets/images/audio-experience/img-1.png" width="1350" height="2760" alt="Before — the inherited PerL Pro home screen, with the immersion slider as the primary control." loading="lazy">
+            <div class="ae-marker" style="--top:78%">1</div>
+            <div class="ae-marker" style="--top:36%">2</div>
+          </div>
+          <ul class="ae-legend">
+            <li>
+              <span class="ae-legend-dot">1</span>
+              <p><strong>Immersion slider buried the core value</strong> — the headline personalisation was hidden behind an abstract control.</p>
+            </li>
+            <li>
+              <span class="ae-legend-dot">2</span>
+              <p><strong>No clear connection status</strong> — users couldn't confirm the earbuds were connected at a glance.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--accent">After</span>
+            <span class="ae-compare-caption">Redesigned home — status, control &amp; profile up front</span>
+          </div>
+          <div class="ae-phone">
+            <img src="../../assets/images/audio-experience/img-2.png" width="1350" height="2760" alt="After — the redesigned home screen, leading with device status, noise control and the sound profile card." loading="lazy">
+            <div class="ae-marker ae-marker--accent" style="--top:40%">1</div>
+            <div class="ae-marker ae-marker--accent" style="--top:55%">2</div>
+            <div class="ae-marker ae-marker--accent" style="--top:74%">3</div>
+          </div>
+          <ul class="ae-legend ae-legend--after">
+            <li>
+              <span class="ae-legend-dot">1</span>
+              <p><strong>Device status front-and-centre</strong> — live L/R battery removes all doubt about connection.</p>
+            </li>
+            <li>
+              <span class="ae-legend-dot">2</span>
+              <p><strong>One-tap noise control</strong> — Cancellation · Off · Transparency, no digging through menus.</p>
+            </li>
+            <li>
+              <span class="ae-legend-dot">3</span>
+              <p><strong>Sound profile promoted</strong> to a tappable, visual card — the personalisation finally feels premium.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- onboarding & connection -->
+      <div class="ae-compare fade-in">
+        <div>
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--ink">Before</span>
+            <span class="ae-compare-caption">Onboarding &amp; connection</span>
+          </div>
+          <div class="ae-phone">
+            <img src="../../assets/images/audio-experience/onboarding-before.png" width="1350" height="2760" alt="Old disconnected state — a full-screen 'Denon device disconnected' message with reconnect and connect-new-device buttons." loading="lazy">
+          </div>
+          <p class="ae-compare-note">A dead end dressed as a screen. The only way back was Bluetooth settings — the switching that testing showed left people unsure whether they were connected at all.</p>
+        </div>
+        <div>
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--accent">After</span>
+            <span class="ae-compare-caption">Guided pairing</span>
+          </div>
+          <div class="ae-phone ae-phone--rec">
+            <video class="lazyvid" muted loop playsinline preload="none"
+                   width="1350" height="2760"
+                   poster="../../assets/images/audio-experience/onboarding-after-poster.jpg"
+                   data-src="../../assets/videos/audio-experience/onboarding-after.mp4"
+                   aria-label="Screen recording of the redesigned pairing flow.">
+            </video>
+          </div>
+          <p class="ae-compare-note">Pairing is walked through in the app itself, with the case and button illustrated at each step and connection state shown continuously.</p>
+        </div>
+      </div>
+
+      <!-- profile creation -->
+      <div class="ae-compare fade-in">
+        <div>
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--ink">First pass</span>
+            <span class="ae-compare-caption">Profile creation · 0:20</span>
+          </div>
+          <div class="ae-phone ae-phone--rec">
+            <video class="lazyvid" muted loop playsinline preload="none"
+                   width="1350" height="2760"
+                   poster="../../assets/images/audio-experience/profile-before-poster.jpg"
+                   data-src="../../assets/videos/audio-experience/AAt-progress-video.mp4"
+                   aria-label="Screen recording of the first-pass profile-creation screen: an Adaptive Acoustic Technology mark, rotating explanatory copy, and a ring that fills while the stage text changes.">
+            </video>
+          </div>
+          <p class="ae-compare-note">The wait gets acknowledged and explained — the AAT mark, copy rotating through what the measurement is for, and stage text moving from <em>"Running a quick measurement of your hearing…"</em> to <em>"Processing measurement…"</em>. The ring fills, but never says how far along it is.</p>
+        </div>
+        <div>
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--accent">Resolved</span>
+            <span class="ae-compare-caption">Profile creation · 0:10</span>
+          </div>
+          <div class="ae-phone ae-phone--rec">
+            <video class="lazyvid" muted loop playsinline preload="none"
+                   width="1350" height="2760"
+                   poster="../../assets/images/audio-experience/profile-after-poster.jpg"
+                   data-src="../../assets/videos/audio-experience/profile-after.mp4"
+                   aria-label="Screen recording of the resolved profile-creation screen, showing a live percentage inside an organic progress ring.">
+            </video>
+          </div>
+          <p class="ae-compare-note">The missing half of finding 02. A live percentage answers <em>how long</em>, the ring takes on the brand's organic form, and the whole sequence is half the length — 0:10 against 0:20.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 06 The app, end to end ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <p class="ae-label">06 — The app, end to end</p>
+        <h2 class="ae-title">One coherent flow — from first launch to the wrist.</h2>
+        <p class="case-body">Sign-in, account creation, device selection and the home experience share one visual system — and it carries cleanly onto the watch.</p>
+      </div>
+
+      <div class="ae-flow-card ae-flow-card--muted fade-in">
+        <div class="ae-compare-head">
+          <span class="ae-tag ae-tag--ink">Before</span>
+          <span class="ae-compare-caption">Inherited flow — account gate, a server wait, then device selection</span>
+        </div>
+        <img src="../../assets/images/audio-experience/flow-before.png" width="4020" height="1840" alt="Inherited onboarding flow — create an account or log in, a 'Connecting to Denon servers' wait screen, a welcome and device-selection screen, then the old VEFA home screen." loading="lazy">
+      </div>
+
+      <div class="ae-flow-card fade-in">
+        <div class="ae-compare-head">
+          <span class="ae-tag ae-tag--accent">After</span>
+          <span class="ae-compare-caption">Redesigned flow — same five beats, one visual system</span>
+        </div>
+        <img src="../../assets/images/audio-experience/img-3.png" width="4096" height="1571" alt="Redesigned Denon app flow — sign in, create account, select device, home and control, and the watch screen." loading="lazy">
+        <div class="ae-flow-captions">
+          <div><div class="ae-flow-captions-num">01</div><div class="ae-flow-captions-label">Sign in</div></div>
+          <div><div class="ae-flow-captions-num">02</div><div class="ae-flow-captions-label">Create account</div></div>
+          <div><div class="ae-flow-captions-num">03</div><div class="ae-flow-captions-label">Select device</div></div>
+          <div><div class="ae-flow-captions-num">04</div><div class="ae-flow-captions-label">Home &amp; control</div></div>
+          <div><div class="ae-flow-captions-num">05</div><div class="ae-flow-captions-label">On the watch</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 07 Visual language ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <p class="ae-label">07 — Visual language</p>
+        <h2 class="ae-title">One dot-grid, one type scale, one palette.</h2>
+      </div>
+
+      <div class="ae-specimen-grid fade-in">
+        <div class="ae-specimen">
+          <p class="ae-label">Typography</p>
+          <div class="ae-specimen-aa">Aa</div>
+          <p class="ae-specimen-caption">Archivo · Display &amp; UI — 400 / 700 / 900</p>
+          <div class="ae-specimen-mono">01 / Aa</div>
+          <p class="ae-specimen-caption">Space Mono · labels &amp; data</p>
+        </div>
+
+        <div class="ae-motif">
+          <p class="ae-label">Signature motif</p>
+          <div class="ae-motif-grid" aria-hidden="true"></div>
+          <p class="ae-motif-caption">The dot-grid recurs across empty states, loading and personalisation — a quiet through-line for the whole system.</p>
+        </div>
+      </div>
+
+      <div class="ae-palette fade-in">
+        <div class="ae-swatch ae-swatch--ink"><span>Ink</span><span>#0B131A</span></div>
+        <div class="ae-swatch ae-swatch--accent"><span>Accent</span><span>#ED4D33</span></div>
+        <div class="ae-swatch ae-swatch--amber"><span>Amber</span><span>#FFA806</span></div>
+        <div class="ae-swatch ae-swatch--mist"><span>Mist</span><span>#EAEDF1</span></div>
+        <div class="ae-swatch ae-swatch--paper"><span>Paper</span><span>#F4F1EA</span></div>
+      </div>
+    </section>
+
+    <!-- ── 08 Sound, voice &amp; motion ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <p class="ae-label">08 — Sound, voice &amp; motion</p>
+        <h2 class="ae-title">The brand you hear and feel, not just see.</h2>
+      </div>
+
+      <div class="ae-grid ae-grid--2 fade-in">
+        <article class="ae-sensory">
+          <h3 class="ae-card-title">Sound &amp; voice</h3>
+          <p>Led the sound and voice-prompt workstream for both the product and brand experience — earcons, confirmations and a spoken guide through setup.</p>
+          <div class="ae-eq" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <ul class="ae-rows">
+            <li><span class="ae-rows-tag">VO</span><span class="ae-rows-quote">"Get ready to connect."</span></li>
+            <li><span class="ae-rows-tag">VO</span><span class="ae-rows-quote">"Press the button on the case."</span></li>
+            <li><span class="ae-rows-tag">VO</span><span class="ae-rows-quote">"You're all set. Enjoy."</span></li>
+          </ul>
+        </article>
+
+        <article class="ae-sensory">
+          <h3 class="ae-card-title">Motion</h3>
+          <p>Behaviour and feel enhanced through product animation and app transitions — the personalisation orb, connection states and screen-to-screen continuity.</p>
+          <div class="ae-pulse" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <ul class="ae-rows ae-rows--spec">
+            <li><span class="ae-rows-name">Profile orb morph</span><span class="ae-rows-value">600ms · ease</span></li>
+            <li><span class="ae-rows-name">Connection pulse</span><span class="ae-rows-value">loop · 1.4s</span></li>
+            <li><span class="ae-rows-name">Sheet transition</span><span class="ae-rows-value">320ms · spring</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── 09 Automotive HMI ── -->
+    <section class="ae-section">
+      <div class="ae-text-block fade-in">
+        <div class="ae-label-row">
+          <p class="ae-label">09 — Automotive HMI</p>
+          <span class="ae-tag">Concept</span>
+        </div>
+        <h2 class="ae-title">Extending the system into the car.</h2>
+        <p class="case-body">The same language — type, dot-grid and sound — carried onto the in-car display, so the Denon experience stays continuous from ear to dashboard. Shown as a working interface at CES 2025.</p>
+      </div>
+
+      <!-- Entry point (link only) to the sibling Denon Automotive case study. -->
+      <a class="ae-entry fade-in" href="../denon/index.html">
+        <span class="ae-entry-grid" aria-hidden="true"></span>
+        <span class="ae-entry-row">
+          <span>
+            <span class="ae-entry-label">Separate case study</span>
+            <span class="ae-entry-title">Denon Automotive</span>
+            <span class="ae-entry-sub">Vision for the in-car experience</span>
+          </span>
+          <span class="ae-entry-go" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12h14M12 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </span>
+        <span class="ae-entry-meta">
+          <span>In-car UX · Interaction &amp; motion</span>
+          <span>CES 2025</span>
+        </span>
+      </a>
+    </section>
+
+    <!-- ── 10 Post-launch reception (dark) ── -->
+    <!-- TODO: both quotes are press reviews. Add the publication name, author and
+         date to each <cite> before this page goes public. -->
+    <section class="ae-dark fade-in">
+      <div class="ae-text-block">
+        <p class="ae-label">10 — Post-launch reception</p>
+        <h2 class="ae-title">The same reviewers, after the redesign.</h2>
+        <p class="case-body">The clearest read on whether the audit findings were the right ones: what the press said about the app before the redesign, and what they said about it after.</p>
+      </div>
+
+      <div class="ae-grid ae-grid--2">
+        <figure class="ae-quote">
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--ink">Before</span>
+            <span class="ae-compare-caption">Review of the inherited app</span>
+          </div>
+          <blockquote>As much as I like the app, it's not a polished experience. The app takes a loooong time to load.</blockquote>
+          <figcaption><cite>Press review — publication TK</cite></figcaption>
+        </figure>
+
+        <figure class="ae-quote ae-quote--after">
+          <div class="ae-compare-head">
+            <span class="ae-tag ae-tag--accent">After</span>
+            <span class="ae-compare-caption">Review of the redesigned app</span>
+          </div>
+          <blockquote>The app has a clean UI. You can adjust 'immersion', which basically narrows and widens the soundscape… it blew me away.</blockquote>
+          <figcaption><cite>Press review — publication TK</cite></figcaption>
+        </figure>
+      </div>
+
+      <div class="ae-note">
+        <span class="ae-tag">Outcome</span>
+        <p>Load time and the forced account gate were the two complaints the inherited app drew publicly — both traced directly to findings 01 and 02 in the audit.</p>
+      </div>
+    </section>
+
+    <!-- ── Closing (dark) ── -->
+    <section class="ae-dark fade-in">
+      <div class="ae-text-block ae-text-block--wide">
+        <p class="ae-label">Where it stands</p>
+        <h2 class="ae-title ae-title--lg">A functional utility, redrawn as a premium, personalised audio experience.</h2>
+      </div>
+
+      <div class="ae-status-board">
+        <div class="ae-status">
+          <span class="ae-status-label">Mobile app</span>
+          <span class="ae-status-value"><span class="ae-status-dot"></span>In progress</span>
+        </div>
+        <div class="ae-status">
+          <span class="ae-status-label">Automotive HMI</span>
+          <span class="ae-status-value"><span class="ae-status-dot ae-status-dot--amber"></span>Concept</span>
+        </div>
+        <div class="ae-status">
+          <span class="ae-status-label">Visual language</span>
+          <span class="ae-status-value"><span class="ae-status-dot ae-status-dot--success"></span>Shipped</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-cta">
+        <h2 class="footer-heading">
+          <span class="footer-h-row">Let's&nbsp;<span class="footer-cycle-wrap"><span class="footer-cycle-track"><span>discover</span><span>work</span><span>create</span><span>discover</span></span></span></span>
+          <span class="footer-h-row">together</span>
+        </h2>
+        <a class="footer-btn" href="mailto:hi@yvefa.com">
+          Get In Touch
+          <span class="footer-btn-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-contact">
+          <p class="footer-label">Contact</p>
+          <a href="mailto:hi@yvefa.com" class="footer-email">hi@yvefa.com</a>
+        </div>
+        <div class="footer-socials">
+          <a class="footer-social-btn" href="https://www.behance.net/yvefa" target="_blank" rel="noopener" aria-label="Behance">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.82,121.39A42,42,0,0,0,86,52H32A12,12,0,0,0,20,64V192a12,12,0,0,0,12,12H90a46,46,0,0,0,27.82-82.61ZM44,76H86a18,18,0,0,1,0,36H44ZM90,180H44V136H90a22,22,0,0,1,0,44ZM156,76a12,12,0,0,1,12-12h64a12,12,0,0,1,0,24H168A12,12,0,0,1,156,76Zm44,24a52,52,0,0,0,0,104,51.45,51.45,0,0,0,22.7-5.21,12,12,0,1,0-10.49-21.58A27.73,27.73,0,0,1,200,180a28.05,28.05,0,0,1-25.3-16H240a12,12,0,0,0,12-12A52.06,52.06,0,0,0,200,100Zm-25.3,40a28,28,0,0,1,50.6,0Z"/></svg>
+          </a>
+          <a class="footer-social-btn" href="https://linkedin.com/in/yvefa/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,20H40A20,20,0,0,0,20,40V216a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V40A20,20,0,0,0,216,20Zm-4,192H44V44H212ZM112,176V124a12,12,0,0,1,21.43-7.41A40,40,0,0,1,192,152v24a12,12,0,0,1-24,0V152a16,16,0,0,0-32,0v24a12,12,0,0,1-24,0ZM96,124v52a12,12,0,0,1-24,0V124a12,12,0,0,1,24,0ZM68,80A16,16,0,1,1,84,96,16,16,0,0,1,68,80Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-copyright">
+        <p>Vefa Yilmaz © 2026</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+      // ── Hero entrance ──
+      var arriving = sessionStorage.getItem('pt-arriving') === '1';
+      var elems = [
+        document.querySelector('.case-eyebrow'),
+        document.querySelector('.case-hero-title'),
+        document.querySelector('.case-hero-sub'),
+        document.querySelector('.case-meta'),
+      ];
+      var base = arriving ? 680 : 150;
+      var stagger = [0, 140, 260, 380];
+      elems.forEach(function (el, i) {
+        if (!el) return;
+        setTimeout(function () { el.classList.add('is-visible'); }, base + stagger[i]);
+      });
+
+      // ── Fade-in on scroll ──
+      var fadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.fade-in').forEach(function (el) { fadeObserver.observe(el); });
+
+      /* Screen recordings: nothing is fetched until the clip is near the viewport,
+         which keeps the video weight off the initial load. Under reduced motion we
+         never autoplay — the poster stays and the visitor gets controls instead. */
+      var vids = document.querySelectorAll('.lazyvid');
+      function load(v) {
+        if (v.src) return;
+        v.src = v.dataset.src;
+        if (reduce.matches) { v.controls = true; return; }
+        v.play().catch(function () { v.controls = true; });
+      }
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            load(e.target);
+            io.unobserve(e.target);
+          });
+        }, { rootMargin: '400px 0px' });
+        vids.forEach(function (v) { io.observe(v); });
+      } else {
+        vids.forEach(load);
+      }
+
+      /* Session clips stay as stills until asked for, so no third-party player is
+         requested on page load. */
+      document.querySelectorAll('.ae-session').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var f = document.createElement('iframe');
+          f.src = 'https://player.vimeo.com/video/' + btn.dataset.vimeo +
+                  '?autoplay=1&dnt=1&title=0&byline=0&portrait=0';
+          f.title = btn.getAttribute('aria-label').replace(/^Play /, '');
+          f.allow = 'autoplay; fullscreen; picture-in-picture';
+          f.allowFullscreen = true;
+          f.className = 'ae-session-frame';
+          btn.replaceWith(f);
+        });
+      });
+
+      // ── Footer word cycle ──
+      var footerTrack = document.querySelector('.footer-cycle-track');
+      if (footerTrack) {
+        var footerItems = footerTrack.querySelectorAll('span');
+        var footerIdx = 0;
+        setInterval(function () {
+          footerIdx++;
+          var itemH = footerItems[0].offsetHeight;
+          footerTrack.style.transition = 'transform 0.65s ease-out';
+          footerTrack.style.transform = 'translateY(-' + footerIdx * itemH + 'px)';
+          if (footerIdx === footerItems.length - 1) {
+            setTimeout(function () {
+              footerTrack.style.transition = 'none';
+              footerTrack.style.transform = 'translateY(0)';
+              footerIdx = 0;
+            }, 650);
+          }
+        }, 2200);
+      }
+    })();
+  </script>
+  <script src="../../js/transition.js"></script>
+</body>
+</html>
