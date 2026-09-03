@@ -536,9 +536,9 @@
             <span></span><span></span><span></span><span></span>
           </div>
           <ul class="ae-rows">
-            <li><span class="ae-rows-tag">VO</span><span class="ae-rows-quote">"Get ready to connect."</span></li>
-            <li><span class="ae-rows-tag">VO</span><span class="ae-rows-quote">"Press the button on the case."</span></li>
-            <li><span class="ae-rows-tag">VO</span><span class="ae-rows-quote">"You're all set. Enjoy."</span></li>
+            <li><span class="ae-rows-tag">Earcons</span><span class="ae-rows-quote">Power, pairing, profile, ANC</span></li>
+            <li><span class="ae-rows-tag">Voice</span><span class="ae-rows-quote">A spoken guide through setup</span></li>
+            <li><span class="ae-rows-tag">Rule</span><span class="ae-rows-quote">Nothing over 1.2s in the ear</span></li>
           </ul>
         </article>
 
@@ -554,6 +554,152 @@
             <li><span class="ae-rows-name">Sheet transition</span><span class="ae-rows-value">320ms · spring</span></li>
           </ul>
         </article>
+      </div>
+
+      <!-- ── Sound library ─────────────────────────────────────────────────
+           Client-owned audio, so nothing here is a file a visitor can keep.
+           The .sfx assets are XOR-scrambled (tools/encode-sounds.py) and
+           decoded in memory into an AudioBuffer — no <audio> element, no
+           player chrome, no object URL, nothing in the network tab a media
+           player will open. See tools/README.md for the workflow and for what
+           this does and doesn't guarantee.
+
+           To add a sound: encode it, then set data-src, the name and the note
+           on a row below. Duration and waveform come from the file itself.
+
+           TODO: the eight rows below are scaffolding — swap the names, notes
+           and data-src for the agency's actual cue list before this goes
+           public, and delete any row the delivery doesn't include. ── -->
+      <div class="ae-dark ae-sfx-panel fade-in">
+        <div class="ae-sfx-head">
+          <div class="ae-text-block">
+            <p class="ae-label">Sound library</p>
+            <h3 class="ae-title">The system, out loud.</h3>
+            <p class="case-body">Produced with our sound agency and tuned against the hardware — every cue short enough to read as feedback rather than interruption, and pitched to sit under music without fighting it.</p>
+          </div>
+          <p class="ae-sfx-hint"><span class="ae-sfx-hint-icon" aria-hidden="true"></span>Best with the headphones on.</p>
+        </div>
+
+        <div class="ae-sfx-group">
+          <p class="ae-sfx-group-label">Earcons</p>
+          <ul class="ae-sfx-list">
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/power-on.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play Power on</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">Power on</span>
+                <span class="ae-sfx-note">The first thing the product says. Rising, unhurried, resolved.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/pairing.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play Pairing</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">Pairing</span>
+                <span class="ae-sfx-note">Held open while the connection is still being made — it answers the wait the audit found.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/connected.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play Connected</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">Connected</span>
+                <span class="ae-sfx-note">The close of the pairing pair. Same interval, landed.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/profile-complete.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play Profile complete</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">Profile complete</span>
+                <span class="ae-sfx-note">Marks the end of the hearing measurement — the one moment allowed to feel like a reward.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/anc-toggle.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play Noise control toggle</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">Noise control toggle</span>
+                <span class="ae-sfx-note">Two states, one gesture — the tone steps up for ANC and down for transparency.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ae-sfx-group">
+          <p class="ae-sfx-group-label">Voice prompts</p>
+          <ul class="ae-sfx-list">
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/vo-get-ready.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play voice prompt: Get ready to connect</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">&ldquo;Get ready to connect.&rdquo;</span>
+                <span class="ae-sfx-note">Opens setup, before the app has anything to show.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/vo-press-button.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play voice prompt: Press the button on the case</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">&ldquo;Press the button on the case.&rdquo;</span>
+                <span class="ae-sfx-note">Carries the one instruction testing showed people missed on screen.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+            <li class="ae-sfx">
+              <button class="ae-sfx-btn" type="button" aria-pressed="false"
+                      data-src="../../assets/audio/audio-experience/vo-all-set.sfx">
+                <span class="ae-sfx-icon" aria-hidden="true"></span>
+                <span class="ae-sfx-a11y">Play voice prompt: You're all set. Enjoy</span>
+              </button>
+              <span class="ae-sfx-body">
+                <span class="ae-sfx-name">&ldquo;You&rsquo;re all set. Enjoy.&rdquo;</span>
+                <span class="ae-sfx-note">Hands the product over and gets out of the way.</span>
+              </span>
+              <span class="ae-sfx-wave" aria-hidden="true"></span>
+              <span class="ae-sfx-time">—</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ae-note">
+          <span class="ae-tag">Playback only</span>
+          <p>Produced with the sound agency and owned by the client — streamed here for listening, not distribution. Get in touch if you need the masters.</p>
+        </div>
       </div>
     </section>
 
@@ -777,6 +923,200 @@
           }
         }, 2200);
       }
+    })();
+  </script>
+  <script>
+    /* ── Sound library ────────────────────────────────────────────────────────
+       The Denon product sounds are client-owned, so this plays them without
+       ever handing over a file:
+
+         · No <audio> element. Playback goes through Web Audio, so the sound
+           lives as an in-memory AudioBuffer — there is no player chrome with a
+           download item, no object URL and no "Save audio as" on right-click.
+         · Nothing playable on the wire. The .sfx assets are XOR-scrambled with
+           an xorshift32 keystream (tools/encode-sounds.py); pulled out of the
+           network tab they are noise no media player will open.
+         · The whole page already sits behind the case study's password gate.
+
+       That raises the cost of taking the files. It cannot make it impossible —
+       anything the browser plays it has already fetched, and the descrambler
+       ships right here. A real guarantee needs a server that authenticates each
+       request, which a static site can't provide.
+
+       SEED must match tools/encode-sounds.py. ── */
+    (function () {
+      var buttons = document.querySelectorAll('.ae-sfx-btn');
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!buttons.length || !AC) return;
+
+      var SEED = 0x9e3779b9;
+      var BARS = 48;
+
+      var ctx = null;
+      var cache = {};   // src → decoded AudioBuffer, so a replay costs nothing
+      var playing = null;
+      /* Bumped on every click. A load that resolves after a later click has
+         been made is stale and drops itself, so hammering across rows can't
+         leave two cues overlapping or a stale row lit up. */
+      var ticket = 0;
+
+      function audio() {
+        if (!ctx) ctx = new AC();
+        return ctx;
+      }
+
+      /* XOR is symmetric — the encoder runs this same keystream. */
+      function unscramble(raw) {
+        var b = new Uint8Array(raw), s = SEED >>> 0;
+        for (var i = 0; i < b.length; i++) {
+          s ^= s << 13; s >>>= 0;
+          s ^= s >>> 17;
+          s ^= s << 5;  s >>>= 0;
+          b[i] ^= s & 0xff;
+        }
+        return b.buffer;
+      }
+
+      function load(src) {
+        if (cache[src]) return Promise.resolve(cache[src]);
+        return fetch(src)
+          .then(function (res) {
+            if (!res.ok) throw new Error(res.status);
+            return res.arrayBuffer();
+          })
+          .then(function (raw) { return audio().decodeAudioData(unscramble(raw)); })
+          .then(function (buf) { cache[src] = buf; return buf; });
+      }
+
+      /* RMS per slice, normalised — a fuller shape than raw peaks on cues this
+         short, where a single transient would otherwise flatten everything. */
+      function peaks(buffer) {
+        var data = buffer.getChannelData(0);
+        var block = Math.max(1, Math.floor(data.length / BARS));
+        var out = [], max = 0;
+        for (var i = 0; i < BARS; i++) {
+          var sum = 0, n = 0;
+          for (var j = i * block; j < (i + 1) * block && j < data.length; j++) {
+            sum += data[j] * data[j];
+            n++;
+          }
+          var rms = n ? Math.sqrt(sum / n) : 0;
+          out.push(rms);
+          if (rms > max) max = rms;
+        }
+        return out.map(function (v) { return max ? Math.max(0.06, v / max) : 0.3; });
+      }
+
+      /* Deterministic stand-in heights, so a row that has never been played
+         still looks like a waveform rather than an empty slot. */
+      function placeholder(seed) {
+        var out = [], s = seed >>> 0 || 1;
+        for (var i = 0; i < BARS; i++) {
+          s = (s * 1664525 + 1013904223) >>> 0;
+          out.push(0.18 + (s % 1000) / 1000 * 0.5);
+        }
+        return out;
+      }
+
+      function draw(wave, heights) {
+        wave.textContent = '';
+        ['ae-sfx-bars', 'ae-sfx-bars ae-sfx-bars--fill'].forEach(function (cls) {
+          var set = document.createElement('span');
+          set.className = cls;
+          heights.forEach(function (h) {
+            var bar = document.createElement('span');
+            bar.style.height = Math.round(h * 100) + '%';
+            set.appendChild(bar);
+          });
+          wave.appendChild(set);
+        });
+      }
+
+      function progress(wave, ratio) {
+        wave.style.setProperty('--p', (ratio * 100).toFixed(2) + '%');
+      }
+
+      /* Earcons run well under a second, where m:ss would round every one of
+         them to 0:00 — so anything short is shown to a tenth instead. */
+      function time(seconds) {
+        if (seconds < 10) return seconds.toFixed(1) + 's';
+        var s = Math.round(seconds);
+        return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+      }
+
+      function stop() {
+        if (!playing) return;
+        var p = playing;
+        playing = null;
+        try { p.node.onended = null; p.node.stop(); } catch (e) {}
+        if (p.raf) cancelAnimationFrame(p.raf);
+        p.row.classList.remove('is-playing');
+        p.btn.setAttribute('aria-pressed', 'false');
+        progress(p.wave, 0);
+      }
+
+      Array.prototype.forEach.call(buttons, function (btn, index) {
+        var row = btn.closest('.ae-sfx');
+        var wave = row.querySelector('.ae-sfx-wave');
+        var stamp = row.querySelector('.ae-sfx-time');
+        var src = btn.dataset.src;
+        var drawn = false;
+
+        draw(wave, placeholder(index * 2654435761 + 1));
+
+        btn.addEventListener('click', function () {
+          var wasThisRow = playing && playing.btn === btn;
+          stop();
+          if (wasThisRow) { ticket++; return; }   // second click pauses the row
+
+          var mine = ++ticket;
+          row.classList.add('is-loading');
+          audio().resume();
+
+          load(src).then(function (buffer) {
+            row.classList.remove('is-loading');
+            if (mine !== ticket) return;
+
+            if (!drawn) {
+              draw(wave, peaks(buffer));
+              stamp.textContent = time(buffer.duration);
+              drawn = true;
+            }
+
+            var node = audio().createBufferSource();
+            node.buffer = buffer;
+            node.connect(audio().destination);
+
+            var startedAt = audio().currentTime;
+            node.onended = function () { if (playing && playing.node === node) stop(); };
+            node.start();
+
+            playing = { btn: btn, row: row, wave: wave, node: node, raf: 0 };
+            row.classList.add('is-playing');
+            btn.setAttribute('aria-pressed', 'true');
+
+            (function tick() {
+              if (!playing || playing.node !== node) return;
+              progress(wave, Math.min(1, (audio().currentTime - startedAt) / buffer.duration));
+              playing.raf = requestAnimationFrame(tick);
+            })();
+          }).catch(function () {
+            /* Missing or not yet encoded — say so on the row rather than
+               throwing into the console on every click. The row is marked
+               whether or not this load is still the current one. */
+            row.classList.remove('is-loading');
+            row.classList.add('is-missing');
+            btn.disabled = true;
+            btn.title = 'Sound not available';
+            stamp.textContent = '\u2014';
+          });
+        });
+      });
+
+      /* Nothing should keep playing into a page the visitor has left. */
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stop();
+      });
     })();
   </script>
   <script src="../../js/transition.js"></script>

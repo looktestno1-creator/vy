@@ -970,6 +970,8 @@
   }
   .ae-eq span, .ae-pulse span { animation: none; }
   .ae-eq span { transform: scaleY(0.6); }
+  .ae-sfx.is-loading .ae-sfx-icon { animation: none; }
+  .ae-sfx-btn { transition: none; }
 }
 
 /* ── Site footer (full-bleed below the case content) ── */
@@ -1092,6 +1094,242 @@
 .footer-copyright p { font-size: 14px; color: rgba(255, 255, 255, 0.3); }
 
 /* ─────────────────────────────────────────────
+   Sound library — section 08
+
+   A dark listening surface reusing .ae-dark's ground, so labels, titles and
+   .ae-note inherit their inverted colours for free. Playback runs through Web
+   Audio rather than an <audio> element (the audio is client-owned and not for
+   download), which means every control here is ours to draw: the play button,
+   the waveform and the progress fill.
+───────────────────────────────────────────── */
+.ae-sfx-panel { gap: 48px; }
+
+.ae-sfx-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.ae-sfx-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  padding: 10px 16px;
+  border: 1px solid var(--ae-line-dark);
+  border-radius: 999px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+/* Headphone glyph, drawn rather than fetched — a band with two cups. */
+.ae-sfx-hint-icon {
+  position: relative;
+  width: 15px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.ae-sfx-hint-icon::before,
+.ae-sfx-hint-icon::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  width: 4px;
+  height: 7px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.ae-sfx-hint-icon::before { left: -2px; }
+.ae-sfx-hint-icon::after  { right: -2px; }
+
+.ae-sfx-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ae-sfx-group + .ae-sfx-group { margin-top: 8px; }
+
+.ae-sfx-group-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  padding-bottom: 10px;
+}
+
+.ae-sfx-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ae-sfx {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 200px 44px;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--ae-line-dark);
+}
+
+.ae-sfx:first-child { border-top: 1px solid var(--ae-line-dark); }
+
+/* ── Play / pause ── */
+.ae-sfx-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--ae-line-dark);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.ae-sfx-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ae-sfx-btn:active:not(:disabled) { transform: scale(0.94); }
+.ae-sfx-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* The glyph is one element: a play triangle built from borders, swapped for a
+   pause pair via border-width when the row is playing. */
+.ae-sfx-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 0;
+  height: 0;
+  border-left: 11px solid currentColor;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  transform: translateX(2px);
+}
+
+.ae-sfx.is-playing .ae-sfx-btn {
+  background: var(--ae-accent);
+  border-color: var(--ae-accent);
+}
+
+.ae-sfx.is-playing .ae-sfx-icon {
+  width: 10px;
+  height: 12px;
+  border: 0;
+  border-left: 3.5px solid currentColor;
+  border-right: 3.5px solid currentColor;
+  transform: none;
+}
+
+/* Spinner while the file is fetched and decoded. */
+.ae-sfx.is-loading .ae-sfx-icon {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  transform: none;
+  animation: ae-sfx-spin 0.7s linear infinite;
+}
+
+/* A row whose file hasn't been encoded yet says so instead of failing silently. */
+.ae-sfx.is-missing { opacity: 0.4; }
+.ae-sfx.is-missing .ae-sfx-btn { cursor: not-allowed; }
+
+.ae-sfx-btn:disabled { cursor: not-allowed; }
+
+/* Visible label lives in .ae-sfx-name; the button carries its own for AT. */
+.ae-sfx-a11y {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── Name + note ── */
+.ae-sfx-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ae-sfx-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ae-sfx.is-playing .ae-sfx-name { color: var(--ae-accent); }
+
+.ae-sfx-note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Waveform ──
+   Two identical bar sets stacked: the muted one underneath, the accent one
+   clipped to --p as playback advances. Peaks come from the decoded buffer, so
+   until a row has been played once these are placeholder heights. */
+.ae-sfx-wave {
+  position: relative;
+  height: 34px;
+  --p: 0%;
+}
+
+.ae-sfx-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ae-sfx-bars span {
+  flex: 1;
+  min-width: 1px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  transition: background 0.25s ease;
+}
+
+.ae-sfx-bars--fill span { background: var(--ae-accent); }
+
+.ae-sfx-bars--fill {
+  clip-path: inset(0 calc(100% - var(--p)) 0 0);
+}
+
+.ae-sfx-time {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ae-sfx.is-playing .ae-sfx-time { color: rgba(255, 255, 255, 0.75); }
+
+@keyframes ae-sfx-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─────────────────────────────────────────────
    Responsive
 ───────────────────────────────────────────── */
 @media (max-width: 1000px) {
@@ -1105,6 +1343,8 @@
   .ae-grid--3 { grid-template-columns: repeat(2, 1fr); }
   .ae-palette { grid-template-columns: repeat(3, 1fr); }
   .ae-title--lg { font-size: 40px; }
+  .ae-sfx { grid-template-columns: 44px minmax(0, 1fr) 120px 44px; }
+  .ae-sfx-head { flex-direction: column; gap: 24px; }
 }
 
 @media (max-width: 767px) {
@@ -1125,6 +1365,18 @@
   .ae-palette { grid-template-columns: repeat(2, 1fr); }
   .ae-flow-captions { grid-template-columns: repeat(2, 1fr); }
   .ae-flow-card, .ae-card, .ae-specimen, .ae-sensory { padding: 24px; }
+  /* The waveform is the first thing to go — the row still reads as play,
+     name, duration, and the bars move to their own line underneath. */
+  .ae-sfx {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    grid-template-areas: 'btn body time' '. wave wave';
+    gap: 12px 16px;
+  }
+  .ae-sfx-btn  { grid-area: btn; }
+  .ae-sfx-body { grid-area: body; }
+  .ae-sfx-time { grid-area: time; }
+  .ae-sfx-wave { grid-area: wave; height: 26px; }
+  .ae-sfx-panel { gap: 36px; }
   .ae-status-board { grid-template-columns: 1fr; }
   .ae-status { border-right: none; border-bottom: 1px solid var(--ae-line-dark); }
   .ae-status:last-child { border-bottom: none; }
