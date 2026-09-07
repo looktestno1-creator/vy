@@ -970,7 +970,7 @@
   }
   .ae-eq span, .ae-pulse span { animation: none; }
   .ae-eq span { transform: scaleY(0.6); }
-  .ae-sfx.is-loading .ae-sfx-icon { animation: none; }
+  .ae-sfx-btn.is-loading .ae-sfx-icon { animation: none; }
   .ae-sfx-btn { transition: none; }
 }
 
@@ -1148,6 +1148,45 @@
 .ae-sfx-hint-icon::before { left: -2px; }
 .ae-sfx-hint-icon::after  { right: -2px; }
 
+/* ── Head aside: hint pill + before/after legend, stacked at the top-right ── */
+.ae-sfx-head-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  flex: none;
+}
+
+.ae-sfx-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px 18px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ae-sfx-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.ae-sfx-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.ae-sfx-legend-dot--before {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.ae-sfx-legend-dot--after {
+  background: var(--ae-accent);
+}
+
 .ae-sfx-group {
   display: flex;
   flex-direction: column;
@@ -1173,7 +1212,7 @@
 
 .ae-sfx {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 200px 44px;
+  grid-template-columns: auto minmax(0, 1fr) 200px 44px;
   align-items: center;
   gap: 20px;
   padding: 16px 0;
@@ -1181,6 +1220,32 @@
 }
 
 .ae-sfx:first-child { border-top: 1px solid var(--ae-line-dark); }
+
+/* ── Before / After pair ── */
+.ae-sfx-ab {
+  display: flex;
+  gap: 12px;
+}
+
+.ae-sfx-ab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ae-sfx-ab-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.25s ease;
+}
+
+/* The active side's label brightens to match its button. */
+.ae-sfx.is-active-before .ae-sfx-ab-item--before .ae-sfx-ab-label { color: rgba(255, 255, 255, 0.9); }
+.ae-sfx.is-active-after  .ae-sfx-ab-item--after  .ae-sfx-ab-label { color: var(--ae-accent); }
 
 /* ── Play / pause ── */
 .ae-sfx-btn {
@@ -1206,7 +1271,7 @@
 .ae-sfx-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 /* The glyph is one element: a play triangle built from borders, swapped for a
-   pause pair via border-width when the row is playing. */
+   pause pair via border-width when the button is playing. */
 .ae-sfx-icon {
   position: absolute;
   inset: 0;
@@ -1219,12 +1284,21 @@
   transform: translateX(2px);
 }
 
-.ae-sfx.is-playing .ae-sfx-btn {
+/* Playing state is per-button, so before and after light independently.
+   After plays in the accent; before plays in neutral white — the same
+   before/after contrast the legend and waveform carry. */
+.ae-sfx-btn.is-playing {
   background: var(--ae-accent);
   border-color: var(--ae-accent);
 }
 
-.ae-sfx.is-playing .ae-sfx-icon {
+.ae-sfx-btn--before.is-playing {
+  background: #fff;
+  border-color: #fff;
+  color: #111;
+}
+
+.ae-sfx-btn.is-playing .ae-sfx-icon {
   width: 10px;
   height: 12px;
   border: 0;
@@ -1234,7 +1308,7 @@
 }
 
 /* Spinner while the file is fetched and decoded. */
-.ae-sfx.is-loading .ae-sfx-icon {
+.ae-sfx-btn.is-loading .ae-sfx-icon {
   width: 14px;
   height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.25);
@@ -1244,9 +1318,9 @@
   animation: ae-sfx-spin 0.7s linear infinite;
 }
 
-/* A row whose file hasn't been encoded yet says so instead of failing silently. */
-.ae-sfx.is-missing { opacity: 0.4; }
-.ae-sfx.is-missing .ae-sfx-btn { cursor: not-allowed; }
+/* A button whose file hasn't been encoded yet dims itself instead of failing
+   silently — and only itself, never the working cue beside it. */
+.ae-sfx-btn.is-missing { opacity: 0.35; cursor: not-allowed; }
 
 .ae-sfx-btn:disabled { cursor: not-allowed; }
 
@@ -1275,7 +1349,8 @@
   color: #fff;
 }
 
-.ae-sfx.is-playing .ae-sfx-name { color: var(--ae-accent); }
+.ae-sfx.is-active .ae-sfx-name { color: var(--ae-accent); }
+.ae-sfx.is-active-before .ae-sfx-name { color: #fff; }
 
 .ae-sfx-note {
   font-size: 13px;
@@ -1311,6 +1386,10 @@
 
 .ae-sfx-bars--fill span { background: var(--ae-accent); }
 
+/* Fill tints to match the side now sounding: neutral white for before,
+   accent for after. */
+.ae-sfx.is-active-before .ae-sfx-bars--fill span { background: #fff; }
+
 .ae-sfx-bars--fill {
   clip-path: inset(0 calc(100% - var(--p)) 0 0);
 }
@@ -1323,7 +1402,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.ae-sfx.is-playing .ae-sfx-time { color: rgba(255, 255, 255, 0.75); }
+.ae-sfx.is-active .ae-sfx-time { color: rgba(255, 255, 255, 0.75); }
 
 @keyframes ae-sfx-spin {
   to { transform: rotate(360deg); }
@@ -1343,7 +1422,7 @@
   .ae-grid--3 { grid-template-columns: repeat(2, 1fr); }
   .ae-palette { grid-template-columns: repeat(3, 1fr); }
   .ae-title--lg { font-size: 40px; }
-  .ae-sfx { grid-template-columns: 44px minmax(0, 1fr) 120px 44px; }
+  .ae-sfx { grid-template-columns: auto minmax(0, 1fr) 120px 44px; }
   .ae-sfx-head { flex-direction: column; gap: 24px; }
 }
 
@@ -1368,11 +1447,11 @@
   /* The waveform is the first thing to go — the row still reads as play,
      name, duration, and the bars move to their own line underneath. */
   .ae-sfx {
-    grid-template-columns: 44px minmax(0, 1fr) 44px;
-    grid-template-areas: 'btn body time' '. wave wave';
+    grid-template-columns: auto minmax(0, 1fr) 44px;
+    grid-template-areas: 'btn body time' 'wave wave wave';
     gap: 12px 16px;
   }
-  .ae-sfx-btn  { grid-area: btn; }
+  .ae-sfx-ab   { grid-area: btn; }
   .ae-sfx-body { grid-area: body; }
   .ae-sfx-time { grid-area: time; }
   .ae-sfx-wave { grid-area: wave; height: 26px; }
