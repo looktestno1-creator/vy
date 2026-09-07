@@ -1243,6 +1243,15 @@
   transition: color 0.25s ease;
 }
 
+/* A cue with no predecessor (e.g. Power on) shows a dashed, non-interactive
+   disc where the "before" button would be, so the row still aligns. */
+.ae-sfx-ab-none {
+  width: 44px;
+  height: 44px;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+}
+
 /* The active side's label brightens to match its button. */
 .ae-sfx.is-active-before .ae-sfx-ab-item--before .ae-sfx-ab-label { color: rgba(255, 255, 255, 0.9); }
 .ae-sfx.is-active-after  .ae-sfx-ab-item--after  .ae-sfx-ab-label { color: var(--ae-accent); }
