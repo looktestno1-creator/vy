@@ -333,7 +333,7 @@ body {
   pointer-events: none;
 }
 
-.card-img-denon {
+.card-img-hmi {
   position: absolute;
   left: 10%;
   top: 40%;
@@ -741,7 +741,7 @@ body {
     height: 300px;
   }
 
-  .card-img-denon {
+  .card-img-hmi {
     width: 100%;
     height: 220px;
     left: 20%;
