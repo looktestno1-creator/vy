@@ -49,31 +49,13 @@
       <img class="ic" src="assets/ic2.svg" alt="" />
       <span class="card-label">All seats</span>
     </button>
-
-    <div class="card card--now">
-      <img class="now-art" src="assets/now-playing.jpg" alt="" />
-      <p class="now-title">Like a song</p>
-      <div class="transport">
-        <button class="tbtn" id="prevBtn" aria-label="Previous track"><img src="assets/ic6.svg" alt="" /></button>
-        <button class="tbtn tbtn--play" id="playBtn" aria-label="Pause"><img id="playIcon" src="assets/ic5.svg" alt="" /></button>
-        <button class="tbtn" id="nextBtn" aria-label="Next track"><img src="assets/ic4.svg" alt="" /></button>
-      </div>
-    </div>
   </div>
 
-  <!-- ── Right rail: modes and level ── -->
+  <!-- ── Right rail: modes ── -->
   <div class="rail rail--right">
     <button class="card card--mode" data-mode="master" aria-pressed="false"><span>Sound Master</span></button>
     <button class="card card--mode" data-mode="dialogue" aria-pressed="true"><span>Dialogue<br />Enhancer</span></button>
     <button class="card card--mode" data-mode="quiet" aria-pressed="false"><span>Quiet Mode</span></button>
-
-    <div class="card card--slider">
-      <div class="slider-head"><span class="slider-name">Volume</span><span class="slider-num" data-num="volume">0</span></div>
-      <div class="track" data-slider="volume" role="slider" tabindex="0"
-           aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <span class="knob"></span>
-      </div>
-    </div>
   </div>
 
   <!-- ── Bottom: the three voicing controls ── -->
@@ -89,7 +71,7 @@
     <div class="card card--slider card--wide">
       <div class="slider-head"><span class="slider-name">Spaciousness</span><span class="slider-num" data-num="spaciousness">0</span></div>
       <div class="track" data-slider="spaciousness" role="slider" tabindex="0"
-           aria-label="Spaciousness" aria-valuemin="-50" aria-valuemax="50" aria-valuenow="0">
+           aria-label="Spaciousness" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0">
         <span class="knob"></span>
       </div>
     </div>
@@ -97,7 +79,7 @@
     <div class="card card--slider card--wide">
       <div class="slider-head"><span class="slider-name">Clarity</span><span class="slider-num" data-num="clarity">0</span></div>
       <div class="track" data-slider="clarity" role="slider" tabindex="0"
-           aria-label="Clarity" aria-valuemin="-50" aria-valuemax="50" aria-valuenow="0">
+           aria-label="Clarity" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0">
         <span class="knob"></span>
       </div>
     </div>

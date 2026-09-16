@@ -13,6 +13,21 @@
   --text:      #e9e7e4;
   --dim:       rgba(233, 231, 228, 0.62);
   --ease:      cubic-bezier(.22, .61, .36, 1);
+
+  /* The screen's one spacing unit: every outer margin and every gap between
+     cards. Both rails are this far from their edge and this wide, so the
+     columns read as a pair. */
+  --gutter:  33px;
+  --rail-w: 316px;
+  --card-h: 160px;
+
+  /* The porthole's centre line — the halo's own top (141px) plus half its
+     825px height, carried up by the lift. The rails hang off this. */
+  --porthole-y: calc(553.5px - var(--stage-lift));
+
+  /* How far the cabin sits above its original placement, so the rear bench
+     clears the bottom cards. The dash pattern's centre follows it. */
+  --stage-lift: 60px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,6 +59,12 @@ html, body {
   overflow: hidden;
   border-radius: 34px;
   pointer-events: none;
+  /* Clarity. The blur lives here and not on .pattern-img because filters are
+     applied before masks — blurring the masked element would blur a flat
+     colour and leave the dashes exactly as sharp. Blurring the wrapper blurs
+     the masked result, which is the thing you actually see. */
+  filter: blur(var(--dash-blur, 0px));
+  transition: filter .45s var(--ease);
 }
 
 /* The dash pattern from the Figma file, carried as an alpha mask over a flat
@@ -53,16 +74,38 @@ html, body {
   position: absolute;
   inset: 0;
   background-color: var(--dash, #4b7867);
-  -webkit-mask-image: url("assets/pattern-mask.webp");
-          mask-image: url("assets/pattern-mask.webp");
-  -webkit-mask-size: 1973px 1232px;
-          mask-size: 1973px 1232px;
+  /* Three mask layers intersected: the artwork, then a horizontal and a
+     vertical gradient that fade its outermost band to nothing.
+
+     The artwork is exactly the screen at rest, so once Spaciousness shrinks it
+     — or the lift shifts it up — its own rectangle comes on screen and the
+     dashes would otherwise stop on a hard straight edge. Tiling hides that but
+     repeats the clear centre, and the seam reads. The gradients travel at the
+     same size and offset, so whatever the scale the field simply falls off. */
+  -webkit-mask-image:
+    url("assets/pattern-mask.webp"),
+    linear-gradient(90deg,  transparent 0%, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask-image:
+    url("assets/pattern-mask.webp"),
+    linear-gradient(90deg,  transparent 0%, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+
+  -webkit-mask-size: calc(1973px * var(--dash-scale, 1)) calc(1232px * var(--dash-scale, 1));
+          mask-size: calc(1973px * var(--dash-scale, 1)) calc(1232px * var(--dash-scale, 1));
+  -webkit-mask-position: 50% calc(50% - var(--stage-lift));
+          mask-position: 50% calc(50% - var(--stage-lift));
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
-  transition: background-color .4s var(--ease);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  transition: background-color .4s var(--ease),
+              -webkit-mask-size .45s var(--ease),
+              mask-size .45s var(--ease);
 }
 
-.pattern-img.is-live { transition: none; }
+.pattern.is-live,
+.pattern.is-live .pattern-img { transition: none; }
 
 /* ── Chrome ── */
 .back {
@@ -84,7 +127,11 @@ html, body {
 
 .logo {
   position: absolute;
-  left: 913px; top: 48px;
+  /* Centred over the right rail rather than the screen: the rail's own centre
+     is 1666 + 274/2, so the logo starts half its width before that. Derived
+     from the rail's numbers so the two stay in step if the column moves. */
+  left: calc(1973px - var(--gutter) - var(--rail-w) + (var(--rail-w) - 169px) / 2);
+  top: 48px;
   width: 169px;
   z-index: 5;
 }
@@ -94,7 +141,10 @@ html, body {
 
 .halo {
   position: absolute;
-  left: 574px; top: 141px;
+  /* Lifted 27px with the car below: the rear bench was clearing the bottom
+     cards by only 6px, which read as touching. This puts it on the same 33px
+     gutter as the screen margins and card gaps. */
+  left: 574px; top: calc(141px - var(--stage-lift));
   width: 825px; height: 825px;
   border-radius: 50%;
   background:
@@ -106,7 +156,7 @@ html, body {
    the halo, matching the comp. */
 .car {
   position: absolute;
-  left: 551px; top: 151px;
+  left: 551px; top: calc(151px - var(--stage-lift));   /* see .halo */
   width: 875px; height: 875px;
 }
 
@@ -117,7 +167,7 @@ html, body {
   inset: 0;
   width: 100%;
   height: 100%;
-  transition: filter .45s var(--ease), opacity .45s var(--ease);
+  transition: filter .7s var(--ease), opacity .7s var(--ease);
 }
 
 /* In the comp the dash sits behind a tall rounded mask, so it reads as a soft
@@ -141,7 +191,7 @@ html, body {
   transform-origin: 50% 50%;
 }
 
-.layer[data-state="off"] { filter: brightness(.72) saturate(.86); opacity: .95; }
+.layer[data-state="off"] { filter: brightness(.42) saturate(.55); opacity: .82; }
 .layer[data-state="on"]  { filter: brightness(1.04) drop-shadow(0 0 40px rgba(212, 200, 172, .3)); }
 
 /* ── Rails ── */
@@ -150,33 +200,56 @@ html, body {
   z-index: 4;
   display: flex;
   flex-direction: column;
+  /* Centred on the porthole instead of pinned to a top edge, so each rail keeps
+     its balance on its own — the two hold different numbers of cards, and
+     adding or removing one no longer needs a new top value. */
+  top: var(--porthole-y);
+  transform: translateY(-50%);
 }
 
-.rail--left  { left: 33px;   top: 158px; width: 316px; gap: 22px; }
-.rail--right { left: 1666px; top: 157px; width: 274px; gap: 33px; }
+.rail--left  { left: var(--gutter); width: var(--rail-w); gap: var(--gutter); }
+.rail--right { left: calc(1973px - var(--gutter) - var(--rail-w));
+               width: var(--rail-w); gap: var(--gutter); }
 
 /* ── Cards ── */
 .card {
+  position: relative;
   border: 0;
   border-radius: 26px;
   background: var(--card);
   color: var(--text);
   font-family: 'Inter', sans-serif;
   text-align: center;
-  transition: background .35s var(--ease), transform .35s var(--ease);
+  transition: transform .45s var(--ease);
 }
+
+/* The selected wash is a gradient, and CSS cannot interpolate a flat colour to
+   a gradient — the old rule swapped `background` outright, so the transition on
+   it did nothing and selection snapped. Painting the wash on a layer above the
+   card and fading that layer instead gives the same look with a real fade. */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(28deg, var(--card-on-1) 0%, var(--card-on-2) 62%, #234b50 100%);
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+  pointer-events: none;
+}
+
+/* keep the icon and label above the wash */
+.card > * { position: relative; z-index: 1; }
 
 button.card { cursor: pointer; }
 button.card:hover { transform: translateY(-2px); }
 button.card:focus-visible { outline: 2px solid rgba(212, 200, 172, .8); outline-offset: 3px; }
 
 /* the selected state is a soft wash lifting from the lower left */
-.card[aria-pressed="true"] {
-  background: linear-gradient(28deg, var(--card-on-1) 0%, var(--card-on-2) 62%, #234b50 100%);
-}
+.card[aria-pressed="true"]::before { opacity: 1; }
 
 .card--seat {
-  height: 144px;
+  height: var(--card-h);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -188,57 +261,13 @@ button.card:focus-visible { outline: 2px solid rgba(212, 200, 172, .8); outline-
 .card-label { font-size: 27px; font-weight: 400; line-height: 1; }
 
 .card--mode {
-  height: 160px;
+  height: var(--card-h);
   display: grid;
   place-items: center;
   font-size: 27px;
   font-weight: 400;
   line-height: 1.25;
 }
-
-/* ── Now playing ── */
-.card--now {
-  position: relative;
-  height: 240px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
-  padding-bottom: 34px;
-}
-
-.now-art {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: brightness(.62) saturate(.85);
-}
-
-.now-title {
-  position: relative;
-  font-size: 27px;
-  font-weight: 400;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, .6);
-}
-
-.transport { position: relative; display: flex; align-items: center; gap: 28px; }
-
-.tbtn {
-  border: 0;
-  background: none;
-  cursor: pointer;
-  padding: 4px;
-  display: grid;
-  place-items: center;
-  transition: opacity .25s var(--ease);
-}
-
-.tbtn:hover { opacity: .65; }
-.tbtn img { width: 30px; height: 34px; display: block; }
-.tbtn--play img { width: 52px; height: 52px; }
 
 /* ── Sliders ── */
 .card--slider {
@@ -298,18 +327,21 @@ button.card:focus-visible { outline: 2px solid rgba(212, 200, 172, .8); outline-
 /* ── Bottom row ── */
 .bottom {
   position: absolute;
-  left: 33px; top: 1039px;
+  /* Pinned to both gutters rather than sized by its cards: three 614px cards
+     and two gaps came to 1941, leaving 32px on the right where everything else
+     has 33. Letting flex divide the span puts the row's edges exactly on the
+     rails' edges. */
+  left: var(--gutter); right: var(--gutter); top: 1039px;
   z-index: 4;
   display: flex;
-  gap: 33px;
+  gap: var(--gutter);
 }
 
-.bottom .card--slider { width: 614px; }
+.bottom .card--slider { flex: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: .01ms !important; }
 }
-
 
 /* ──────────────────────────────────────────────
    Sound Master — Marantz's own tuning takes over,
@@ -345,7 +377,7 @@ button.card:focus-visible { outline: 2px solid rgba(212, 200, 172, .8); outline-
 .back        { transition: transform .65s var(--ease); }
 
 .is-master .rail--left,
-.is-master .rail--right { transform: translateY(14px); }
+.is-master .rail--right { transform: translateY(calc(-50% + 14px)); }
 .is-master .stage       { transform: translateY(18px); }
 .is-master .logo,
 .is-master .back        { transform: translateY(6px); }

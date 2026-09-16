@@ -9,10 +9,9 @@
   var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
 
   var RANGE = {
-    volume:       { min: 0,   max: 100, step: 2 },
     warmth:       { min: -10, max: 10,  step: 1 },
-    spaciousness: { min: -50, max: 50,  step: 2 },
-    clarity:      { min: -50, max: 50,  step: 2 }
+    spaciousness: { min: -10, max: 10,  step: 1 },
+    clarity:      { min: -10, max: 10,  step: 1 }
   };
 
   // Warmth recolours the dash pattern only: blue below zero, amber above,
@@ -30,8 +29,6 @@
 
   var state = {
     seat: 'passenger',           // 'driver' | 'passenger' | 'all'
-    volume: 0,
-    playing: true,
     modes: { master: false, dialogue: true, quiet: false },
     // voicing is held per seat, so moving between seats recalls their settings
     voicing: {
@@ -65,10 +62,9 @@
     });
   });
 
-  /* ── Voicing + volume ──────────────────── */
+  /* ── Voicing ───────────────────────────── */
   // with every seat live these read the cabin average and write all three
   function getValue(key) {
-    if (key === 'volume') return state.volume;
     var keys = targetSeats(), sum = 0;
     keys.forEach(function (k) { sum += state.voicing[k][key]; });
     return sum / keys.length;
@@ -77,7 +73,6 @@
   function setValue(key, v) {
     var r = RANGE[key];
     v = clamp(v, r.min, r.max);
-    if (key === 'volume') { state.volume = v; return; }
     targetSeats().forEach(function (k) { state.voicing[k][key] = v; });
   }
 
@@ -92,7 +87,7 @@
   // Recolouring the full-screen masked pattern is the most expensive thing on
   // the page, so coalesce it to one write per frame and skip it when the
   // colour has not actually moved.
-  var patternImg = $('.pattern-img');
+  var patternWrap = $('.pattern');
   var warmthRaf = 0, lastDash = '';
 
   function renderWarmth() {
@@ -105,6 +100,40 @@
       if (dash === lastDash) return;
       lastDash = dash;
       screenEl.style.setProperty('--dash', dash);
+    });
+  }
+
+  // Warmth recolours the dash pattern; Spaciousness resizes it. 85% at -10,
+  // unchanged at 0, 115% at +10. Coalesced per frame like the recolour, since a
+  // drag fires far faster than paint.
+  var DASH_SPREAD = 0.15;
+  var spaceRaf = 0, lastScale = '';
+
+  function renderSpaciousness() {
+    if (spaceRaf) return;
+    spaceRaf = requestAnimationFrame(function () {
+      spaceRaf = 0;
+      var t = clamp(getValue('spaciousness') / RANGE.spaciousness.max, -1, 1);
+      var scale = (1 + t * DASH_SPREAD).toFixed(4);
+      if (scale === lastScale) return;
+      lastScale = scale;
+      screenEl.style.setProperty('--dash-scale', scale);
+    });
+  }
+
+  // Clarity blurs the dash field: sharp at +10, soft at -10, linear between.
+  var DASH_BLUR_MAX = 6;   // px, at -10
+  var blurRaf = 0, lastBlur = '';
+
+  function renderClarity() {
+    if (blurRaf) return;
+    blurRaf = requestAnimationFrame(function () {
+      blurRaf = 0;
+      var t = clamp(getValue('clarity') / RANGE.clarity.max, -1, 1);   // -1 … 1
+      var blur = ((1 - t) / 2 * DASH_BLUR_MAX).toFixed(2) + 'px';
+      if (blur === lastBlur) return;
+      lastBlur = blur;
+      screenEl.style.setProperty('--dash-blur', blur);
     });
   }
 
@@ -125,6 +154,8 @@
     track.setAttribute('aria-valuenow', Math.round(v));
     $('[data-num="' + key + '"]').textContent = Math.round(v);
     if (key === 'warmth') renderWarmth();
+    if (key === 'spaciousness') renderSpaciousness();
+    if (key === 'clarity') renderClarity();
   }
 
   function renderSliders() {
@@ -149,7 +180,7 @@
       active = true;
       left = track.getBoundingClientRect().left;   // cached for the whole drag
       track.classList.add('is-dragging');
-      patternImg.classList.add('is-live');
+      patternWrap.classList.add('is-live');
       track.setPointerCapture(e.pointerId);
       fromPointer(e);
     });
@@ -160,7 +191,7 @@
       track.addEventListener(evt, function () {
         active = false;
         track.classList.remove('is-dragging');
-        patternImg.classList.remove('is-live');
+        patternWrap.classList.remove('is-live');
       });
     });
 
@@ -204,29 +235,6 @@
       if (mode === 'master') renderMaster();
     });
   });
-
-  /* ── Transport ─────────────────────────── */
-  var PLAY_SVG = 'data:image/svg+xml,' + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" fill="none">' +
-    '<circle cx="26" cy="26" r="26" fill="#0b2a2c" fill-opacity=".55"/>' +
-    '<path d="M20 15l17 11-17 11z" fill="#e9e7e4"/></svg>');
-  var playIcon = $('#playIcon');
-  var pauseSrc = playIcon.getAttribute('src');
-
-  $('#playBtn').addEventListener('click', function () {
-    state.playing = !state.playing;
-    playIcon.setAttribute('src', state.playing ? pauseSrc : PLAY_SVG);
-    this.setAttribute('aria-label', state.playing ? 'Pause' : 'Play');
-  });
-
-  var TRACKS = ['Like a song', 'Nocturne in E-flat', 'Blue in Green', 'Spiegel im Spiegel'];
-  var at = 0;
-  function step(d) {
-    at = (at + d + TRACKS.length) % TRACKS.length;
-    $('.now-title').textContent = TRACKS[at];
-  }
-  $('#nextBtn').addEventListener('click', function () { step(1); });
-  $('#prevBtn').addEventListener('click', function () { step(-1); });
 
   /* ── Boot ──────────────────────────────── */
   renderSeats();
