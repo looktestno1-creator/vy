@@ -30,11 +30,11 @@
   display: block;
 }
 
-/* Prototype is a fixed 1280×800 canvas — scale it to fill container */
+/* Prototypes render at a fixed canvas size and scale to fill the container.
+   padding-bottom is only the pre-JS placeholder; scaleProtos() sets the real height. */
 .dn-media-full--iframe {
   position: relative;
   width: 100%;
-  /* 800/1280 = 62.5% aspect ratio */
   padding-bottom: 62.5%;
   border-radius: 16px;
   overflow: hidden;
@@ -44,12 +44,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* Render at native 1280px wide, then scale down to container */
-  width: 1280px;
-  height: 800px;
+  /* Rendered at the prototype's native size, then scaled down to the container.
+     JS sets width, height and scale from the wrapper's data-w / data-h. */
   border: none;
   transform-origin: top left;
-  /* JS will set the scale dynamically */
 }
 
 .dn-caption {

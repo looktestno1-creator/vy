@@ -1,0 +1,356 @@
+/* ──────────────────────────────────────────────
+   Marantz Cabin Audio — console screen (1973×1232)
+────────────────────────────────────────────── */
+
+:root {
+  --bg:        #002428;
+  --card:      #10373b;
+  --card-on-1: #37676b;
+  --card-on-2: #2b565b;
+  --track:     #204548;
+  --knob:      #d4c8ac;
+  --halo:      #041719;
+  --text:      #e9e7e4;
+  --dim:       rgba(233, 231, 228, 0.62);
+  --ease:      cubic-bezier(.22, .61, .36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1973px;
+  height: 1232px;
+  overflow: hidden;
+  background: #000;
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text);
+  user-select: none;
+}
+
+.screen {
+  position: relative;
+  width: 1973px;
+  height: 1232px;
+  overflow: hidden;
+  border-radius: 34px;
+  background-color: var(--bg);
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 34px;
+  pointer-events: none;
+}
+
+/* The dash pattern from the Figma file, carried as an alpha mask over a flat
+   colour. Warmth then recolours the dashes alone — the background and the
+   cards stay exactly where they are, as in the comps. */
+.pattern-img {
+  position: absolute;
+  inset: 0;
+  background-color: var(--dash, #4b7867);
+  -webkit-mask-image: url("assets/pattern-mask.webp");
+          mask-image: url("assets/pattern-mask.webp");
+  -webkit-mask-size: 1973px 1232px;
+          mask-size: 1973px 1232px;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  transition: background-color .4s var(--ease);
+}
+
+.pattern-img.is-live { transition: none; }
+
+/* ── Chrome ── */
+.back {
+  position: absolute;
+  left: 33px; top: 33px;
+  width: 88px; height: 88px;
+  z-index: 5;
+  border: 0;
+  border-radius: 26px;
+  background: var(--card);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background .3s var(--ease);
+}
+
+.back:hover { background: #17454a; }
+.back svg { width: 40px; height: 40px; fill: var(--text); }
+
+.logo {
+  position: absolute;
+  left: 913px; top: 48px;
+  width: 169px;
+  z-index: 5;
+}
+
+/* ── Centre stage ── */
+.stage { position: absolute; inset: 0; z-index: 1; }
+
+.halo {
+  position: absolute;
+  left: 574px; top: 141px;
+  width: 825px; height: 825px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--halo) 62%, rgba(6, 34, 36, .72) 76%, rgba(10, 48, 50, .28) 88%, transparent 97%);
+}
+
+/* The four layers share one square render frame, so stacking them full-bleed
+   rebuilds the original composition. Sized and placed so the cabin sits inside
+   the halo, matching the comp. */
+.car {
+  position: absolute;
+  left: 551px; top: 151px;
+  width: 875px; height: 875px;
+}
+
+.car-inner { position: absolute; inset: 0; }
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: filter .45s var(--ease), opacity .45s var(--ease);
+}
+
+/* In the comp the dash sits behind a tall rounded mask, so it reads as a soft
+   central band that dissolves outwards instead of a hard-edged slab. Two mask
+   layers intersected give the same falloff on both axes. */
+.layer[data-seat="console"] {
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 4%, rgba(0,0,0,.25) 10%, rgba(0,0,0,.7) 15%, #000 21%),
+    linear-gradient(90deg,  transparent 17%, rgba(0,0,0,.16) 25%, #000 34%, #000 69%, rgba(0,0,0,.16) 78%, transparent 86%);
+  mask-image:
+    linear-gradient(180deg, transparent 4%, rgba(0,0,0,.25) 10%, rgba(0,0,0,.7) 15%, #000 21%),
+    linear-gradient(90deg,  transparent 17%, rgba(0,0,0,.16) 25%, #000 34%, #000 69%, rgba(0,0,0,.16) 78%, transparent 86%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* the rear bench is laid out on its own in the comp, a touch larger
+   and higher than a straight stack would put it */
+.layer[data-seat="back"] {
+  transform: translate(-5px, -18px) scale(1.10);
+  transform-origin: 50% 50%;
+}
+
+.layer[data-state="off"] { filter: brightness(.72) saturate(.86); opacity: .95; }
+.layer[data-state="on"]  { filter: brightness(1.04) drop-shadow(0 0 40px rgba(212, 200, 172, .3)); }
+
+/* ── Rails ── */
+.rail {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.rail--left  { left: 33px;   top: 158px; width: 316px; gap: 22px; }
+.rail--right { left: 1666px; top: 157px; width: 274px; gap: 33px; }
+
+/* ── Cards ── */
+.card {
+  border: 0;
+  border-radius: 26px;
+  background: var(--card);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  transition: background .35s var(--ease), transform .35s var(--ease);
+}
+
+button.card { cursor: pointer; }
+button.card:hover { transform: translateY(-2px); }
+button.card:focus-visible { outline: 2px solid rgba(212, 200, 172, .8); outline-offset: 3px; }
+
+/* the selected state is a soft wash lifting from the lower left */
+.card[aria-pressed="true"] {
+  background: linear-gradient(28deg, var(--card-on-1) 0%, var(--card-on-2) 62%, #234b50 100%);
+}
+
+.card--seat {
+  height: 144px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card--seat .ic { width: 55px; height: 55px; }
+.card-label { font-size: 27px; font-weight: 400; line-height: 1; }
+
+.card--mode {
+  height: 160px;
+  display: grid;
+  place-items: center;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* ── Now playing ── */
+.card--now {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  padding-bottom: 34px;
+}
+
+.now-art {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.62) saturate(.85);
+}
+
+.now-title {
+  position: relative;
+  font-size: 27px;
+  font-weight: 400;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .6);
+}
+
+.transport { position: relative; display: flex; align-items: center; gap: 28px; }
+
+.tbtn {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 4px;
+  display: grid;
+  place-items: center;
+  transition: opacity .25s var(--ease);
+}
+
+.tbtn:hover { opacity: .65; }
+.tbtn img { width: 30px; height: 34px; display: block; }
+.tbtn--play img { width: 52px; height: 52px; }
+
+/* ── Sliders ── */
+.card--slider {
+  height: 160px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  text-align: left;
+}
+
+.card--wide { height: 193px; padding: 32px 33px; }
+
+.slider-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.slider-num { font-variant-numeric: tabular-nums; }
+
+.track {
+  position: relative;
+  height: 66px;
+  border-radius: 33px;
+  background: var(--track);
+  cursor: ew-resize;
+  touch-action: none;
+  outline: none;
+}
+
+.track:focus-visible { box-shadow: 0 0 0 3px rgba(212, 200, 172, .7); }
+
+.knob {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 66px; height: 66px;
+  border-radius: 50%;
+  background: var(--knob);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .35);
+  /* transform rather than left: the knob rides the compositor instead of
+     forcing layout on every pointer move */
+  transform: translate3d(0, 0, 0);
+  transition: transform .16s var(--ease);
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* while dragging, the knob must sit under the finger with no easing behind it */
+.track.is-dragging .knob { transition: none; }
+
+/* ── Bottom row ── */
+.bottom {
+  position: absolute;
+  left: 33px; top: 1039px;
+  z-index: 4;
+  display: flex;
+  gap: 33px;
+}
+
+.bottom .card--slider { width: 614px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; }
+}
+
+
+/* ──────────────────────────────────────────────
+   Sound Master — Marantz's own tuning takes over,
+   so the three voicing controls withdraw
+────────────────────────────────────────────── */
+
+/* leaving and returning are staggered in opposite directions, so the row
+   peels away left to right and comes back right to left */
+.bottom .card--slider {
+  transition: opacity .55s var(--ease), transform .7s var(--ease);
+}
+
+.bottom .card--slider:nth-child(1) { transition-delay: 150ms; }
+.bottom .card--slider:nth-child(2) { transition-delay: 75ms; }
+.bottom .card--slider:nth-child(3) { transition-delay: 0ms; }
+
+.is-master .bottom .card--slider {
+  opacity: 0;
+  transform: translateY(78px);
+  pointer-events: none;
+}
+
+.is-master .bottom .card--slider:nth-child(1) { transition-delay: 0ms; }
+.is-master .bottom .card--slider:nth-child(2) { transition-delay: 75ms; }
+.is-master .bottom .card--slider:nth-child(3) { transition-delay: 150ms; }
+
+/* everything else follows the same way, just barely — the room settling
+   rather than a relayout */
+.rail--left,
+.rail--right { transition: transform .7s var(--ease); }
+.stage       { transition: transform .8s var(--ease); }
+.logo,
+.back        { transition: transform .65s var(--ease); }
+
+.is-master .rail--left,
+.is-master .rail--right { transform: translateY(14px); }
+.is-master .stage       { transform: translateY(18px); }
+.is-master .logo,
+.is-master .back        { transform: translateY(6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom .card--slider,
+  .is-master .bottom .card--slider { transition-delay: 0ms; }
+}

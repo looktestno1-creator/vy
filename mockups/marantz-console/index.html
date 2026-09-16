@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1973, initial-scale=1" />
+<title>Marantz Cabin Audio — console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="pattern" aria-hidden="true"><div class="pattern-img"></div></div>
+
+  <button class="back" aria-label="Back">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+  </button>
+
+  <img class="logo" src="assets/marantz-logo.svg" alt="Marantz" />
+
+  <!-- ── Centre: the cabin, from above ── -->
+  <div class="stage">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="car" id="car">
+      <div class="car-inner">
+        <img class="layer" data-seat="console"   src="assets/car-console.png"   alt="" />
+        <img class="layer" data-seat="passenger" src="assets/car-passenger.png" alt="" />
+        <img class="layer" data-seat="driver"    src="assets/car-driver.png"    alt="" />
+        <img class="layer" data-seat="back"      src="assets/car-back.png"      alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Left rail: who is listening ── -->
+  <div class="rail rail--left">
+    <button class="card card--seat" data-seat="driver" aria-pressed="false">
+      <img class="ic" src="assets/ic1.svg" alt="" />
+    </button>
+
+    <button class="card card--seat" data-seat="passenger" aria-pressed="true">
+      <img class="ic" src="assets/ic3.svg" alt="" />
+      <span class="card-label">Passenger</span>
+    </button>
+
+    <button class="card card--seat" data-seat="all" aria-pressed="false">
+      <img class="ic" src="assets/ic2.svg" alt="" />
+      <span class="card-label">All seats</span>
+    </button>
+
+    <div class="card card--now">
+      <img class="now-art" src="assets/now-playing.jpg" alt="" />
+      <p class="now-title">Like a song</p>
+      <div class="transport">
+        <button class="tbtn" id="prevBtn" aria-label="Previous track"><img src="assets/ic6.svg" alt="" /></button>
+        <button class="tbtn tbtn--play" id="playBtn" aria-label="Pause"><img id="playIcon" src="assets/ic5.svg" alt="" /></button>
+        <button class="tbtn" id="nextBtn" aria-label="Next track"><img src="assets/ic4.svg" alt="" /></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right rail: modes and level ── -->
+  <div class="rail rail--right">
+    <button class="card card--mode" data-mode="master" aria-pressed="false"><span>Sound Master</span></button>
+    <button class="card card--mode" data-mode="dialogue" aria-pressed="true"><span>Dialogue<br />Enhancer</span></button>
+    <button class="card card--mode" data-mode="quiet" aria-pressed="false"><span>Quiet Mode</span></button>
+
+    <div class="card card--slider">
+      <div class="slider-head"><span class="slider-name">Volume</span><span class="slider-num" data-num="volume">0</span></div>
+      <div class="track" data-slider="volume" role="slider" tabindex="0"
+           aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span class="knob"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Bottom: the three voicing controls ── -->
+  <div class="bottom">
+    <div class="card card--slider card--wide">
+      <div class="slider-head"><span class="slider-name">Warmth</span><span class="slider-num" data-num="warmth">-10</span></div>
+      <div class="track" data-slider="warmth" role="slider" tabindex="0"
+           aria-label="Warmth" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-10">
+        <span class="knob"></span>
+      </div>
+    </div>
+
+    <div class="card card--slider card--wide">
+      <div class="slider-head"><span class="slider-name">Spaciousness</span><span class="slider-num" data-num="spaciousness">0</span></div>
+      <div class="track" data-slider="spaciousness" role="slider" tabindex="0"
+           aria-label="Spaciousness" aria-valuemin="-50" aria-valuemax="50" aria-valuenow="0">
+        <span class="knob"></span>
+      </div>
+    </div>
+
+    <div class="card card--slider card--wide">
+      <div class="slider-head"><span class="slider-name">Clarity</span><span class="slider-num" data-num="clarity">0</span></div>
+      <div class="track" data-slider="clarity" role="slider" tabindex="0"
+           aria-label="Clarity" aria-valuemin="-50" aria-valuemax="50" aria-valuenow="0">
+        <span class="knob"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

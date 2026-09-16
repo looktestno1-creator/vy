@@ -4,3 +4,18 @@
 # Agency masters for the Denon sound library. These stay off the repo — the
 # case study only ever ships the scrambled .sfx built from them.
 tools/sounds-src/
+
+# Plaintext case studies. These are the originals that tools/protect.py
+# encrypts into the published files — they must never reach this public repo.
+# Recoverable with `python3 tools/protect.py --restore` if this copy is lost.
+src/
+
+# Denon rebrand — shared privately as a standalone bundle, never from this
+# public repo. Committing any of these would put the path, the filenames and
+# the blob into public git history permanently, where deleting the files later
+# would not remove them. Build the bundle instead; see tools/README.md.
+case-studies/Denon-rebrand/
+css/cases/denon-rebrand.css
+assets/images/denon-rebrand/
+assets/videos/denon-rebrand/
+mockups/hearing-test/

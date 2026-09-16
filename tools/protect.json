@@ -1,0 +1,6 @@
+{
+  "note": "Public by design \u2014 salt, iteration count and a verifier blob. The password is not here.",
+  "iterations": 310000,
+  "salt": "MYOaFAaqVf4rNfE5C+rdJQ==",
+  "verify": "f+6fZhUS3i1l5/FXPjz45c56EBZ+tGp/17vSxHlLrP20RqXta+vAXA=="
+}

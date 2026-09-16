@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Case study access</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/Favicon.svg?v=1" />
+  <link rel="shortcut icon" href="assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
+
+  <!-- Salt, iteration count and verifier. Rewritten by tools/protect.py — do
+       not edit by hand, or this page stops agreeing with the case studies.
+       Public by design: none of it is the password. -->
+  <script id="vy-config" type="application/json">{"salt": "MYOaFAaqVf4rNfE5C+rdJQ==", "iterations": 310000, "verify": "f+6fZhUS3i1l5/FXPjz45c56EBZ+tGp/17vSxHlLrP20RqXta+vAXA=="}</script>
+
+  <style>
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh; background: #0a0a0a;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 32px; padding: 24px; box-sizing: border-box;
+    }
+    .gate-head { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+    .gate-eyebrow {
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35);
+    }
+    .gate-title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700;
+      color: #fff; margin: 0;
+    }
+    .gate-form { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px; }
+    #pw-input {
+      width: 100%; padding: 14px 18px; box-sizing: border-box;
+      font-family: 'Manrope', sans-serif; font-size: 15px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; color: #fff; outline: none;
+    }
+    #pw-error {
+      font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f;
+      display: none; margin: 0;
+    }
+    .gate-btn {
+      width: 100%; padding: 14px;
+      font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+      border: none; border-radius: 10px; cursor: pointer;
+      transition: opacity .2s ease;
+    }
+    .gate-btn:hover { opacity: .8; }
+    .gate-btn[disabled] { opacity: .5; cursor: default; }
+    .gate-btn-primary { background: #fff; color: #000; }
+    .gate-btn-back { background: #000; color: #ababab; }
+  </style>
+</head>
+<body>
+
+  <div class="gate-head">
+    <span class="gate-eyebrow" id="gate-eyebrow">Case study</span>
+    <h1 class="gate-title">Case study access</h1>
+  </div>
+
+  <form class="gate-form" id="gate-form">
+    <input id="pw-input" type="password" placeholder="Enter password"
+           autocomplete="current-password" autofocus />
+    <p id="pw-error">Incorrect password. Try again.</p>
+    <button type="submit" class="gate-btn gate-btn-primary" id="gate-submit">Continue</button>
+    <button type="button" class="gate-btn gate-btn-back" id="gate-back">Back to previous</button>
+  </form>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var KEY_NAME = 'vy-case-key';
+      var cfg = JSON.parse(document.getElementById('vy-config').textContent);
+
+      // Which study was asked for, so the gate keeps the branding and the
+      // analytics event the old per-page overlays had.
+      var STUDIES = [
+        ['/case-studies/denon/',                   'Denon',              'denon'],
+        ['/case-studies/audio-experience/',        'Audio experience',   'audio-experience'],
+        ['/case-studies/bw/app-experience',        'Bowers & Wilkins',   'bw_app_experience'],
+        ['/case-studies/bw/ia-case-study',         'Bowers & Wilkins',   'bw_ia_case_study'],
+        ['/case-studies/bw/product-experience',    'Bowers & Wilkins',   'bw_product_experience'],
+        ['/case-studies/bw/unboxing',              'Bowers & Wilkins',   'bw_unboxing']
+      ];
+
+      // Only same-origin absolute paths. Without this check the ?next= on a
+      // link someone else wrote could bounce a visitor off the site.
+      function safeNext() {
+        var raw = new URLSearchParams(location.search).get('next') || '';
+        try { raw = decodeURIComponent(raw); } catch (e) { return null; }
+        if (!/^\/[^\/\\]/.test(raw)) return null;
+        return raw;
+      }
+
+      var next = safeNext();
+      var study = next && STUDIES.filter(function (s) { return next.indexOf(s[0]) === 0; })[0];
+      if (study) document.getElementById('gate-eyebrow').textContent = study[1];
+
+      var input = document.getElementById('pw-input');
+      var error = document.getElementById('pw-error');
+      var submit = document.getElementById('gate-submit');
+
+      function bytes(b64) {
+        var raw = atob(b64.replace(/\s+/g, ''));
+        var out = new Uint8Array(raw.length);
+        for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+        return out;
+      }
+
+      function b64(buf) {
+        var arr = new Uint8Array(buf), s = '';
+        for (var i = 0; i < arr.length; i++) s += String.fromCharCode(arr[i]);
+        return btoa(s);
+      }
+
+      // Same derivation as tools/protect.py: PBKDF2-SHA256 over the shared
+      // salt. One unlock therefore opens every case study in the session.
+      async function deriveKey(password) {
+        var material = await crypto.subtle.importKey(
+          'raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']
+        );
+        return crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: bytes(cfg.salt), iterations: cfg.iterations, hash: 'SHA-256' },
+          material,
+          { name: 'AES-GCM', length: 256 },
+          true,
+          ['decrypt']
+        );
+      }
+
+      // The verifier decrypts to a known token, so a wrong password is caught
+      // here rather than as a broken-looking case study page.
+      async function isCorrect(key) {
+        var blob = bytes(cfg.verify);
+        try {
+          var out = await crypto.subtle.decrypt(
+            { name: 'AES-GCM', iv: blob.subarray(0, 12) }, key, blob.subarray(12)
+          );
+          return new TextDecoder().decode(out) === 'vy-unlock-ok';
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function reject() {
+        gtag('event', 'case_study_unlock_failed', { case_study: study ? study[2] : 'unknown' });
+        error.style.display = 'block';
+        input.value = '';
+        input.focus();
+      }
+
+      var form = document.getElementById('gate-form');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (!input.value) return;
+
+        // PBKDF2 at this iteration count takes a moment on a phone.
+        error.style.display = 'none';
+        submit.disabled = true;
+        submit.textContent = 'Unlocking…';
+
+        var key = await deriveKey(input.value);
+        var ok = await isCorrect(key);
+
+        submit.disabled = false;
+        submit.textContent = 'Continue';
+        if (!ok) return reject();
+
+        // The key itself is what travels, not an "unlocked" flag — the case
+        // study pages have nothing to read without it.
+        var raw = b64(await crypto.subtle.exportKey('raw', key));
+        try { sessionStorage.setItem(KEY_NAME, raw); } catch (err) {
+          error.textContent = 'This browser is blocking session storage, so the case study cannot be opened.';
+          error.style.display = 'block';
+          return;
+        }
+
+        gtag('event', 'case_study_unlock', { case_study: study ? study[2] : 'unknown' });
+        location.replace(next || 'index.html');
+      });
+
+      // The old per-page gate submitted on Enter; implicit form submission is
+      // not reliable enough across browsers to drop that.
+      input.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        if (form.requestSubmit) form.requestSubmit();
+        else form.dispatchEvent(new Event('submit', { cancelable: true }));
+      });
+
+      document.getElementById('gate-back').addEventListener('click', function () {
+        // history.back() would land on the case study, which bounces straight
+        // back here — so leaving the gate means leaving for the homepage.
+        try { sessionStorage.setItem('pt-arriving', '1'); } catch (err) {}
+        location.replace('index.html');
+      });
+    })();
+  </script>
+
+</body>
+</html>

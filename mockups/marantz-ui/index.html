@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1470, initial-scale=1" />
+<title>Marantz Cabin Audio — UI exploration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+<div class="screen" id="screen">
+
+  <img class="logo" src="assets/marantz-logo.svg" alt="Marantz" />
+
+  <!-- view switcher -->
+  <nav class="views" id="views" aria-label="Screens">
+    <button class="view-btn is-active" data-view="volume">Volume</button>
+    <button class="view-btn" data-view="cabin">Cabin</button>
+    <button class="view-btn" data-view="map">Seats</button>
+    <button class="view-btn" data-view="levels">Levels</button>
+  </nav>
+
+  <!-- ── Aurora (shared) ── -->
+  <div class="aurora" id="aurora" aria-hidden="true">
+    <div class="aurora-blur">
+      <span class="aurora-teal"></span>
+      <span class="aurora-gold"></span>
+    </div>
+  </div>
+
+  <!-- ── 1. Volume ── -->
+  <section class="view view--volume is-on" id="v-volume">
+    <div class="dial" id="dial" role="slider" tabindex="0"
+         aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25">
+      <span class="dial-value" id="dialValue">25</span>
+    </div>
+    <p class="hint" id="volHint">Drag or scroll the porthole</p>
+  </section>
+
+  <!-- ── 2. Cabin ── -->
+  <section class="view view--cabin" id="v-cabin">
+
+    <div class="halo" aria-hidden="true"></div>
+
+    <div class="seats seats--cabin" id="seatsCabin">
+      <img class="seat" data-seat="back"      src="assets/seat-back.png"      alt="Rear bench" />
+      <img class="seat" data-seat="passenger" src="assets/seat-passenger.png" alt="Passenger seat" />
+      <img class="seat" data-seat="driver"    src="assets/seat-driver.png"    alt="Driver seat" />
+
+      <button class="pill" data-seat="passenger" style="left: 88px;  top: 292px;">Passenger</button>
+      <button class="pill" data-seat="driver"    style="left: 429px; top: 292px;">Driver</button>
+      <button class="pill" data-seat="back"      style="left: 733px; top: 292px;">Back seat</button>
+    </div>
+
+    <ul class="params" id="params">
+      <li><button data-param="clarity">Clarity</button></li>
+      <li><button data-param="warmth" class="is-active">Warmth</button></li>
+      <li><button data-param="spaciousness">Spaciousness</button></li>
+    </ul>
+
+    <div class="tray">
+      <div class="slider" id="slider" role="slider" tabindex="0"
+           aria-label="Warmth" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <span class="slider-fill" id="sliderFill">
+          <span class="slider-name" id="sliderName">Warmth</span>
+        </span>
+        <span class="slider-num" id="sliderNum">50</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. Seat map ── -->
+  <section class="view view--map" id="v-map">
+    <div class="map">
+      <img class="top top--driver"    data-seat="driver"    src="assets/top-driver.png"    alt="Driver seat, from above" />
+      <img class="top top--passenger" data-seat="passenger" src="assets/top-passenger.png" alt="Passenger seat, from above" />
+      <img class="top top--back"      data-seat="back"      src="assets/top-back.png"      alt="Rear bench, from above" />
+
+      <button class="pill pill--map" data-seat="driver"    style="left: 76px;  top: 168px;">Driver</button>
+      <button class="pill pill--map" data-seat="passenger" style="left: 340px; top: 168px;">Passenger</button>
+      <button class="pill pill--map" data-seat="back"      style="left: 190px; top: 502px;">Back seat</button>
+    </div>
+  </section>
+
+  <!-- ── 4. Levels ── -->
+  <section class="view view--levels" id="v-levels">
+
+    <div class="halo halo--levels" aria-hidden="true"></div>
+
+    <div class="seats seats--levels" role="group" aria-label="Seat">
+      <img class="seat" data-seat="passenger" src="assets/seat-passenger.png"
+           role="button" tabindex="0" aria-pressed="false" alt="Passenger seat" />
+      <img class="seat" data-seat="driver"    src="assets/seat-driver.png"
+           role="button" tabindex="0" aria-pressed="true"  alt="Driver seat" />
+      <img class="seat" data-seat="back"      src="assets/seat-back.png"
+           role="button" tabindex="0" aria-pressed="false" alt="Rear bench" />
+    </div>
+
+    <div class="tiles" id="tiles">
+      <button class="tile" data-param="clarity" role="slider"
+              aria-label="Clarity" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <span class="tile-fill" data-fill="clarity"></span>
+        <span class="tile-key">Clarity</span>
+        <span class="tile-val"><b data-val="clarity">50</b><i>%</i></span>
+      </button>
+      <button class="tile" data-param="warmth" role="slider"
+              aria-label="Warmth" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <span class="tile-fill" data-fill="warmth"></span>
+        <span class="tile-key">Warmth</span>
+        <span class="tile-val"><b data-val="warmth">50</b><i>%</i></span>
+      </button>
+      <button class="tile" data-param="spaciousness" role="slider"
+              aria-label="Spaciousness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <span class="tile-fill" data-fill="spaciousness"></span>
+        <span class="tile-key">Spaciousness</span>
+        <span class="tile-val"><b data-val="spaciousness">50</b><i>%</i></span>
+      </button>
+      <button class="tile tile--toggle" data-param="master" aria-pressed="false">
+        <span class="tile-fill" data-fill="master"></span>
+        <span class="tile-key">Sound master</span>
+        <span class="tile-val"><b id="masterVal">Off</b></span>
+      </button>
+    </div>
+
+    <p class="levels-seat" id="levelsSeat" aria-live="polite">Seat &middot; <b>Driver</b></p>
+  </section>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

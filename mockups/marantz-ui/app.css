@@ -1,0 +1,489 @@
+/* ──────────────────────────────────────────────
+   Marantz Cabin Audio — UI exploration
+────────────────────────────────────────────── */
+
+:root {
+  --bg:         #051819;
+  --panel:      #082a2d;
+  --tile:       rgba(8, 35, 37, 0.62);
+  --ring:       #2c5d5e;
+  --glass:      #012625;
+  --pill:       rgba(255, 255, 255, 0.82);
+  --pill-on:    #0b3435;
+  --track:      #b4bcbd;
+  --gold:       #a49566;
+  --text:       #ffffff;
+  --dim:        rgba(255, 255, 255, 0.45);
+  --ease:       cubic-bezier(.22, .61, .36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1470px;
+  height: 960px;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text);
+  user-select: none;
+}
+
+.screen {
+  position: relative;
+  width: 1470px;
+  height: 960px;
+  overflow: hidden;
+  background-color: var(--bg);
+  /* the dash pattern from the Figma file. It is concentric rather than a
+     repeating tile, so it ships as an image, positioned as in the comps. */
+  background-image: url("assets/pattern.webp");
+  background-size: 1645px 1360px;
+  background-position: -87px -200px;
+  background-repeat: no-repeat;
+}
+
+.logo {
+  position: absolute;
+  left: 79px;
+  top: 61px;
+  width: 209px;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* ── View switcher ── */
+.views {
+  position: absolute;
+  right: 48px;
+  top: 52px;
+  z-index: 6;
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.view-btn {
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 100px;
+  background: none;
+  cursor: pointer;
+  font: 500 14px/1 'Inter', sans-serif;
+  letter-spacing: .01em;
+  color: rgba(255, 255, 255, 0.55);
+  transition: background .3s var(--ease), color .3s var(--ease);
+}
+
+.view-btn:hover { color: #fff; }
+
+.view-btn.is-active {
+  background: var(--pill);
+  color: #0b2223;
+}
+
+/* ── Views ── */
+.view {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0;
+  /* visibility (not just opacity) keeps a hidden screen's controls
+     out of the tab order once the fade has finished */
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .5s var(--ease), visibility 0s linear .5s;
+}
+
+.view.is-on {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity .5s var(--ease), visibility 0s;
+}
+
+/* ── Aurora ── */
+.aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .6s var(--ease);
+}
+
+.aurora.is-on { opacity: 1; }
+
+/* blur lives on the parent so it softens the clipped star, not the other way round */
+.aurora-blur {
+  position: absolute;
+  inset: 0;
+  filter: blur(44px);
+}
+
+.aurora span {
+  position: absolute;
+  display: block;
+  /* four-point star with a broad waist */
+  clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
+  transform-origin: 50% 50%;
+  transition: transform .18s linear, opacity .18s linear;
+}
+
+/* the teal arm reaches up and left of the porthole */
+.aurora-teal {
+  left: 130px; top: -140px;
+  width: 1020px; height: 1020px;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(178, 248, 236, 1)   0%,
+    rgba(120, 214, 206, .92) 18%,
+    rgba(66, 164, 162, .74)  34%,
+    rgba(36, 112, 114, .40)  52%,
+    rgba(20, 70, 72, .14)    68%,
+    transparent 82%);
+}
+
+/* the gold arm falls away below and to the right */
+.aurora-gold {
+  left: 452px; top: 152px;
+  width: 830px; height: 830px;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(255, 233, 166, 1)   0%,
+    rgba(238, 206, 132, .92) 18%,
+    rgba(206, 172, 96, .72)  34%,
+    rgba(146, 120, 62, .38)  52%,
+    rgba(88, 74, 40, .13)    68%,
+    transparent 82%);
+}
+
+/* ── 1. Volume ── */
+.view--volume { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px; }
+
+.dial {
+  position: relative;
+  width: 470px;
+  height: 470px;
+  border-radius: 50%;
+  background: var(--glass);
+  border: 2px solid var(--ring);
+  box-shadow: 0 0 0 14px rgba(44, 93, 94, .14), inset 0 0 70px rgba(0, 0, 0, .5);
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+  transition: box-shadow .25s var(--ease);
+}
+
+.dial:active { cursor: grabbing; }
+.dial:focus-visible { box-shadow: 0 0 0 14px rgba(126, 220, 210, .22), inset 0 0 70px rgba(0, 0, 0, .5); }
+
+.dial-value {
+  font-size: 128px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ── Seats (shared) ── */
+.halo {
+  position: absolute;
+  left: 322px; top: 8px;
+  width: 812px; height: 812px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 68.4%, rgba(126, 220, 210, .10) 69.4%, transparent 71%),
+    radial-gradient(circle at 50% 50%, rgba(2, 24, 25, .97) 58%, rgba(6, 34, 35, .78) 68%, rgba(9, 44, 44, .32) 75%, transparent 81%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.halo--levels { left: 300px; top: -30px; width: 880px; height: 880px; }
+
+.seats {
+  position: absolute;
+  z-index: 3;
+}
+
+.seats--cabin  { left: 156px; top: 36px;  width: 1181px; height: 664px; }
+.seats--levels { left: 196px; top: 74px;  width: 1140px; height: 641px; }
+
+.seat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter .45s var(--ease), opacity .45s var(--ease);
+}
+
+/* stack by z-index rather than source order, so the markup can follow
+   left-to-right reading order for the keyboard */
+.seat[data-seat="back"]      { z-index: 1; }
+.seat[data-seat="passenger"] { z-index: 2; }
+.seat[data-seat="driver"]    { z-index: 3; }
+
+.seat[data-state="off"] { filter: brightness(.62) saturate(.78); opacity: .94; }
+.seat[data-state="on"]  { filter: brightness(1.06) drop-shadow(0 0 34px rgba(150, 220, 210, .18)); }
+
+/* an unselected seat lifts under the cursor, so it reads as selectable */
+.seat[data-state="off"][data-hover="1"] { filter: brightness(.84) saturate(.9); opacity: 1; }
+
+/* drop-shadow traces the PNG's alpha, so the focus ring follows the seat's
+   silhouette instead of boxing the whole frame */
+.seat:focus-visible { outline: none; }
+
+.seat[data-state="off"]:focus-visible {
+  filter: brightness(.88) saturate(.92)
+          drop-shadow(0 0 0 rgba(168, 244, 232, .9))
+          drop-shadow(0 0 12px rgba(126, 220, 210, .7));
+  opacity: 1;
+}
+
+.seat[data-state="on"]:focus-visible {
+  filter: brightness(1.06)
+          drop-shadow(0 0 0 rgba(168, 244, 232, .9))
+          drop-shadow(0 0 18px rgba(126, 220, 210, .55));
+}
+
+/* ── Pills ── */
+.pill {
+  position: absolute;
+  z-index: 5;
+  padding: 26px 30px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--pill);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #0b2223;
+  font: 600 24px/1 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background .35s var(--ease), color .35s var(--ease), transform .35s var(--ease);
+}
+
+.pill:hover { transform: translateY(-2px); }
+
+.pill.is-active {
+  background: var(--pill-on);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+
+/* ── Parameter list ── */
+.params {
+  position: absolute;
+  right: 98px;
+  top: 178px;
+  z-index: 5;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 69px;
+  align-items: flex-end;
+}
+
+.params button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: 400 26px/1 'Inter', sans-serif;
+  color: rgba(255, 255, 255, .56);
+  transition: color .3s var(--ease);
+  padding: 4px 0;
+}
+
+.params button:hover { color: rgba(255, 255, 255, .8); }
+
+.params button.is-active {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ── Bottom tray + slider ── */
+.tray {
+  position: absolute;
+  left: -10px;
+  bottom: -20px;
+  width: 1490px;
+  height: 340px;
+  z-index: 4;
+  border-radius: 34px;
+  background: linear-gradient(180deg, rgba(8, 39, 41, .86), rgba(9, 44, 46, .96));
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 122px;
+}
+
+.slider {
+  position: relative;
+  width: 750px;
+  height: 73px;
+  border-radius: 100px;
+  background: var(--track);
+  cursor: ew-resize;
+  touch-action: none;
+  outline: none;
+  overflow: hidden;
+}
+
+.slider:focus-visible { box-shadow: 0 0 0 3px rgba(126, 220, 210, .55); }
+
+.slider-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  min-width: 190px;
+  border-radius: 100px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding-left: 44px;
+  transition: width .08s linear;
+}
+
+.slider-name {
+  font: 400 26px/1 'Inter', sans-serif;
+  color: #0b2223;
+  white-space: nowrap;
+}
+
+.slider-num {
+  position: absolute;
+  right: 42px;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 400 26px/1 'Inter', sans-serif;
+  color: #0b2223;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 3. Seat map ── */
+.view--map { display: grid; place-items: center; }
+
+.map {
+  position: relative;
+  width: 620px;
+  height: 700px;
+}
+
+.top {
+  position: absolute;
+  transition: filter .45s var(--ease), opacity .45s var(--ease);
+}
+
+.top--driver    { left: 0;     top: 30px;  width: 250px; }
+.top--passenger { left: 300px; top: 30px;  width: 250px; }
+.top--back      { left: 0;     top: 350px; width: 560px; }
+
+.top { cursor: pointer; }
+.top[data-state="off"] { filter: brightness(.74) saturate(.8); }
+.top[data-state="on"]  { filter: brightness(1.05) drop-shadow(0 0 30px rgba(150, 220, 210, .2)); }
+.top[data-state="off"]:hover { filter: brightness(.92) saturate(.9); }
+
+.pill--map { padding: 20px 24px; font-size: 21px; border-radius: 17px; }
+
+/* ── 4. Levels ── */
+.tiles {
+  position: absolute;
+  left: 79px;
+  bottom: 62px;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(4, 323px);
+  gap: 28px;
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  height: 308px;
+  border: 1px solid rgba(255, 255, 255, .05);
+  border-radius: 44px;
+  background: var(--tile);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  cursor: ns-resize;
+  touch-action: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  color: #fff;
+  outline: none;
+  transition: border-color .35s var(--ease), transform .35s var(--ease);
+}
+
+.tile--toggle { cursor: pointer; }
+
+.tile:hover { transform: translateY(-4px); }
+
+.tile.is-active,
+.tile:focus-visible { border-color: rgba(126, 220, 210, .34); }
+
+/* the level rises up the card as you drag it */
+.tile-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background:
+    linear-gradient(180deg, rgba(126, 220, 210, .30) 0%, rgba(58, 150, 148, .17) 46%, rgba(26, 86, 88, .10) 100%);
+  border-top: 1px solid rgba(168, 244, 232, .55);
+  box-shadow: 0 -10px 26px rgba(102, 204, 196, .16);
+  transition: height .08s linear;
+  pointer-events: none;
+}
+
+.tile--toggle .tile-fill {
+  background:
+    linear-gradient(180deg, rgba(252, 224, 150, .28) 0%, rgba(206, 172, 96, .15) 46%, rgba(120, 100, 52, .08) 100%);
+  border-top-color: rgba(255, 233, 166, .55);
+  box-shadow: 0 -10px 26px rgba(232, 198, 120, .16);
+  transition: height .4s var(--ease);
+}
+
+.tile-key,
+.tile-val { position: relative; z-index: 1; }
+
+.tile-key { font: 400 24px/1 'Inter', sans-serif; }
+
+.tile-val { display: flex; align-items: baseline; gap: 8px; }
+.tile-val b { font: 300 66px/1 'Inter', sans-serif; font-variant-numeric: tabular-nums; }
+.tile-val i { font: 400 24px/1 'Inter', sans-serif; font-style: normal; }
+
+.levels-seat {
+  position: absolute;
+  right: 79px;
+  top: 128px;
+  z-index: 6;
+  font: 400 22px/1 'Inter', sans-serif;
+  color: var(--dim);
+}
+
+.levels-seat b {
+  font-weight: 400;
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; }
+}

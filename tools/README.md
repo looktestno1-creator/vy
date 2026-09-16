@@ -48,3 +48,72 @@ and streams short-lived segments, which a static GitHub Pages site cannot do.
 
 `SEED` in `encode-sounds.py` must match `SEED` in the case study's sound-library
 script. Change one without the other and playback goes silent.
+
+---
+
+# Password-protected case studies
+
+Seven case studies are gated: the three Denon studies and the four Bowers &
+Wilkins ones. Their published HTML holds no case study — only a title, a favicon
+and an AES-256-GCM blob. `unlock.html` takes the password, derives the key and
+hands it to the page, which decrypts itself.
+
+## Workflow
+
+Plaintext lives in `src/case-studies/`, mirroring where each file is published.
+That folder is git-ignored, so the originals never reach this public repo.
+
+1. Edit the case study in `src/` — e.g. `src/case-studies/denon/index.html`.
+   Nothing else about authoring changes.
+
+2. Build:
+
+   ```
+   python3 tools/protect.py
+   ```
+
+   It prompts for the password and rewrites the seven published files.
+
+3. Commit the published files. `git status` will not show `src/`, which is the
+   point.
+
+To change the password, `python3 tools/protect.py --set-password`. That picks a
+new salt and re-encrypts everything, so every previously shared link needs the
+new password.
+
+If `src/` is ever lost, `python3 tools/protect.py --restore` rebuilds it from
+the committed ciphertext — the published files are a complete backup that
+happens to need the password to read.
+
+`tools/protect.json` carries the salt, the iteration count and a verifier blob.
+None of it is the password, so it is safe in a public repo, but it must stay
+committed: delete it and the published files can no longer be opened.
+
+Requires `pip3 install --user cryptography`.
+
+## Why this replaced the overlay gate
+
+The old gate was a `<div>` on top of a fully-formed page. Everything it covered
+was in the HTML, so it stopped nobody who ran `curl`, turned JavaScript off, or
+deleted the element in devtools — and with this repo public, the plaintext was
+also a `raw.githubusercontent.com` request away, where no gate applied at all.
+
+What ships now has nothing to uncover. Wrong password fails the GCM tag and
+yields nothing; `sessionStorage` holds the derived key rather than an "unlocked"
+flag, so forging the entry just produces a failed decrypt.
+
+## What this does *not* protect
+
+**The images and videos.** Everything under `assets/` is still served plain at
+its own URL. Someone who has opened a case study once — legitimately or not —
+can read those paths out of the decrypted markup and share direct links that
+need no password. Encrypting the markup hides what the case study *says*, not
+the media it points at.
+
+**Anything after one legitimate unlock.** Whoever has the password can save the
+decrypted page. This raises the cost of casual access; it is not DRM.
+
+A real guarantee needs a server that authenticates each request, which a static
+GitHub Pages site cannot do. The nearest option is putting the site behind
+Cloudflare Access — free up to 50 users — but that only helps if the repo is
+also made private, since Access guards `yvefa.com` and not `github.com`.
