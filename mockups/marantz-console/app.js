@@ -30,16 +30,14 @@
   var state = {
     seat: 'passenger',           // 'driver' | 'passenger' | 'all'
     modes: { master: false, dialogue: true, quiet: false },
-    // voicing is held per seat, so moving between seats recalls their settings
-    voicing: {
-      driver:    { warmth: 0,   spaciousness: 0, clarity: 0 },
-      passenger: { warmth: -10, spaciousness: 0, clarity: 0 },
-      back:      { warmth: 0,   spaciousness: 0, clarity: 0 }
-    }
+    // one voicing for the whole cabin: the seat only decides where that sound
+    // is focused, it does not carry settings of its own
+    voicing: { warmth: -10, spaciousness: 0, clarity: 0 }
   };
 
   /* ── Seats ─────────────────────────────── */
-  // 'all' lights the whole cabin; a single seat dims the others
+  // the seat is where the sound is aimed, nothing more: 'all' lights the whole
+  // cabin, a single seat dims the others, and the voicing is left alone
   function targetSeats() { return state.seat === 'all' ? ALL_SEATS : [state.seat]; }
 
   function renderSeats() {
@@ -52,7 +50,6 @@
     $$('.card--seat').forEach(function (c) {
       c.setAttribute('aria-pressed', String(c.dataset.seat === state.seat));
     });
-    renderSliders();
   }
 
   $$('.card--seat').forEach(function (c) {
@@ -63,17 +60,14 @@
   });
 
   /* ── Voicing ───────────────────────────── */
-  // with every seat live these read the cabin average and write all three
+  // global to the cabin, whichever seat is selected
   function getValue(key) {
-    var keys = targetSeats(), sum = 0;
-    keys.forEach(function (k) { sum += state.voicing[k][key]; });
-    return sum / keys.length;
+    return state.voicing[key];
   }
 
   function setValue(key, v) {
     var r = RANGE[key];
-    v = clamp(v, r.min, r.max);
-    targetSeats().forEach(function (k) { state.voicing[k][key] = v; });
+    state.voicing[key] = clamp(v, r.min, r.max);
   }
 
   var screenEl = $('.screen');
@@ -238,6 +232,7 @@
 
   /* ── Boot ──────────────────────────────── */
   renderSeats();
+  renderSliders();
   renderMaster();
   window.addEventListener('resize', function () {
     $$('.track').forEach(function (t) { t._travel = 0; });

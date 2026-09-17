@@ -23,11 +23,9 @@
     seat: null,          // null = no seat picked, so every seat is live
     param: 'warmth',
     master: false,
-    levels: {
-      driver:    { clarity: 50, warmth: 50, spaciousness: 50 },
-      passenger: { clarity: 50, warmth: 50, spaciousness: 50 },
-      back:      { clarity: 50, warmth: 50, spaciousness: 50 }
-    }
+    // one voicing for the whole cabin: the seat only decides where that sound
+    // is focused, it does not carry levels of its own
+    levels: { clarity: 50, warmth: 50, spaciousness: 50 }
   };
 
   /* ── Views ─────────────────────────────── */
@@ -115,11 +113,7 @@
   })();
 
   /* ── Seat selection ────────────────────── */
-  var ALL_SEATS = ['driver', 'passenger', 'back'];
-
-  // which seats the cards and the slider are currently driving
-  function targetSeats() { return state.seat ? [state.seat] : ALL_SEATS; }
-
+  // picking a seat aims the sound at it; with none picked the whole cabin is lit
   function renderSeats() {
     var all = state.seat === null;
     $$('.seat, .top').forEach(function (img) {
@@ -132,13 +126,12 @@
       img.setAttribute('aria-pressed', String(all || img.dataset.seat === state.seat));
     });
     $('#levelsSeat').innerHTML = 'Seat \u00b7 <b>' + (all ? 'All seats' : LABEL[state.seat]) + '</b>';
-    renderLevels();
   }
 
   function selectSeat(seat) { state.seat = seat; renderSeats(); }
 
-  // clicking the seat that is already selected clears the selection — every
-  // seat lights up and the cards then drive the whole cabin at once
+  // clicking the seat that is already selected clears the selection, and the
+  // sound spreads back across the whole cabin
   function toggleSeat(seat) {
     state.seat = (seat === state.seat) ? null : seat;
     renderSeats();
@@ -251,16 +244,13 @@
   var sliderName = $('#sliderName');
   var sliderNum  = $('#sliderNum');
 
-  // with no seat picked these read the cabin average and write every seat
+  // global to the cabin, whichever seat is selected
   function getLevel(param) {
-    var keys = targetSeats(), sum = 0;
-    keys.forEach(function (k) { sum += state.levels[k][param]; });
-    return sum / keys.length;
+    return state.levels[param];
   }
 
   function setLevel(param, v) {
-    v = clamp(v, 0, 100);
-    targetSeats().forEach(function (k) { state.levels[k][param] = v; });
+    state.levels[param] = clamp(v, 0, 100);
   }
 
   function value() { return getLevel(state.param); }
