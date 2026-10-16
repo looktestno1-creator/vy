@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css?v=7" />
+    <link rel="stylesheet" href="css/styles.css?v=13" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
@@ -262,7 +262,9 @@
         document.querySelector('.hero-regular'),
         document.querySelector('.hero-carousel'),
       ];
-      var base    = arriving ? 680 : 150;
+      // Arriving through the wipe: start while the curtain is still lifting,
+      // so the hero is already settling as it is uncovered.
+      var base    = arriving ? 220 : 100;
       var stagger = [0, 140, 260];
       elems.forEach(function (el, i) {
         if (!el) return;
@@ -273,17 +275,33 @@
 
   <script>
     // Parallax + scroll-driven card scale
+    //
+    // Where the browser supports CSS scroll-driven animations, the hero drift,
+    // card scale and image parallax live in css/styles.css (.scroll-fx) and
+    // run in step with the scroll itself. Driving them from a scroll handler
+    // lands each update a frame after the page has moved — invisible while
+    // smooth-scroll.js drove every scroll, but a visible tremble once
+    // trackpads scroll natively. The handler below still does the hero fade,
+    // where a frame of lag can't be seen, and is the fallback for the rest.
     const headerSection = document.querySelector('.header-section');
     const cardImages    = document.querySelectorAll('.card-image');
     const cards         = document.querySelectorAll('.card');
+    const cssScrollFx   = window.CSS && CSS.supports('animation-timeline: view()');
+    if (cssScrollFx) document.documentElement.classList.add('scroll-fx');
     let rafId = null;
-    let lastBlur = -1;
+    let lastRecede = -1;
     let isDesktop = window.innerWidth > 1024;
 
     // Snap a value to a fixed step so we emit far fewer distinct transform/
     // filter values — each unique scale or blur radius otherwise forces the
     // GPU to re-rasterise, which is what made the cards stutter on scroll.
+    // (Fallback only: CSS-driven animations don't re-rasterise.)
     const snap = (v, s) => Math.round(v / s) * s;
+
+    // The CSS image parallax needs each image pane's height for its reach.
+    function setImageHeights() {
+      cardImages.forEach((img) => img.style.setProperty('--img-h', img.offsetHeight + 'px'));
+    }
 
     function updateParallax() {
       rafId = null;
@@ -291,9 +309,10 @@
       const vh = window.innerHeight;
 
       // ── Batch reads ──
-      const headerRect = headerSection.getBoundingClientRect();
+      // Header position from layout, so it's independent of its own drift.
+      const headerBottom = headerSection.offsetTop + headerSection.offsetHeight - scrollY;
       const cardRects  = Array.from(cards, (c) => c.getBoundingClientRect());
-      const imgMids    = isDesktop
+      const imgMids    = isDesktop && !cssScrollFx
         ? Array.from(cardImages, (img) => {
             const r = img.getBoundingClientRect();
             return (r.top + r.height / 2) - vh / 2;
@@ -302,16 +321,25 @@
 
       // ── Batch writes ──
 
-      // Header parallax (cheap composited translate) + blur driven by overlap.
-      headerSection.style.transform = `translate3d(0,${(scrollY * 0.7).toFixed(1)}px,0)`;
-      const overlap = Math.max(0, headerRect.bottom - cardRects[0].top);
-      // Cap the radius (blur cost grows with radius) and quantise to 2px steps
-      // so the expensive Gaussian repaint fires as rarely as possible.
-      const blurPx  = snap(Math.min(14, overlap * 0.08), 2);
-      if (blurPx !== lastBlur) {
-        headerSection.style.filter = blurPx > 0 ? `blur(${blurPx}px)` : '';
-        lastBlur = blurPx;
+      // Header parallax, receding as the first card slides over it. Fade and
+      // scale are composited, unlike the blur this replaced, which forced a
+      // full repaint of the hero whenever its radius changed.
+      const headerY = scrollY * 0.7;
+      if (!cssScrollFx) headerSection.style.translate = `0 ${headerY.toFixed(1)}px`;
+      const overlap = Math.max(0, headerBottom + headerY - cardRects[0].top);
+      // Fade over at most 420px of overlap, or sooner for a short hero (phones),
+      // so the type is gone before cards slide past the middle of it.
+      const fadeSpan = Math.min(420, headerSection.offsetHeight * 0.6);
+      const recede  = Math.round(Math.min(1, overlap / fadeSpan) * 1000) / 1000;
+      if (recede !== lastRecede) {
+        headerSection.style.scale   = (1 - recede * 0.04).toFixed(4);
+        // Fade all the way out: at partial opacity the large type stays
+        // readable through the gaps between the cards below.
+        headerSection.style.opacity = (1 - recede).toFixed(3);
+        lastRecede = recede;
       }
+
+      if (cssScrollFx) return;
 
       // Card image parallax — desktop only.
       if (isDesktop) {
@@ -346,8 +374,9 @@
 
     window.addEventListener('resize', () => {
       isDesktop = window.innerWidth > 1024;
+      if (cssScrollFx) setImageHeights();
       // Leaving desktop: clear any parallax offsets left on the children.
-      if (!isDesktop) {
+      if (!isDesktop && !cssScrollFx) {
         cardImages.forEach((img) => Array.from(img.children).forEach((child) => {
           if (child.classList.contains('card-vid-payco')) return;
           child.style.transform = ''; child._pt = '';
@@ -356,6 +385,7 @@
       if (!rafId) rafId = requestAnimationFrame(updateParallax);
     }, { passive: true });
 
+    if (cssScrollFx) setImageHeights();
     // Run once on load to set initial positions
     updateParallax();
 
@@ -426,9 +456,11 @@
         const items = entry.target.querySelectorAll('.hero-anim');
         if (entry.isIntersecting) {
           items.forEach((el, i) => {
-            el._animTimer = setTimeout(() => el.classList.add('is-visible'), i * 120);
+            el._animTimer = setTimeout(() => el.classList.add('is-visible'), i * 80);
           });
-        } else {
+        } else if (entry.boundingClientRect.top > 0) {
+          // Only reset when the text leaves through the bottom, so it replays
+          // on the way down but doesn't re-fade while scrolling back up.
           items.forEach(el => {
             clearTimeout(el._animTimer);
             el.classList.remove('is-visible');
@@ -456,8 +488,8 @@
     }
 
   </script>
-  <script src="js/hero-pointer.js"></script>
-  <script src="js/smooth-scroll.js"></script>
-  <script src="js/transition.js"></script>
+  <script src="js/hero-pointer.js?v=2"></script>
+  <script src="js/smooth-scroll.js?v=2"></script>
+  <script src="js/transition.js?v=2"></script>
 </body>
 </html>
