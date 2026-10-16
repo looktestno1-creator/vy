@@ -28,8 +28,8 @@ body {
   opacity: 0;
   transform: translateY(14px);
   will-change: opacity, transform;
-  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-anim.is-visible {
@@ -44,7 +44,11 @@ body {
 .header-section {
   width: 100%;
   max-width: 1200px;
-  will-change: transform;
+  will-change: translate, scale, opacity;
+  transform-origin: 50% 0;
+  /* Never let the browser pick something in the drifting hero as its scroll
+     anchor: Firefox would then "correct" for the drift and jump the page. */
+  overflow-anchor: none;
 }
 
 .header-inner {
@@ -757,6 +761,28 @@ body {
   .header-inner { height: auto; gap: 48px; }
 }
 
+/* Stacked card, tablet to small desktop: the in-car screen fits the
+   500px pane in full, vertically centred, with the blob beside it.
+   (top/bottom 0 + auto margins centres an image whose height follows
+   its width.) */
+@media (min-width: 768px) and (max-width: 1328px) {
+  .card-img-hmi {
+    left: 6%;
+    top: 0;
+    bottom: 0;
+    width: min(62%, 640px);
+    margin: auto 0;
+    transform: none;
+  }
+  .blob-wrap {
+    left: auto;
+    right: 6%;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
+}
+
 /* ── Tablet ── */
 @media (max-width: 1023px) {
   .page { padding: 32px 20px; }
@@ -793,4 +819,62 @@ body {
   /* Footer */
   .footer-inner   { padding: 64px 20px 40px; gap: 48px; }
   .footer-bottom  { flex-direction: column; align-items: flex-start; gap: 28px; }
+}
+
+/* ─────────────────────────────────────────────
+   Scroll-driven effects. The page script adds .scroll-fx where the browser
+   supports animation-timeline; elsewhere it animates these itself.
+───────────────────────────────────────────── */
+.scroll-fx .header-section {
+  animation: hero-drift linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0 4000px;
+}
+/* Drifts down at 0.7× scroll speed, so it slides up at 0.3× behind the cards. */
+@keyframes hero-drift {
+  to { translate: 0 2800px; }
+}
+
+/* Cards: 0.9 while entering, 1 once fully in view (or filling it), back to
+   0.9 on the way out. `clip` crops like `hidden` but, unlike it, doesn't
+   make the card a scroll container — which would tie the image parallax
+   below to the card's (non-existent) scrolling instead of the page's. */
+.scroll-fx .card {
+  overflow: clip;
+  animation: card-scale linear both;
+  animation-timeline: view();
+  animation-range: cover;
+}
+@keyframes card-scale {
+  entry 0%     { scale: 0.9; }
+  contain 0%   { scale: 1; }
+  contain 100% { scale: 1; }
+  exit 100%    { scale: 0.9; }
+}
+
+/* Image parallax, desktop only: each layer moves by its share (--k) of the
+   pane's distance from the viewport centre, which runs from
+   +(50vh + h/2) as the pane enters to -(50vh + h/2) as it leaves. */
+@media (min-width: 1025px) {
+  .scroll-fx .card-image { view-timeline: --card-img block; }
+  .scroll-fx .card-image > :not(.card-vid-payco) {
+    --k: 0.1;
+    --reach: calc(var(--k) * (50vh + var(--img-h, 800px) / 2));
+    animation: img-drift linear both;
+    animation-timeline: --card-img;
+    animation-range: cover;
+  }
+  .scroll-fx .card-image > .card-img-cover  { --k: 0.2; }
+  .scroll-fx .card-image > .blob-wrap       { --k: 0.13; }
+  .scroll-fx .card-image > .card-img-bottom { --k: 0.04; }
+
+  /* On desktop the in-car screen sits fully inside the pane. The old
+     scroll script overwrote the base translate(-50%, -30%) with its own
+     transform, so this is what the page always showed; without it the
+     screen hangs off the card's left edge. */
+  .card-img-hmi { transform: none; }
+}
+@keyframes img-drift {
+  from { translate: 0 var(--reach); }
+  to   { translate: 0 calc(var(--reach) * -1); }
 }

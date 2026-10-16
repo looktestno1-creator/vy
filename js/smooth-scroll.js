@@ -1,7 +1,9 @@
 /* ── Experimental smooth (lerp) scrolling — landing page only ──
    Drives window.scrollTo so the existing parallax 'scroll' handler stays
    perfectly in sync. Disabled for touch and reduced-motion, where the
-   browser's native scrolling already feels better. Tune SPEED to taste:
+   browser's native scrolling already feels better — and for trackpads,
+   which already have their own momentum; easing on top of that makes
+   scrolling feel laggy. Tune SPEED to taste:
    higher = snappier/tighter, lower = floatier/longer glide. */
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -14,12 +16,27 @@
   var running = false;
   var lastT   = 0;
 
+  // Trackpads send a dense stream of small, often fractional or sideways
+  // deltas (especially in the momentum tail); mouse wheels send whole
+  // notches. Once a trackpad shows itself, hand scrolling back to the
+  // browser for the rest of the session.
+  var TRACKPAD_KEY = 'vy-trackpad';
+  var trackpad = false;
+  var halt = false;
+  try { trackpad = sessionStorage.getItem(TRACKPAD_KEY) === '1'; } catch (e) {}
+  function looksLikeTrackpad(e) {
+    if (e.deltaMode !== 0) return false;
+    return e.deltaX !== 0 || !Number.isInteger(e.deltaY) || Math.abs(e.deltaY) < 4;
+  }
+
   function maxScroll() {
     return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
   }
   function clamp(v) { return Math.max(0, Math.min(maxScroll(), v)); }
 
   function frame(now) {
+    // A trackpad took over mid-glide: stop, or we'd fight its scrolling.
+    if (halt) { halt = false; running = false; lastT = 0; return; }
     if (!lastT) lastT = now;
     var dt = Math.min(0.05, (now - lastT) / 1000);   // seconds, capped
     lastT = now;
@@ -44,6 +61,13 @@
 
   window.addEventListener('wheel', function (e) {
     if (e.ctrlKey) return;                       // leave pinch-zoom alone
+    if (trackpad) return;
+    if (looksLikeTrackpad(e)) {
+      trackpad = true;
+      if (running) halt = true;
+      try { sessionStorage.setItem(TRACKPAD_KEY, '1'); } catch (err) {}
+      return;
+    }
     e.preventDefault();
     var d = e.deltaY;
     if (e.deltaMode === 1)      d *= 16;          // lines  -> px

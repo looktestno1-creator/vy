@@ -1,7 +1,7 @@
 /* ── Page transition — vertical wipe ── */
 (function () {
-  const DURATION_OUT = 550;
-  const DURATION_IN  = 650;
+  const DURATION_OUT = 380;
+  const DURATION_IN  = 480;
   const EASE_OUT = 'cubic-bezier(0.76, 0, 0.24, 1)';
   const EASE_IN  = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
@@ -68,6 +68,30 @@
     }, DURATION_OUT);
   }
 
+  // ── Prefetch on intent ──────────────────────────
+  // Start fetching the next page the moment a link is hovered, focused or
+  // pressed, so it is already in cache when the wipe finishes and the new
+  // page paints straight away instead of after a network round trip.
+  const prefetched = new Set();
+  function isInternal(href) {
+    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('javascript')) return false;
+    return !(href.startsWith('http') && !href.includes(location.hostname));
+  }
+  function prefetch(e) {
+    const link = e.target.closest && e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!isInternal(href) || prefetched.has(href)) return;
+    prefetched.add(href);
+    const hint = document.createElement('link');
+    hint.rel = 'prefetch';
+    hint.href = href;
+    document.head.appendChild(hint);
+  }
+  document.addEventListener('pointerover', prefetch, { passive: true });
+  document.addEventListener('pointerdown', prefetch, { passive: true });
+  document.addEventListener('focusin', prefetch);
+
   // ── Intercept clicks ────────────────────────────
   document.addEventListener('click', function (e) {
     // Back button — navigate to stored origin instead of history.back()
@@ -93,8 +117,7 @@
     const link = e.target.closest('a[href]');
     if (!link) return;
     const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('javascript')) return;
-    if (href.startsWith('http') && !href.includes(location.hostname)) return;
+    if (!isInternal(href)) return;
 
     e.preventDefault();
     // If the link lives inside the BW overlay, return URL should re-open it
