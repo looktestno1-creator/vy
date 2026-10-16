@@ -57,6 +57,62 @@
     .gate-btn[disabled] { opacity: .5; cursor: default; }
     .gate-btn-primary { background: #fff; color: #000; }
     .gate-btn-back { background: #000; color: #ababab; }
+
+    /* Access request — offered after a few wrong passwords. */
+    .req-overlay {
+      position: fixed; inset: 0; z-index: 10;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px; box-sizing: border-box;
+      opacity: 0; pointer-events: none; transition: opacity .25s ease;
+    }
+    .req-overlay.is-open { opacity: 1; pointer-events: auto; }
+    .req-card {
+      position: relative; width: 100%; max-width: 400px; box-sizing: border-box;
+      max-height: calc(100vh - 32px); overflow-y: auto;
+      background: #141414; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 32px 24px 24px;
+      transform: translateY(12px); transition: transform .25s ease;
+    }
+    .req-overlay.is-open .req-card { transform: none; }
+    .req-close {
+      position: absolute; top: 12px; right: 12px;
+      width: 32px; height: 32px; border: none; border-radius: 8px;
+      background: transparent; color: rgba(255,255,255,0.5);
+      font-size: 22px; line-height: 1; cursor: pointer;
+    }
+    .req-close:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .req-title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700;
+      color: #fff; margin: 0 0 8px;
+    }
+    .req-body {
+      font-family: 'Manrope', sans-serif; font-size: 15px; line-height: 1.5;
+      color: rgba(255,255,255,0.6); margin: 0 0 20px;
+    }
+    .req-form { display: flex; flex-direction: column; gap: 12px; }
+    .req-form input, .req-form textarea {
+      width: 100%; padding: 14px 18px; box-sizing: border-box;
+      font-family: 'Manrope', sans-serif; font-size: 15px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; color: #fff; outline: none; resize: vertical;
+    }
+    .req-form input:focus, .req-form textarea:focus, #pw-input:focus { border-color: rgba(255,255,255,0.4); }
+    .req-form textarea { min-height: 96px; }
+    .req-hp { position: absolute; left: -9999px; }
+    #req-status {
+      font-family: 'Manrope', sans-serif; font-size: 13px; color: #ff5f5f;
+      display: none; margin: 0;
+    }
+    .req-done { display: none; }
+    .req-card.is-sent .req-form, .req-card.is-sent > .req-body { display: none; }
+    .req-card.is-sent .req-done { display: block; }
+    .gate-request {
+      font-family: 'Manrope', sans-serif; font-size: 13px; color: rgba(255,255,255,0.5);
+      background: none; border: none; padding: 4px; cursor: pointer;
+      text-decoration: underline; text-underline-offset: 3px; display: none;
+    }
+    .gate-request:hover { color: #fff; }
   </style>
 </head>
 <body>
@@ -72,7 +128,29 @@
     <p id="pw-error">Incorrect password. Try again.</p>
     <button type="submit" class="gate-btn gate-btn-primary" id="gate-submit">Continue</button>
     <button type="button" class="gate-btn gate-btn-back" id="gate-back">Back to previous</button>
+    <button type="button" class="gate-request" id="gate-request">Don't have the password? Request access</button>
   </form>
+
+  <div class="req-overlay" id="req-overlay" aria-hidden="true">
+    <div class="req-card" id="req-card" role="dialog" aria-modal="true" aria-labelledby="req-title">
+      <button type="button" class="req-close" id="req-close" aria-label="Close">&times;</button>
+      <h2 class="req-title" id="req-title">Interested?</h2>
+      <p class="req-body">Fill out this form if you'd like to get access.</p>
+      <form class="req-form" id="req-form" novalidate>
+        <input name="name" type="text" placeholder="Name" autocomplete="name" required />
+        <input name="email" type="email" placeholder="Email address" autocomplete="email" required />
+        <textarea name="message" placeholder="Message (optional)"></textarea>
+        <!-- Honeypot: humans never see it, bots fill it in. -->
+        <input class="req-hp" name="_honey" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <p id="req-status"></p>
+        <button type="submit" class="gate-btn gate-btn-primary" id="req-submit">Request access</button>
+      </form>
+      <div class="req-done">
+        <p class="req-body">Thanks — your request is in. You'll hear back by email.</p>
+        <button type="button" class="gate-btn gate-btn-primary" id="req-ok">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function () {
@@ -151,11 +229,98 @@
         }
       }
 
+      // After this many wrong passwords, offer the access request form. The
+      // count lives in sessionStorage so reloading the gate doesn't reset it.
+      var FAILS_BEFORE_REQUEST = 3;
+      var FAILS_NAME = 'vy-unlock-fails';
+      // Static site, so a form relay delivers the request by email. The first
+      // submission sends a one-time activation link to this address.
+      var REQUEST_ENDPOINT = 'https://formsubmit.co/ajax/hi@yvefa.com';
+
+      function failCount() {
+        try { return parseInt(sessionStorage.getItem(FAILS_NAME), 10) || 0; } catch (e) { return 0; }
+      }
+
+      var overlay = document.getElementById('req-overlay');
+      var card = document.getElementById('req-card');
+      var reqForm = document.getElementById('req-form');
+      var reqStatus = document.getElementById('req-status');
+      var reqSubmit = document.getElementById('req-submit');
+      var reqLink = document.getElementById('gate-request');
+
+      function openRequest() {
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        reqLink.style.display = 'block';
+        (card.classList.contains('is-sent') ? document.getElementById('req-ok') : reqForm.elements.name).focus();
+        gtag('event', 'case_study_request_shown', { case_study: study ? study[2] : 'unknown' });
+      }
+
+      function closeRequest() {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        input.focus();
+      }
+
+      if (failCount() >= FAILS_BEFORE_REQUEST) reqLink.style.display = 'block';
+      reqLink.addEventListener('click', openRequest);
+      document.getElementById('req-close').addEventListener('click', closeRequest);
+      document.getElementById('req-ok').addEventListener('click', closeRequest);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeRequest(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeRequest();
+      });
+
+      reqForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var f = reqForm.elements;
+        var name = f.name.value.trim(), email = f.email.value.trim();
+        reqStatus.style.display = 'none';
+        if (!name || !f.email.checkValidity() || !email) {
+          reqStatus.textContent = 'Please add your name and a valid email address.';
+          reqStatus.style.display = 'block';
+          return;
+        }
+        if (f._honey.value) return;
+
+        reqSubmit.disabled = true;
+        reqSubmit.textContent = 'Sending…';
+        try {
+          var res = await fetch(REQUEST_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              message: f.message.value.trim(),
+              case_study: study ? study[1] + ' (' + next + ')' : 'unknown',
+              _subject: 'Case study access request — ' + name,
+              _replyto: email,
+              _template: 'table',
+              _captcha: 'false'
+            })
+          });
+          if (!res.ok) throw new Error(res.status);
+          card.classList.add('is-sent');
+          document.getElementById('req-ok').focus();
+          gtag('event', 'case_study_request_sent', { case_study: study ? study[2] : 'unknown' });
+        } catch (err) {
+          reqStatus.textContent = 'Something went wrong. Please email hi@yvefa.com instead.';
+          reqStatus.style.display = 'block';
+        }
+        reqSubmit.disabled = false;
+        reqSubmit.textContent = 'Request access';
+      });
+
       function reject() {
         gtag('event', 'case_study_unlock_failed', { case_study: study ? study[2] : 'unknown' });
         error.style.display = 'block';
         input.value = '';
-        input.focus();
+        var fails = failCount() + 1;
+        try { sessionStorage.setItem(FAILS_NAME, String(fails)); } catch (e) {}
+        // Pop it on the 3rd miss, and again every 3 after, until they've sent one.
+        if (fails % FAILS_BEFORE_REQUEST === 0 && !card.classList.contains('is-sent')) openRequest();
+        else input.focus();
       }
 
       var form = document.getElementById('gate-form');
@@ -184,6 +349,7 @@
           return;
         }
 
+        try { sessionStorage.removeItem(FAILS_NAME); } catch (err) {}
         gtag('event', 'case_study_unlock', { case_study: study ? study[2] : 'unknown' });
         location.replace(next || 'index.html');
       });
