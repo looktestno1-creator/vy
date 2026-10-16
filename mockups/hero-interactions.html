@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Hero interactions</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/Favicon.svg?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f1f2f4; font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    /* ── Hero, copied from css/styles.css ── */
+    .page { display: flex; flex-direction: column; align-items: center; padding: 64px; }
+    .header-section { position: relative; width: 100%; max-width: 1200px; }
+    .header-inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; justify-content: space-between;
+      height: min(854px, calc(100vh - 128px)); min-height: 520px;
+    }
+    .spacer { flex: 1; }
+    .logo {
+      width: 56px; height: 56px; background: #2f2f2f; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .logo img { width: 39.375px; height: 29.75px; }
+    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: 100px; line-height: 1.05; color: #000; }
+    .hero-regular { font-weight: 400; }
+    .hero-bold { font-weight: 700; }
+    .hero-carousel { overflow: hidden; height: 1.2em; display: block; }
+    .hero-carousel-track { display: flex; flex-direction: column; will-change: transform; }
+    .hero-carousel-track > span { flex-shrink: 0; display: block; line-height: 1.098em; }
+
+    @media (max-width: 1328px) {
+      .page { padding: 40px 24px; }
+      .hero-title { font-size: clamp(40px, 7vw, 100px); }
+    }
+    @media (max-width: 767px) {
+      .page { padding: 16px; }
+      .header-inner { height: calc(100svh - 32px); min-height: 0; }
+      .hero-title { font-size: clamp(32px, 9vw, 60px); }
+    }
+
+    .logo, .hero-regular, .hero-carousel { will-change: translate; }
+    .hero-word { white-space: nowrap; }
+    .hero-glow {
+      position: fixed; left: 0; top: 0; z-index: -1;
+      width: 720px; height: 720px; margin: -360px 0 0 -360px;
+      border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, rgba(239,115,133,0.22) 0%, rgba(255,186,140,0.12) 35%, rgba(241,242,244,0) 68%);
+      filter: blur(20px); will-change: translate, opacity;
+    }
+    /* Faint grid behind the hero, fading toward the bottom of the viewport. */
+    .hero-grid, .hero-grid-lens {
+      position: fixed; left: 0; top: 0; z-index: -1; pointer-events: none;
+      --grid: 48px;
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: var(--grid) var(--grid);
+    }
+    .hero-grid {
+      inset: 0;
+      --grid-line: rgba(0,0,0,0.022);
+      -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 95%);
+              mask-image: linear-gradient(to bottom, #000 40%, transparent 95%);
+    }
+    /* Darker lines in a soft circle around the cursor. Size matches LENS in
+       js/hero-pointer.js. */
+    .hero-grid-lens {
+      width: 480px; height: 480px;
+      --grid-line: rgba(0,0,0,0.07);
+      -webkit-mask-image: radial-gradient(circle closest-side, #000 0%, rgba(0,0,0,0.4) 45%, transparent 100%);
+              mask-image: radial-gradient(circle closest-side, #000 0%, rgba(0,0,0,0.4) 45%, transparent 100%);
+      will-change: translate, opacity;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+    <section class="header-section">
+      <div class="header-inner">
+        <div class="logo"><img src="../assets/icons/logo_layer.svg" alt="Logo" /></div>
+        <div class="spacer"></div>
+        <div class="hero-title">
+          <p class="hero-regular">Lead product designer specialising in&nbsp;</p>
+          <div class="hero-bold hero-carousel" aria-label="UX design disciplines">
+            <div class="hero-carousel-track">
+              <span>UX design</span>
+              <span>UI Design</span>
+              <span>User research</span>
+              <span>UX strategy</span>
+              <span>UX design</span>
+            </div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Carousel, as on the site.
+    (function () {
+      var track = document.querySelector('.hero-carousel-track');
+      var words = track.querySelectorAll(':scope > span');
+      var idx = 0;
+      setInterval(function () {
+        idx++;
+        track.style.transition = 'transform 0.65s ease-out';
+        track.style.transform = 'translateY(-' + idx * words[0].offsetHeight + 'px)';
+        if (idx === words.length - 1) {
+          setTimeout(function () {
+            track.style.transition = 'none';
+            track.style.transform = 'translateY(0)';
+            idx = 0;
+          }, 650);
+        }
+      }, 2000);
+    })();
+  </script>
+  <!-- Same script the landing page uses: glow + depth + letter weight. -->
+  <script src="../js/hero-pointer.js"></script>
+</body>
+</html>

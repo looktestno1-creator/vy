@@ -19,8 +19,8 @@
   <link rel="shortcut icon" href="assets/icons/Favicon.svg?v=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css?v=4" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Manrope:wght@400;700&family=Anybody:wght@400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css?v=7" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YT43C40S0Z"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YT43C40S0Z');</script>
@@ -361,7 +361,7 @@
 
     // ── Vertical carousel ──
     const carouselTrack = document.querySelector('.hero-carousel-track');
-    const carouselSpans = carouselTrack.querySelectorAll('span');
+    const carouselSpans = carouselTrack.querySelectorAll(':scope > span');
     const CAROUSEL_COUNT = carouselSpans.length - 1; // last span is the clone
     let carouselIndex = 0;
 
@@ -456,6 +456,7 @@
     }
 
   </script>
+  <script src="js/hero-pointer.js"></script>
   <script src="js/smooth-scroll.js"></script>
   <script src="js/transition.js"></script>
 </body>

@@ -85,6 +85,46 @@ body {
 .hero-regular { font-weight: 400; }
 .hero-bold    { font-weight: 700; }
 
+/* ── Pointer interaction (js/hero-pointer.js) ── */
+.logo, .hero-regular, .hero-carousel { will-change: translate; }
+.hero-word { white-space: nowrap; }
+
+/* Warm glow that trails the cursor. Fixed behind everything; z-index -1
+   keeps it under the cards but above the page background. */
+.hero-glow {
+  position: fixed; left: 0; top: 0; z-index: -1;
+  width: 720px; height: 720px; margin: -360px 0 0 -360px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(239,115,133,0.22) 0%, rgba(255,186,140,0.12) 35%, rgba(241,242,244,0) 68%);
+  filter: blur(20px);
+  will-change: translate, opacity;
+}
+
+/* Faint grid behind the hero, fading toward the bottom of the viewport. */
+.hero-grid, .hero-grid-lens {
+  position: fixed; left: 0; top: 0; z-index: -1; pointer-events: none;
+  --grid: 48px;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+}
+.hero-grid {
+  inset: 0;
+  --grid-line: rgba(0,0,0,0.022);
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 95%);
+          mask-image: linear-gradient(to bottom, #000 40%, transparent 95%);
+}
+/* Darker lines in a soft circle around the cursor. Size matches LENS in
+   js/hero-pointer.js. */
+.hero-grid-lens {
+  width: 480px; height: 480px;
+  --grid-line: rgba(0,0,0,0.07);
+  -webkit-mask-image: radial-gradient(circle closest-side, #000 0%, rgba(0,0,0,0.4) 45%, transparent 100%);
+          mask-image: radial-gradient(circle closest-side, #000 0%, rgba(0,0,0,0.4) 45%, transparent 100%);
+  will-change: translate, opacity;
+}
+
 /* ── Carousel ── */
 .hero-carousel {
   overflow: hidden;
@@ -98,7 +138,7 @@ body {
   will-change: transform;
 }
 
-.hero-carousel-track span {
+.hero-carousel-track > span {
   flex-shrink: 0;
   display: block;
   line-height: 1.098em;  /* slight extra spacing to prevent accidental line breaks */
